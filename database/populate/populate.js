@@ -2,19 +2,24 @@ var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
 // Connection URL
-var url = 'mongodb://localhost:27017/';
+var localUrl = 'mongodb://localhost:27017/';
+
+var onlineUrl = "mongodb+srv://<username>:<password>:youcantimagine@wotify-uwq9g.mongodb.net/test?retryWrites=true"
+
+var databaseName = "wotify_development"
+var collectionName = "implementations"
 
 // Use connect method to connect to the server
 // Must change the url to be parsed as an option
-MongoClient.connect(url, async function (err, client) {
+MongoClient.connect(onlineUrl, async function (err, client) {
+    console.log(err)
     assert.equal(null, err);
+    
     console.log("Connected successfully to server");
 
-    const db = client.db('wotify')
+    const db = client.db(databaseName)
 
-
-
-    await db.collection('implementations').insertOne({
+    await db.collection(collectionName).insertOne({
         name: 'journal',
         github: 25,
         type: 'template',

@@ -4,6 +4,7 @@
   "description": "Populates a wotify MongoDB database with random entries",
   "main": "populate.js",
   "dependencies": {
+    "json-schema-faker": "^0.5.0-rc16",
     "mongodb": "^3.2.2"
   },
   "devDependencies": {},
