@@ -1,43 +1,100 @@
 {
-    "name":"journal",
-    "github": 25,
-    "type": "template",
-    "td": {
-        "id": "urn:dev:wot:com:example:servient:lamp",
-        "name": "MyLampThing",
-        "securityDefinitions": {
-            "basic_sc": {
-                "scheme": "basic",
-                "in": "header"
-            }
+    "title": "WoTify JSON Schema for checking implementation inputs",
+    "$schema ": "http://json-schema.org/draft-06/schema#",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The name of the implementation that will appear also a title",
+            "type": "string",
+            "minLength": 5
         },
-        "security": ["basic_sc"],
-        "properties": {
-            "status": {
+        "shortDescription": {
+            "description": "Short description of the implementation that appears on search results and as a subtitle under name",
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 180
+        },
+        "longDescription": {
+            "description": "Long description of the implementation that can be used as a Readme in case there is no Github link",
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+        },
+        "github": {
+            "description": "GitHub repository link",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://github\\.com/.*"
+        },
+        "implementationType": {
+            "description": "to distinguish between the TD templates and source code with Github",
+            "type": "string",
+            "enum": ["template", "code"]
+        },
+        "topic": {
+            "description": "Topic(s) to be chosen from sensor, actuator, robotics or other",
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
                 "type": "string",
-                "forms": [{
-                    "href": "https://mylamp.example.com/status"
-                }]
+                "enum": ["sensor", "actuator", "robotics", "other"]
             }
         },
-        "actions": {
-            "toggle": {
-                "forms": [{
-                    "href": "https://mylamp.example.com/toggle"
-                }]
+        "platform": {
+            "description": "A hardware platform to be chosen from raspberry, arduino, ESP or other",
+            "type": "string",
+            "enum": ["raspberry", "arduino", "ESP", "other"]
+        },
+        "tags": {
+            "description": "Tag(s) to be chosen freely by the user",
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
             }
         },
-        "events": {
-            "overheating": {
-                "data": {
+        "complexity": {
+            "description": "A string indicating whether the usage is complicated, i.e. ESP light sensor is simple and LED Strip is medium. This would translate to the complexity of the client script that can do everything",
+            "type": "string",
+            "enum": ["simple", "medium", "expert"]
+        },
+        "td": {
+            "description": "A TD with simple validation at the moment. Should be changed with a link to the official schema",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "name": {
                     "type": "string"
                 },
-                "forms": [{
-                    "href": "https://mylamp.example.com/oh",
-                    "subprotocol": "longpoll"
-                }]
-            }
+                "security": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "securityDefinitions": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "type": "object"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "id",
+                "security",
+                "securityDefinitions"
+            ]
         }
-
-    }
+    },
+    "required": ["name", "shortDescription", "longDescription", "github", "implementationType", "topic", "platform", "tags", "complexity", "td"]
 }
