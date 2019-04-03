@@ -1,0 +1,28 @@
+{
+  "name": "wotify-backend",
+  "version": "0.0.1",
+  "description": "Backend for the Wotify library",
+  "author": "Hassib Belhaj",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "wot"
+  ],
+  "devDependencies": {
+    "@types/express": "4.11.1",
+    "@types/mongodb": "3.0.17",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "typescript": "3.4.1",
+    "http-errors": "1.7.2"
+  },
+  "dependencies": {
+    "express": "4.16.4",
+    "http-errors": "1.7.2",
+    "mongodb": "3.2.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "develop": "tsnd --respawn src/server.ts"
+  }
+}

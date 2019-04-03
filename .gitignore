@@ -131,7 +131,11 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+### Typescript output ###
+dist/
+
 ### VisualStudioCode ###
+*/.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
