@@ -143,3 +143,8 @@ typings/
 .history
 
 # End of https://www.gitignore.io/api/node,linux,macos,visualstudiocode
+
+# Added by Ege
+database/data/*
+!database/data/.keep
+**/package-lock.json

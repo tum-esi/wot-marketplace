@@ -1,0 +1,19 @@
+{
+  "name": "wotify-populate",
+  "version": "1.0.0",
+  "description": "Populates a wotify MongoDB database with random entries",
+  "main": "populate.js",
+  "dependencies": {
+    "mongodb": "^3.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "faker",
+    "mongodb"
+  ],
+  "author": "egekorkan",
+  "license": "MIT"
+}
