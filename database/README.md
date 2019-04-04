@@ -26,7 +26,7 @@ There is also a dashboard at https://cloud.mongodb.com/user#/atlas/login
 
 You will need a username and its password to access it that you can obtain by asking @egekorkan
 
-For scripts and clients: the url should be mongodb+srv://<user>:<pw>@wotify-uwq9g.mongodb.net/
+For scripts and clients: the url should be mongodb+srv://user:pw@wotify-uwq9g.mongodb.net/
 
 ## Using the database
 
@@ -97,4 +97,6 @@ MongoClient.connect(onlineUrl, async function (err, client) {
 
 ## Database population
 
-You can run populate.js to populate it with 100 random entries that all respect the implementationSchema.
+You can run `database/populate/populate.js` to populate it with all the entries from  `database/populate/implementations`. These fake implementations can be generated using  `database/populate/generate.js` that all respect the implementationSchema.
+
+The fake implementation generation has a bug that makes the script hang. Try to run a "couple" of times.
