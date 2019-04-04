@@ -30,16 +30,19 @@ fs.readFile("implementationSchema.json", (err, implementationSchemaFile) => {
 
     var implementationSchemaJSON = JSON.parse(implementationSchemaFile);
 
-    for (let index = 0; index < fakeAmount; index++) {
+    for (var i = 0; i < fakeAmount; i++) {
 
-        // console.log("Generating nb", index)
+        console.log("Generating nb", i)
         var fakeImplementation = jsf.generate(implementationSchemaJSON);
-        // console.log("generated")
 
-        fs.writeFileSync("database/populate/implementations/fake" + index + ".json", JSON.stringify(fakeImplementation));
-        // console.log("fakeImplementation saved")
+        console.log("generated", i)
+
+        fs.writeFileSync("database/populate/implementations/fake" + i + ".json", JSON.stringify(fakeImplementation));
+        console.log("fakeImplementation saved")
                 
-        };
+    };
+
+    console.log("Finished generating ", fakeAmount, "fake implementations")
     
 
 });

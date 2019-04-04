@@ -1,0 +1,27 @@
+{
+    "name": "ESP Light Sensor",
+    "shortDescription": "ea occa",
+    "longDescription": "ut ut reprehenderit ullamco",
+    "github": "https://github.com/24",
+    "implementationType": "code",
+    "topic": ["actuator", "robotics", "other", "sensor"],
+    "platform": "other",
+    "tags": ["consequat anim", "proident amet voluptate"],
+    "complexity": "simple",
+    "td": {
+        "id": "light:sensor:192.168.0.101",
+        "properties": {
+            "intensity": {
+                "forms": [{
+                    "href": "http://192.168.0.101/properties/intensity",
+                    "mediaType": "application/json"
+                }],
+                "type": "number",
+                "maximum": 1000,
+                "minimum": 0
+            }
+        },
+        "name": "light_sensor",
+        "description": "Sensor that measures the intensity of light"
+    }
+}

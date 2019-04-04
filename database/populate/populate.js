@@ -1,10 +1,12 @@
 var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
+const fs = require('fs');
+
 // Connection URL
 var localUrl = 'mongodb://localhost:27017/';
 
-var onlineUrl = "mongodb+srv://<username>:<password>@wotify-uwq9g.mongodb.net/test?retryWrites=true"
+var onlineUrl = "mongodb+srv://esi:youcantimagine@wotify-uwq9g.mongodb.net/test?retryWrites=true"
 
 var databaseName = "wotify_development"
 var collectionName = "implementations"
@@ -19,9 +21,18 @@ MongoClient.connect(onlineUrl, async function (err, client) {
 
     const db = client.db(databaseName)
 
+    var myDir = fs.readdirSync("database/populate/implementations");
+    console.log(myDir);
+    myDir.forEach(async (curImplementationAddress) => {
+        var curImplementationData = fs.readFileSync("database/populate/implementations/" +
+            curImplementationAddress);
+        var curImplementationJSON = JSON.parse(curImplementationData);
+        console.log(curImplementationJSON);
+        await db.collection(collectionName).insertOne(curImplementationJSON);
+    })
     await db.collection(collectionName).insertOne(
         {
-            "name": "senseHat-native",
+            "name": "senseHat-native2",
             "shortDescription": "senseHAT implementation using native http libraries",
             "longDescription": "Implemented using the native http libraries of nodejs. Supports all button clicks and sensor readings with a 2ms refresh rate",
             "github": "https://github.com/<#n:MoL2o",
