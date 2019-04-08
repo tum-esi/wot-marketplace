@@ -16,10 +16,11 @@ export default {
   props: ["project"],
   data() {
     return {
-        color: ''
+      color: ""
     };
   },
   created() {
+    //TODO: change color based on project platform
     switch (this.project.platform) {
       case "raspberry":
         this.color = "red";
@@ -28,13 +29,12 @@ export default {
         this.color = "blue";
         break;
       case "esp":
-        this, (color = "green");
+        this.color = "green";
         break;
       case "other":
       default:
         this.color = "grey";
     }
-    console.log('color: ', this.color);
   }
 };
 </script>
@@ -55,7 +55,7 @@ export default {
 }
 
 .project-item-top {
-  border: 3px solid black;
+  border: 3px solid grey;
   border-bottom: none;
   border-radius: 5px 5px 0 0;
 }
