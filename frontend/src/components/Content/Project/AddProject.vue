@@ -58,8 +58,8 @@
           </h4>
           <p class="form-el-left-text">Paste the Thing Description of your project</p>
         </div>
-        <div class="form-el-right">
-          <textarea class="form-el-right-input" type="text" placeholder="Your amazing Thing Description" v-model="form.thingDescription"></textarea>
+        <div class="form-el-right-td-area">
+            <textarea class="form-el-right-input" type="text" v-model="form.thingDescription"></textarea>
         </div>
       </div>
 
@@ -252,6 +252,17 @@ export default {
 .form-el-right textarea {
   resize: none;
   height: 250px;
+}
+
+.form-el-right-td-area {
+  width: 75%;
+  float: left;
+  padding: 10px 10px 0 10px;
+}
+
+.form-el-right-td-area textarea {
+  resize: none;
+  height: 500px;
 }
 
 .form-el-right-radio-container {

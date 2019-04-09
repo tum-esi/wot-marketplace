@@ -12,6 +12,7 @@
     "node-fetch": "^2.3.0",
     "uuid": "^3.3.2",
     "vue": "^2.6.6",
+    "vue-json-pretty": "^1.6.0",
     "vue-router": "^3.0.2"
   },
   "devDependencies": {

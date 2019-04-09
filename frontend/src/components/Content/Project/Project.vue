@@ -76,7 +76,7 @@ export default {
         this.prName = this.project.clickedProject.artistName;
         this.prShortDescr = this.project.clickedProject.collectionCensoredName;
         this.prLongDescr = this.project.clickedProject.previewUrl;
-        this.prTD = this.project.clickedProject.artistViewUrl;
+        this.prTD = this.project.clickedProject.artistViewUrl; // can be replaced with a TD to see highlighting
         this.prInfo.implType = this.project.clickedProject.trackPrice;
         this.prInfo.platform = this.project.clickedProject.trackNumber;
         this.prInfo.complexity = this.project.clickedProject.trackCount;
