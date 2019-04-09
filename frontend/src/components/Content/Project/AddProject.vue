@@ -54,6 +54,18 @@
       <div class="form-el">
         <div class="form-el-left">
           <h4 class="form-el-left-heading">
+            <label>Thing Description</label>
+          </h4>
+          <p class="form-el-left-text">Paste the Thing Description of your project</p>
+        </div>
+        <div class="form-el-right">
+          <textarea class="form-el-right-input" type="text" placeholder="Your amazing Thing Description" v-model="form.thingDescription"></textarea>
+        </div>
+      </div>
+
+      <div class="form-el">
+        <div class="form-el-left">
+          <h4 class="form-el-left-heading">
             <label>Topic</label>
           </h4>
           <p class="form-el-left-text">Please select at least one topic for your project.</p>
@@ -156,7 +168,6 @@
 </template>
 
 <script>
-import uuid from "uuid";
 
 export default {
   name: "AddProject",
