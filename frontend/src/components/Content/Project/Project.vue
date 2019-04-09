@@ -40,6 +40,8 @@ import ProjectInfobox from "./ProjectInfobox.vue";
 import ProjectGeneral from "./ProjectGeneral.vue";
 import ProjectTD from "./ProjectTD.vue";
 
+
+
 export default {
   name: "Project",
   components: {
