@@ -146,4 +146,7 @@ dist/
 # Ignore all local history of files
 .history
 
+### Configuration file ###
+*/config/
+
 # End of https://www.gitignore.io/api/node,linux,macos,visualstudiocode
