@@ -1,6 +1,6 @@
 <template>
   <div id="search-results">
-    <div class="project-item" v-for="project in projects" v-bind:key="project.id">
+    <div class="project-item" v-for="project in projects" v-bind:key="project.name">
       <ProjectItem
         v-bind:project="project"
         v-on:project-item-clicked="$emit('project-item-clicked', project)"
@@ -27,9 +27,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
-}
-
-.project-item {
 }
 </style>
 
