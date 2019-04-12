@@ -2,12 +2,12 @@
   <div>
     <div class="info-container">
       <h4>General Info</h4>
-      <div class="info-el">Type: {{projectInfo.implType}}</div>
+      <div class="info-el">Type: {{projectInfo.implementationType}}</div>
       <div class="info-el">Topic: {{projectInfo.topic}}</div>
       <div class="info-el">Platform: {{projectInfo.platform}}</div>
       <div class="info-el">Complexity: {{projectInfo.complexity}}</div>
       <div class="info-el">
-        <a target="_blank" v-bind:href="`${projectInfo.url}`">View on Github</a>
+        <a target="_blank" v-bind:href="`${projectInfo.github}`">View on Github</a>
       </div>
     </div>
     <div class="info-container">
