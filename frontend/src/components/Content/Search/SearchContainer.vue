@@ -41,9 +41,9 @@ export default {
       this.loading = true;
       this.projects = [];
       fetch(
-        `https://itunes.apple.com/search?term=${encodeURIComponent(
+        `api/search?q=${encodeURIComponent(
           this.searchTerm
-        )}&limit=10&media=music`
+        )}&count=10`
       )
         .then(res => res.json())
         .then(json => {

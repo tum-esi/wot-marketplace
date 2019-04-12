@@ -264,7 +264,7 @@
 </template>
 
 <script>
-import Project from "@/classes/Project.js";
+// import Project from "@/classes/Project.js";
 
 export default {
   name: "AddProject",
