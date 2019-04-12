@@ -137,9 +137,17 @@
         </div>
         <div class="form-el-right">
           <ul class="form-el-right-input" id="add-tags">
-            <li class="tag">Bla</li>
-            <li class="form-el-right-tag-list-input">
-              <input class="form-el-right-tag-input" type="text">
+            <li v-for="tagEl in tags" v-bind:key="tagEl" class="tag">{{ tagEl }}</li>
+            <li @click="focusInput" class="form-el-right-tag-list-input">
+              <input
+                ref="tagInput"
+                @blur="addTag"
+                @keydown.space="addTag"
+                @keydown.delete="removeTag"
+                v-model="tag"
+                class="form-el-right-tag-input"
+                type="text"
+              >
             </li>
           </ul>
         </div>
@@ -162,11 +170,14 @@ export default {
   name: "AddProject",
   data() {
     return {
+      isTagInputActive: false,
+      tag: "",
+      tags: [],
       form: {
-        title: '',
-        shortDescription: '',
-        longDescription: '',
-        url: ''
+        title: "",
+        shortDescription: "",
+        longDescription: "",
+        url: ""
       }
     };
   },
@@ -186,6 +197,23 @@ export default {
       } else {
         console.log("Form is not correct");
       }
+    },
+    addTag() {
+      if (
+        this.tag !== "" &&
+        this.tag !== " " &&
+        !this.tags.includes(this.tag) &&
+        this.tags.length <= 10
+      ) {
+        this.tags.push(this.tag);
+      }
+      this.tag = "";
+    },
+    removeTag() {
+      if (this.tags.length && this.tag === "") this.tags.pop();
+    },
+    focusInput() {
+       this.$refs.tagInput.focus();
     }
   }
 };
@@ -241,6 +269,23 @@ export default {
 .form-el-right textarea {
   resize: none;
   height: 250px;
+}
+
+.form-el-right-tag-list-input {
+  height: 100%;
+  cursor: text;
+}
+
+
+.form-el-right-tag-input {
+  outline: none;
+  border: none;
+  vertical-align: middle;
+  height: 100%;
+  padding: 0;
+  margin-bottom: 0;
+  display: inline-block;
+  font-size: 14px;
 }
 
 .form-el-right-radio-container {
@@ -309,6 +354,10 @@ export default {
 .submit-btn {
   padding: 15px;
   width: 100%;
+}
+
+.input-active{
+  box-shadow: 0 0 5px #25e4d4;
 }
 </style>
 
