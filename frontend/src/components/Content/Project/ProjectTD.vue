@@ -7,7 +7,7 @@
       :showLine=true
       :showLength=true
       :highlightMouseoverNode=true
-      @click="handleClick">
+      >
     </vue-json-pretty>
     <!-- showDoubleQuotes is for showing quotes at property names
     showLine is for the vertical line, not sure if it is better or not this way. Cleaner without but makes it easier to understand a TD

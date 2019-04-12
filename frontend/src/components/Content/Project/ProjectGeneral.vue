@@ -1,37 +1,48 @@
 <template>
 <div>
 <div class="project-general-container">
-<!--<vue-markdown>
 
-  *wow* asds \n
-  *asdasd
-  *asdasd
+<vue-markdown>
+*first one*
 </vue-markdown>
--->
+
+<VueShowdown
+  markdown="`${projectGeneral}`"
+  flavor="github"
+  :options="{ emoji: true }"/>
+
+<div class="project-general-container">{{projectGeneral}}</div>
+<!-- <div class="project-general-container">{{projectGeneral}}</div> -->
+
 </div>
 </div>
 </template>
 
 <script>
 import VueMarkdown from 'vue-markdown'
-// this.getReadme("some");
+import {VueShowdown} from 'vue-showdown' 
 
 export default {
   name: "ProjectGeneral",
   props: ["projectGeneral"],
   components: {
-    VueMarkdown
-  },
-  created(){
-    this.getReadme();
-  },
-  data() {
-    return {
-      download_url: "",
-      readmeMD: ""
-    };
+    VueMarkdown,
+    VueShowdown
   }
+  // },
+  // data(){
+  //   return{
+  //     html = "";
+  //   }
+  // },
+  // created() {
+  //   var converter = new showdown.Converter();
+  //   var text      = '# hello, markdown!';
+  //   var this.html      = converter.makeHtml(text);
+  // }
 };
+
+
 </script>
 
 <style scoped>

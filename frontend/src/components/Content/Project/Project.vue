@@ -75,13 +75,17 @@ export default {
     if(!this.project) return;
     //TODO: Get data from data store
     if (this.project.clickedProject) {
+        // console.log("lolololol");
         this.prName = this.project.clickedProject.artistName;
         this.prShortDescr = this.project.clickedProject.collectionCensoredName;
         this.getReadme("something");
+        //
+        // this.prLongDescr = "asfdasd"
+        // this.prLongDescr = this.project.clickedProject.previewUrl;
         // .then(
         //   this.prLongDescr = this.project.clickedProject.readmeMD;//
         // );
-        this.project.clickedProject.previewUrl;
+        // this.project.clickedProject.previewUrl;
         this.prTD = this.project.clickedProject.artistViewUrl; // can be replaced with a TD to see highlighting
         this.prInfo.implType = this.project.clickedProject.trackPrice;
         this.prInfo.platform = this.project.clickedProject.trackNumber;
@@ -112,7 +116,7 @@ export default {
       //   )}readme`
       //   // this.entryPoint+this.searchTerm+this.readmeEndPoint
       // )
-      fetch(`https://api.github.com/repos/tum-ei-esi/wot-marketplace/readme`)
+      fetch(`https://api.github.com/repos/tum-ei-esi/testbench/readme`)
         .then(res => res.json())
         .then(json => {
           console.log("resJSON is ", json)
@@ -125,7 +129,7 @@ export default {
         })
         .then(
           // fetch(this.download_url)
-          fetch(`https://raw.githubusercontent.com/tum-ei-esi/wot-marketplace/master/README.md`)
+          fetch(`https://raw.githubusercontent.com/tum-ei-esi/wot-marketplace/ege-frontend/README.md`)
           .then(res => res.text())
           .then(
             text => {
