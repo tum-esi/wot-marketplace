@@ -86,6 +86,8 @@ function setupExpress(models) {
     app.use(Passport.initialize());
     app.use(Passport.session());
     app.use("/static", Express.static(Path.join(__dirname, "../static")));
+    app.use("/css", Express.static(Path.join(__dirname, "../css")));
+    app.use("/js", Express.static(Path.join(__dirname, "../js")));
 
     // Serve index.html
     app.get("/", (req, res) => {
