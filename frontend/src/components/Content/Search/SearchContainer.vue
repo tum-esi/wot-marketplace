@@ -39,6 +39,7 @@ export default {
       this.searchTerm = searchTerm;
       this.status = "load";
       this.loading = true;
+      this.projects = [];
       fetch(
         `https://itunes.apple.com/search?term=${encodeURIComponent(
           this.searchTerm

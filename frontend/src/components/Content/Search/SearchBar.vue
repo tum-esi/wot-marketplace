@@ -31,7 +31,7 @@ export default {
 #search-bar-container {
   width: 100%;
   position: relative;
-  padding: 10px;
+  padding: 20px 20px 10px 20px;
   box-sizing: border-box;
 }
 
