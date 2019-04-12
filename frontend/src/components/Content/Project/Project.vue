@@ -77,7 +77,11 @@ export default {
     if (this.project.clickedProject) {
         this.prName = this.project.clickedProject.artistName;
         this.prShortDescr = this.project.clickedProject.collectionCensoredName;
-        this.prLongDescr = this.project.clickedProject.previewUrl;
+        this.getReadme("something");
+        // .then(
+        //   this.prLongDescr = this.project.clickedProject.readmeMD;//
+        // );
+        this.project.clickedProject.previewUrl;
         this.prTD = this.project.clickedProject.artistViewUrl; // can be replaced with a TD to see highlighting
         this.prInfo.implType = this.project.clickedProject.trackPrice;
         this.prInfo.platform = this.project.clickedProject.trackNumber;
@@ -89,6 +93,52 @@ export default {
         this.prName = this.project.newProject.title;
         this.prShortDescr = this.project.newProject.shortDescription;
         this.prLongDescr = this.project.newProject.longDescription;
+    }
+  },
+  methods: {
+    getReadme(searchTerm) {
+      // this.searchTerm = searchTerm;
+      // so all GitHub API requests about repo information start at this url
+      this.entryPoint = "https://api.github.com/repos";
+      // then you have to provide the name of the org and repo
+      this.searchTerm = "/tum-ei-esi/wot-marketplace";
+      // in the end you can put readme which will return a JSON object with the url for readme in different forms
+      this.readmeEndPoint = "/readme";
+
+      this.download_url = "";
+      // fetch(
+      //   `https://api.github.com/repos${encodeURIComponent(
+      //     this.searchTerm
+      //   )}readme`
+      //   // this.entryPoint+this.searchTerm+this.readmeEndPoint
+      // )
+      fetch(`https://api.github.com/repos/tum-ei-esi/wot-marketplace/readme`)
+        .then(res => res.json())
+        .then(json => {
+          console.log("resJSON is ", json)
+          //html_url is what we click on as a user. To parse it you would need additional css from GitHub
+          this.html_url = json.html_url;
+          // download url returns raw.* files, so not rendered
+          this.download_url = json.download_url;
+          
+          console.log("urls are", this.html_url, this.download_url);
+        })
+        .then(
+          // fetch(this.download_url)
+          fetch(`https://raw.githubusercontent.com/tum-ei-esi/wot-marketplace/master/README.md`)
+          .then(res => res.text())
+          .then(
+            text => {
+              console.log("markdown in text is ", text)
+              //this.readmeMD = text;
+              this.prLongDescr = text;
+            }
+          )
+        )
+        .catch(err => {
+          this.status = "error";
+          this.error = err;
+        });
     }
   }
 };
