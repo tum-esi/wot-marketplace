@@ -29,7 +29,7 @@ function setupMongo() {
     ImplementationSchema.index({'$**': 'text'});
     let ImplementationModel = Mongoose.model("ImplementationModel", ImplementationSchema, "implementations" );
     let UserModel =  Mongoose.model("UserModel", UserSchema, "users");
-    return {impModel: ImplementationModel, userModel: UserModel}
+    return {ImplementationModel: ImplementationModel, userModel: UserModel}
 }
 
 
@@ -89,8 +89,7 @@ function setupExpress(models) {
 
     // Serve index.html
     app.get("/", (req, res) => {
-        // res.sendFile(INDEX-FILE-PATH)
-        res.send('Website will be online soon. Please come back later!');
+        res.sendFile(Path.join(__dirname, config.index));
     });
 
     // Login process
@@ -112,7 +111,6 @@ function setupExpress(models) {
 
     // Process search requests
     app.get("/api/search", (req, res, next) => {
-        console.log(req.sessionID)
         models.ImplementationModel.find(
             {$text: {$search: req.query.q}},
             null,

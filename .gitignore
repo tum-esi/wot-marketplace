@@ -154,7 +154,12 @@ database/data/*
 **/package-lock.json
 database/populate/implementations/fake*
 
-### Configuration file ###
+### Configuration files ###
 */config/
+
+### Static files ###
+*/static/
+favicon.ico
+index.html
 
 # End of https://www.gitignore.io/api/node,linux,macos,visualstudiocode
