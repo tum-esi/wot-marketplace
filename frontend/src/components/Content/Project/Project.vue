@@ -75,23 +75,17 @@ export default {
     if(!this.project) return;
     //TODO: Get data from data store
     if (this.project.clickedProject) {
-        // console.log("lolololol");
-        this.prName = this.project.clickedProject.artistName;
-        this.prShortDescr = this.project.clickedProject.collectionCensoredName;
         this.getReadme("something");
-        //
-        // this.prLongDescr = "asfdasd"
-        // this.prLongDescr = this.project.clickedProject.previewUrl;
-        // .then(
-        //   this.prLongDescr = this.project.clickedProject.readmeMD;//
-        // );
-        // this.project.clickedProject.previewUrl;
-        this.prTD = this.project.clickedProject.artistViewUrl; // can be replaced with a TD to see highlighting
-        this.prInfo.implType = this.project.clickedProject.trackPrice;
-        this.prInfo.platform = this.project.clickedProject.trackNumber;
-        this.prInfo.complexity = this.project.clickedProject.trackCount;
-        this.prInfo.topic = this.project.clickedProject.trackCount;
-        this.prInfo.url = this.project.clickedProject.previewUrl;
+
+        this.prName = this.project.clickedProject.name;
+        this.prShortDescr = this.project.clickedProject.shortDescription;
+        this.prLongDescr = this.project.clickedProject.longDescription;
+        this.prTD = this.project.clickedProject.td;
+        this.prInfo.implType = this.project.clickedProject.implementationType;
+        this.prInfo.platform = this.project.clickedProject.platform;
+        this.prInfo.complexity = this.project.clickedProject.complexity;
+        this.prInfo.topic = this.project.clickedProject.topic;
+        this.prInfo.url = this.project.clickedProject.github;
     }
     if (this.project.newProject) {
         this.prName = this.project.newProject.title;
