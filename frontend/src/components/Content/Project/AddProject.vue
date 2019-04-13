@@ -9,7 +9,18 @@
           <p class="form-el-left-text">Give your project a short, descriptive title.</p>
         </div>
         <div class="form-el-right">
-          <input class="form-el-right-input" type="text" v-model="form.title">
+          <input
+            class="form-el-right-input"
+            type="text"
+            v-model="form.title"
+            :class="{'input-error' : form.titleErr}"
+            @focus="resetError(form.titleKey)"
+            @blur="validateInput(form.titleKey)"
+          >
+          <span
+            :class="{ 'visible' : form.titleErr }"
+            class="error-mgs invisible"
+          >Please enter a title for your project.</span>
         </div>
       </div>
 
@@ -21,7 +32,17 @@
           <p class="form-el-left-text">Describe this project in one sentence (max 180 characters).</p>
         </div>
         <div class="form-el-right">
-          <input class="form-el-right-input" type="text" v-model="form.shortDescription">
+          <input
+            class="form-el-right-input"
+            type="text"
+            v-model="form.shortDescription"
+            :class="{'input-error' : form.shortDescrErr}"
+            @focus="resetError(form.descrKey)"
+            @blur="validateInput(form.descrKey)"
+          >
+          <span
+            :class="{'error-mgs' : form.shortDescrErr, 'invisible' : !form.shortDescrErr } "
+          >Please enter a short description for your project.</span>
         </div>
       </div>
 
@@ -47,7 +68,17 @@
           >Add the URL of the repository, where your WoT project is hosted. Make sure it is publiclly available.</p>
         </div>
         <div class="form-el-right">
-          <input class="form-el-right-input" type="text" v-model="form.url">
+          <input
+            class="form-el-right-input"
+            type="text"
+            v-model="form.url"
+            :class="{'input-error' : form.urlErr}"
+            @focus="resetError(form.urlKey)"
+            @blur="validateInput(form.urlKey)"
+          >
+          <span
+            :class="{'error-mgs' : form.urlErr, 'invisible' : !form.urlErr } "
+          >Please enter a valid URL.</span>
         </div>
       </div>
 
@@ -72,21 +103,48 @@
         </div>
         <div class="form-el-right">
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-1">
+            <input
+              class="form-el-right-radio"
+              type="checkbox"
+              id="rad-1"
+              value="sensor"
+              v-model="form.topics"
+            >
             <label class="form-el-right-radio-label" for="rad-1">Sensor</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-2">
+            <input
+              class="form-el-right-radio"
+              type="checkbox"
+              id="rad-2"
+              value="robotics"
+              v-model="form.topics"
+            >
             <label class="form-el-right-radio-label" for="rad-2">Robotics</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-3">
+            <input
+              class="form-el-right-radio"
+              type="checkbox"
+              id="rad-3"
+              value="actuator"
+              v-model="form.topics"
+            >
             <label class="form-el-right-radio-label" for="rad-3">Actuator</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-4">
+            <input
+              class="form-el-right-radio"
+              type="checkbox"
+              id="rad-4"
+              value="other"
+              v-model="form.topics"
+            >
             <label class="form-el-right-radio-label" for="rad-4">Other</label>
           </div>
+          <span
+            :class="{'error-mgs' : form.topicErr, 'invisible' : !form.topicErr } "
+          >Please select one option.</span>
         </div>
       </div>
 
@@ -99,21 +157,48 @@
         </div>
         <div class="form-el-right">
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-plat-1">
+            <input
+              class="form-el-right-radio"
+              type="radio"
+              id="rad-plat-1"
+              value="raspberry"
+              v-model="form.platform"
+            >
             <label class="form-el-right-radio-label" for="rad-plat-1">Raspberry</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-plat-2">
+            <input
+              class="form-el-right-radio"
+              type="radio"
+              id="rad-plat-2"
+              value="arduino"
+              v-model="form.platform"
+            >
             <label class="form-el-right-radio-label" for="rad-plat-2">Arduino</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-plat-3">
+            <input
+              class="form-el-right-radio"
+              type="radio"
+              id="rad-plat-3"
+              value="ESP"
+              v-model="form.platform"
+            >
             <label class="form-el-right-radio-label" for="rad-plat-3">ESP</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-plat-4">
+            <input
+              class="form-el-right-radio"
+              type="radio"
+              id="rad-plat-4"
+              value="other"
+              v-model="form.platform"
+            >
             <label class="form-el-right-radio-label" for="rad-plat-4">Other</label>
           </div>
+          <span
+            :class="{'error-mgs' : form.platformErr, 'invisible' : !form.platformErr } "
+          >Please select one option.</span>
         </div>
       </div>
 
@@ -128,14 +213,29 @@
         </div>
         <div class="form-el-right">
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-impl-1">
+            <input
+              class="form-el-right-radio"
+              type="radio"
+              id="rad-impl-1"
+              value="template"
+              v-model="form.implementationType"
+            >
             <label class="form-el-right-radio-label" for="rad-impl-1">Template</label>
           </div>
           <div class="form-el-right-radio-container">
-            <input class="form-el-right-radio" type="radio" id="rad-impl-2">
+            <input
+              class="form-el-right-radio"
+              type="radio"
+              id="rad-impl-2"
+              value="code"
+              v-model="form.implementationType"
+            >
             <label class="form-el-right-radio-label" for="rad-impl-2">Code</label>
           </div>
         </div>
+        <span
+          :class="{'error-mgs' : form.implErr, 'invisible' : !form.implErr } "
+        >Please select at least one option.</span>
       </div>
 
       <div class="form-el">
@@ -149,9 +249,17 @@
         </div>
         <div class="form-el-right">
           <ul class="form-el-right-input" id="add-tags">
-            <li class="tag">Bla</li>
-            <li class="form-el-right-tag-list-input">
-              <input class="form-el-right-tag-input" type="text">
+            <li v-for="tagEl in form.tags" v-bind:key="tagEl" class="tag">{{ tagEl }}</li>
+            <li @click="focusInput" class="form-el-right-tag-list-input">
+              <input
+                ref="tagInput"
+                @blur="addTag"
+                @keydown.space="addTag"
+                @keydown.delete="removeTag"
+                v-model="tag"
+                class="form-el-right-tag-input"
+                type="text"
+              >
             </li>
           </ul>
         </div>
@@ -159,7 +267,7 @@
 
       <div class="form-el">
         <div class="form-el-one">
-          <button class="btn submit-btn" type="submit" @keyup.enter="addProject">Create Project</button>
+          <button class="btn submit-btn" type="submit">Create Project</button>
         </div>
       </div>
       <div class="form-el"></div>
@@ -173,22 +281,66 @@ export default {
   name: "AddProject",
   data() {
     return {
+      tag: "",
       form: {
-        title: '',
-        shortDescription: '',
-        longDescription: '',
-        url: ''
+        title: "",
+        titleKey: "title",
+        titleErr: false,
+        descrKey: "description",
+        shortDescription: "",
+        shortDescrErr: false,
+        longDescription: "",
+        url: "",
+        urlKey: "url",
+        urlErr: false,
+        topics: [],
+        topicKey: "topic",
+        topicErr: false,
+        platform: "",
+        platformKey: "platform",
+        platformErr: false,
+        implementationType: "",
+        implKey: "implementation",
+        implErr: false,
+        tags: []
       }
     };
   },
   methods: {
     addProject(event) {
-      let formIsCorrect = false;
       event.preventDefault();
+      let formKeys = [];
+      let formErrors = [];
       const newProject = this.form;
 
-      //TODO: form validation
-      formIsCorrect = true;
+      formKeys = [
+        this.form.titleKey,
+        this.form.descrKey,
+        this.form.urlKey,
+        this.form.topicKey,
+        this.form.platformKey,
+        this.form.implKey
+      ];
+      let formIsCorrect = true;
+      for (let i = 0; i < formKeys.length; i++) {
+        this.resetError(formKeys[i]);
+        this.validateInput(formKeys[i]);
+      }
+      formErrors = [
+        this.form.titleErr,
+        this.form.urlErr,
+        this.form.shortDescrErr,
+        this.form.topicErr,
+        this.form.platformErr,
+        this.form.implErr
+      ];
+      for (let i = 0; i < formErrors.length; i++) {
+        console.log(formErrors[i]);
+        if (formErrors[i]) {
+          formIsCorrect = false;
+          break;
+        }
+      }
       if (formIsCorrect) {
         this.$router.push({
           name: "Project",
@@ -197,6 +349,68 @@ export default {
       } else {
         console.log("Form is not correct");
       }
+    },
+    addTag() {
+      if (
+        this.tag !== "" &&
+        this.tag !== " " &&
+        !this.form.tags.includes(this.tag) &&
+        this.form.tags.length <= 10
+      ) {
+        this.form.tags.push(this.tag);
+      }
+      this.tag = "";
+    },
+    removeTag() {
+      if (this.form.tags.length && this.tag === "") this.form.tags.pop();
+    },
+    validateInput(el) {
+      switch (el) {
+        case this.form.titleKey:
+          if (this.form.title === "") this.form.titleErr = true;
+          console.log('formTitle', this.form.title, this.form.titleErr);
+          break;
+        case this.form.descrKey:
+          if (this.form.shortDescription === "") this.form.shortDescrErr = true;
+          break;
+        case this.form.urlKey:
+          if (this.form.url === "") this.form.urlErr = true;
+          break;
+        case this.form.topicKey:
+          if (this.form.topic === "") this.form.topicErr = true;
+          break;
+        case this.form.platformKey:
+          if (this.form.platform === "") this.form.platformErr = true;
+          break;
+        case this.form.implKey:
+          if (this.form.implementationType === "") this.form.implErr = true;
+          break;
+      }
+    },
+    resetError(el) {
+      switch (el) {
+        case this.form.titleKey:
+          this.form.titleErr = false;
+          break;
+        case this.form.descrKey:
+          this.form.shortDescrErr = false;
+          break;
+        case this.form.urlKey:
+          this.form.urlErr = false;
+          break;
+        case this.form.topicKey:
+          this.form.topicErr = false;
+          break;
+        case this.form.platformKey:
+          this.form.platformErr = false;
+          break;
+        case this.form.implKey:
+          this.form.implErr = false;
+          break;
+      }
+    },
+    focusInput() {
+      this.$refs.tagInput.focus();
     }
   }
 };
@@ -263,6 +477,21 @@ export default {
 .form-el-right-td-area textarea {
   resize: none;
   height: 500px;
+}
+.form-el-right-tag-list-input {
+  height: 100%;
+  cursor: text;
+}
+
+.form-el-right-tag-input {
+  outline: none;
+  border: none;
+  vertical-align: middle;
+  height: 100%;
+  padding: 0;
+  margin-bottom: 0;
+  display: inline-block;
+  font-size: 14px;
 }
 
 .form-el-right-radio-container {
@@ -331,6 +560,23 @@ export default {
 .submit-btn {
   padding: 15px;
   width: 100%;
+}
+
+.input-active {
+  box-shadow: 0 0 5px #25e4d4;
+}
+
+.input-error {
+  box-shadow: 0 0 5px red;
+}
+
+.error-mgs {
+  color: red;
+  padding: 10px 10px 10px 10px;
+}
+
+.visible {
+  display: block;
 }
 </style>
 

@@ -1,11 +1,11 @@
 <template>
-  <div class="project-item-container" @click="$emit('project-item-clicked', project.artistId)">
-    <div class="project-item project-item-top">
-      <p class="project-item-title">{{project.artistName}}</p>
-      <p class="project-item-description">{{project.artistViewUrl}}</p>
+  <div class="project-item-container" @click="$emit('project-item-clicked', project.name)">
+    <div :class="`${color}-top`" class="project-item project-item-top">
+      <p class="project-item-title">{{project.name}}</p>
+      <p class="project-item-description">{{project.shortDescription}}</p>
     </div>
     <div>
-      <p class="project-item project-item-bottom">{{project.artistId}}</p>
+      <p :class="`${color}-bottom`" class="project-item project-item-bottom">{{project.platform}}</p>
     </div>
   </div>
 </template>
@@ -20,20 +20,16 @@ export default {
     };
   },
   created() {
-    //TODO: change color based on project platform
-    switch (this.project.platform) {
-      case "raspberry":
-        this.color = "red";
+    switch (this.project.implementationType) {
+      case "template":
+        this.color = "colorOne";
         break;
-      case "arduino":
-        this.color = "blue";
+      case "code":
+        this.color = "colorTwo";
         break;
-      case "esp":
-        this.color = "green";
-        break;
-      case "other":
       default:
-        this.color = "grey";
+        this.color = "default";
+        break;
     }
   }
 };
@@ -44,6 +40,7 @@ export default {
   color: black;
   margin: 10px;
   border-radius: 5px;
+  height: 100%;
 }
 
 .project-item-container:hover {
@@ -55,14 +52,14 @@ export default {
 }
 
 .project-item-top {
-  border: 3px solid grey;
   border-bottom: none;
   border-radius: 5px 5px 0 0;
+  height: 70%;
 }
 
 .project-item-bottom {
-  background-color: grey;
   border-radius: 0 0 5px 5px;
+  height: 30%;
 }
 
 .project-item-title {
@@ -71,6 +68,30 @@ export default {
 
 .project-item-description {
   color: grey;
+}
+
+.default-top {
+  border: 3px solid grey;
+}
+
+.default-bottom {
+  background-color: grey;
+}
+
+.red-top {
+  border: 3px solid red;
+}
+
+.red-bottom {
+  background-color: red;
+}
+
+.blue-top {
+  border: 3px solid blue;
+}
+
+.blue-bottom {
+  background-color: blue;
 }
 </style>
 
