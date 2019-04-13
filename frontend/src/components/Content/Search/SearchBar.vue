@@ -8,9 +8,7 @@
       @keyup.enter="$emit('search-btn-clicked', searchTerm)"
     >
     <button class="btn search-btn" @click="$emit('search-btn-clicked', searchTerm)">Search</button>
-    <button class="btn search-btn btn-right">
-      <router-link to="/new-project">New Project</router-link>
-    </button>
+    <button class="btn search-btn btn-right" @click="$emit('add-project-btn-clicked')">New Project</button>
   </div>
 </template>
 

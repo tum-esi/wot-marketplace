@@ -1,11 +1,11 @@
 <template>
-  <div class="project-item-container" @click="$emit('project-item-clicked', project.artistId)">
+  <div class="project-item-container" @click="$emit('project-item-clicked', project.name)">
     <div :class="`${color}-top`" class="project-item project-item-top">
-      <p class="project-item-title">{{project.artistName}}</p>
-      <p class="project-item-description">{{project.artistViewUrl}}</p>
+      <p class="project-item-title">{{project.name}}</p>
+      <p class="project-item-description">{{project.shortDescription}}</p>
     </div>
     <div>
-      <p :class="`${color}-bottom`" class="project-item project-item-bottom">{{project.artistId}}</p>
+      <p :class="`${color}-bottom`" class="project-item project-item-bottom">{{project.platform}}</p>
     </div>
   </div>
 </template>
@@ -31,11 +31,6 @@ export default {
         this.color = "default";
         break;
     }
-
-    //FIXME: Delete this when correct API is connected
-    if (this.project.primaryGenreName === "Rock") this.color = "red";
-    if (this.project.primaryGenreName === "K-Pop") this.color = "blue";
-    // ====
   }
 };
 </script>
@@ -43,6 +38,7 @@ export default {
 <style scoped>
 .project-item-container {
   color: black;
+  margin: 10px;
   border-radius: 5px;
   height: 100%;
 }
@@ -58,12 +54,12 @@ export default {
 .project-item-top {
   border-bottom: none;
   border-radius: 5px 5px 0 0;
-  height: 60%;
+  height: 70%;
 }
 
 .project-item-bottom {
   border-radius: 0 0 5px 5px;
-  height: 100%;
+  height: 30%;
 }
 
 .project-item-title {
@@ -82,19 +78,19 @@ export default {
   background-color: grey;
 }
 
-.red-top {
+.colorOne-top {
   border: 3px solid red;
 }
 
-.red-bottom {
+.colorOne-bottom {
   background-color: red;
 }
 
-.blue-top {
+.colorTwo-top {
   border: 3px solid blue;
 }
 
-.blue-bottom {
+.colorTwo-bottom {
   background-color: blue;
 }
 </style>

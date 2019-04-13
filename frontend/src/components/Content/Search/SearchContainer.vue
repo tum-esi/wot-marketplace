@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchBar v-on:search-btn-clicked="searchBtnClicked"/>
+    <SearchBar v-on:search-btn-clicked="searchBtnClicked" v-on:add-project-btn-clicked="projectBtnClicked"/>
     <Status
       v-bind:class="{invisible: !loading && status != 'load'}"
       v-bind:status="status"
@@ -60,7 +60,11 @@ export default {
           this.error = err;
         });
     },
-
+    projectBtnClicked() {
+      this.$router.push({
+        name: "AddProject"
+      });
+    },
     projectItemClicked(clickedProject) {
       //TODO: don't pass data with routes use data store instead
       this.$router.push({

@@ -18,8 +18,7 @@
             @blur="validateInput(form.titleKey)"
           >
           <span
-            :class="{ 'visible' : form.titleErr }"
-            class="error-mgs invisible"
+            :class="{'error-mgs' : form.titleErr, 'invisible' : !form.titleErr}"
           >Please enter a title for your project.</span>
         </div>
       </div>
@@ -41,7 +40,7 @@
             @blur="validateInput(form.descrKey)"
           >
           <span
-            :class="{'error-mgs' : form.shortDescrErr, 'invisible' : !form.shortDescrErr } "
+            :class="{'error-mgs' : form.shortDescrErr, 'invisible' : !form.shortDescrErr}"
           >Please enter a short description for your project.</span>
         </div>
       </div>
@@ -90,47 +89,50 @@
           <p class="form-el-left-text">Please select at least one topic for your project.</p>
         </div>
         <div class="form-el-right">
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="checkbox"
-              id="rad-1"
-              value="sensor"
-              v-model="form.topics"
-            >
-            <label class="form-el-right-radio-label" for="rad-1">Sensor</label>
-          </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="checkbox"
-              id="rad-2"
-              value="robotics"
-              v-model="form.topics"
-            >
-            <label class="form-el-right-radio-label" for="rad-2">Robotics</label>
-          </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="checkbox"
-              id="rad-3"
-              value="actuator"
-              v-model="form.topics"
-            >
-            <label class="form-el-right-radio-label" for="rad-3">Actuator</label>
-          </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="checkbox"
-              id="rad-4"
-              value="other"
-              v-model="form.topics"
-            >
-            <label class="form-el-right-radio-label" for="rad-4">Other</label>
+          <div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="checkbox"
+                id="rad-1"
+                value="sensor"
+                v-model="form.topics"
+              >
+              <label class="form-el-right-radio-label" for="rad-1">Sensor</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="checkbox"
+                id="rad-2"
+                value="robotics"
+                v-model="form.topics"
+              >
+              <label class="form-el-right-radio-label" for="rad-2">Robotics</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="checkbox"
+                id="rad-3"
+                value="actuator"
+                v-model="form.topics"
+              >
+              <label class="form-el-right-radio-label" for="rad-3">Actuator</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="checkbox"
+                id="rad-4"
+                value="other"
+                v-model="form.topics"
+              >
+              <label class="form-el-right-radio-label" for="rad-4">Other</label>
+            </div>
           </div>
           <span
+            style="padding-top: 5px;"
             :class="{'error-mgs' : form.topicErr, 'invisible' : !form.topicErr } "
           >Please select one option.</span>
         </div>
@@ -144,47 +146,50 @@
           <p class="form-el-left-text">Pleace choose the according platform.</p>
         </div>
         <div class="form-el-right">
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="radio"
-              id="rad-plat-1"
-              value="raspberry"
-              v-model="form.platform"
-            >
-            <label class="form-el-right-radio-label" for="rad-plat-1">Raspberry</label>
-          </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="radio"
-              id="rad-plat-2"
-              value="arduino"
-              v-model="form.platform"
-            >
-            <label class="form-el-right-radio-label" for="rad-plat-2">Arduino</label>
-          </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="radio"
-              id="rad-plat-3"
-              value="ESP"
-              v-model="form.platform"
-            >
-            <label class="form-el-right-radio-label" for="rad-plat-3">ESP</label>
-          </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="radio"
-              id="rad-plat-4"
-              value="other"
-              v-model="form.platform"
-            >
-            <label class="form-el-right-radio-label" for="rad-plat-4">Other</label>
+          <div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="radio"
+                id="rad-plat-1"
+                value="raspberry"
+                v-model="form.platform"
+              >
+              <label class="form-el-right-radio-label" for="rad-plat-1">Raspberry</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="radio"
+                id="rad-plat-2"
+                value="arduino"
+                v-model="form.platform"
+              >
+              <label class="form-el-right-radio-label" for="rad-plat-2">Arduino</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="radio"
+                id="rad-plat-3"
+                value="ESP"
+                v-model="form.platform"
+              >
+              <label class="form-el-right-radio-label" for="rad-plat-3">ESP</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="radio"
+                id="rad-plat-4"
+                value="other"
+                v-model="form.platform"
+              >
+              <label class="form-el-right-radio-label" for="rad-plat-4">Other</label>
+            </div>
           </div>
           <span
+            style="padding-top: 5px;"
             :class="{'error-mgs' : form.platformErr, 'invisible' : !form.platformErr } "
           >Please select one option.</span>
         </div>
@@ -200,30 +205,33 @@
           >To distinguish between the TD templates and source code with Github.</p>
         </div>
         <div class="form-el-right">
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="radio"
-              id="rad-impl-1"
-              value="template"
-              v-model="form.implementationType"
-            >
-            <label class="form-el-right-radio-label" for="rad-impl-1">Template</label>
+          <div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="radio"
+                id="rad-impl-1"
+                value="template"
+                v-model="form.implementationType"
+              >
+              <label class="form-el-right-radio-label" for="rad-impl-1">Template</label>
+            </div>
+            <div class="form-el-right-radio-container">
+              <input
+                class="form-el-right-radio"
+                type="radio"
+                id="rad-impl-2"
+                value="code"
+                v-model="form.implementationType"
+              >
+              <label class="form-el-right-radio-label" for="rad-impl-2">Code</label>
+            </div>
           </div>
-          <div class="form-el-right-radio-container">
-            <input
-              class="form-el-right-radio"
-              type="radio"
-              id="rad-impl-2"
-              value="code"
-              v-model="form.implementationType"
-            >
-            <label class="form-el-right-radio-label" for="rad-impl-2">Code</label>
-          </div>
+          <span
+            style="padding-top: 5px;"
+            :class="{'error-mgs' : form.implErr, 'invisible' : !form.implErr } "
+          >Please select one option.</span>
         </div>
-        <span
-          :class="{'error-mgs' : form.implErr, 'invisible' : !form.implErr } "
-        >Please select at least one option.</span>
       </div>
 
       <div class="form-el">
@@ -357,7 +365,7 @@ export default {
       switch (el) {
         case this.form.titleKey:
           if (this.form.title === "") this.form.titleErr = true;
-          console.log('formTitle', this.form.title, this.form.titleErr);
+          console.log("formTitle", this.form.title, this.form.titleErr);
           break;
         case this.form.descrKey:
           if (this.form.shortDescription === "") this.form.shortDescrErr = true;
@@ -551,11 +559,13 @@ export default {
 
 .error-mgs {
   color: red;
-  padding: 10px 10px 10px 10px;
+  padding: 5px 10px 10px 10px;
+  display: block;
+  clear: both;
 }
 
 .visible {
-  display: block;
+  display: inherit;
 }
 </style>
 
