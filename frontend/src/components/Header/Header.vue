@@ -30,8 +30,8 @@ export default {
 
 <style scoped>
 .header {
-  background: #333333;
-  color: #ffffff;
+  background: #30B8A3;
+  color: #000;
   padding: 20px;
   overflow: hidden;
   width: 100%;

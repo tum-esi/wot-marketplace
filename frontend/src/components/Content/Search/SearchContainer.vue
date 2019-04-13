@@ -1,12 +1,18 @@
 <template>
   <div>
-    <SearchBar v-on:search-btn-clicked="searchBtnClicked" v-on:add-project-btn-clicked="projectBtnClicked"/>
+    <SearchBar
+      v-on:search-btn-clicked="searchBtnClicked"
+      v-on:add-project-btn-clicked="projectBtnClicked"
+    />
     <Status
       v-bind:class="{invisible: !loading && status != 'load'}"
       v-bind:status="status"
       v-bind:propSearchTerm="searchTerm"
     />
-    <div class="status-container" v-bind:class="{invisible: status != 'noResult'}">There are no projects for "{{ searchTerm }}"</div>
+    <div
+      class="status-container"
+      v-bind:class="{invisible: status != 'noResult'}"
+    >There are no projects for "{{ searchTerm }}"</div>
     <SearchResults v-bind:projects="projects" v-on:project-item-clicked="projectItemClicked"/>
   </div>
 </template>
@@ -78,7 +84,7 @@ export default {
 
 <style scoped>
 .status-container {
-  padding: 10px; 
+  padding: 10px;
   text-align: center;
 }
 </style>

@@ -38,7 +38,6 @@ export default {
 <style scoped>
 .project-item-container {
   color: black;
-  margin: 10px;
   border-radius: 5px;
   height: 100%;
 }
@@ -60,6 +59,7 @@ export default {
 .project-item-bottom {
   border-radius: 0 0 5px 5px;
   height: 30%;
+  color: #fff;
 }
 
 .project-item-title {
@@ -79,19 +79,19 @@ export default {
 }
 
 .colorOne-top {
-  border: 3px solid red;
+  border: 3px solid #B85730;
 }
 
 .colorOne-bottom {
-  background-color: red;
+  background-color: #B85730;
 }
 
 .colorTwo-top {
-  border: 3px solid blue;
+  border: 3px solid #116B5E;
 }
 
 .colorTwo-bottom {
-  background-color: blue;
+  background-color: #116B5E;
 }
 </style>
 

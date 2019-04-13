@@ -202,7 +202,7 @@
           </h4>
           <p
             class="form-el-left-text"
-          >To distinguish between the TD templates and source code with Github.</p>
+          >Is this project a Thing Description Template or source code.</p>
         </div>
         <div class="form-el-right">
           <div>

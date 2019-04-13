@@ -63,7 +63,7 @@ export default {
         platform: "",
         complexity: "",
         topic: "",
-        tags: ["Hi", "Bla", "sadhasd", "asdasd", "ASdads"],
+        tags: "",
         url: ""
       }
     };
@@ -73,20 +73,23 @@ export default {
     if(!this.project) return;
     //TODO: Get data from data store
     if (this.project.clickedProject) {
-        this.prName = this.project.clickedProject.artistName;
-        this.prShortDescr = this.project.clickedProject.collectionCensoredName;
-        this.prLongDescr = this.project.clickedProject.previewUrl;
-        this.prTD = this.project.clickedProject.artistViewUrl;
-        this.prInfo.implType = this.project.clickedProject.trackPrice;
-        this.prInfo.platform = this.project.clickedProject.trackNumber;
-        this.prInfo.complexity = this.project.clickedProject.trackCount;
-        this.prInfo.topic = this.project.clickedProject.trackCount;
-        this.prInfo.url = this.project.clickedProject.previewUrl;
+        this.prName = this.project.clickedProject.name;
+        this.prShortDescr = this.project.clickedProject.shortDescription;
+        this.prLongDescr = this.project.clickedProject.longDescription;
+        this.prTD = this.project.clickedProject.td;
+        this.prInfo.implType = this.project.clickedProject.implementationType;
+        this.prInfo.platform = this.project.clickedProject.platform;
+        this.prInfo.complexity = this.project.clickedProject.complexity;
+        this.prInfo.topic = this.project.clickedProject.topic;
+        this.prInfo.url = this.project.clickedProject.github;
+        this.prInfo.tags = this.project.clickedProject.tags;
     }
     if (this.project.newProject) {
         this.prName = this.project.newProject.title;
         this.prShortDescr = this.project.newProject.shortDescription;
         this.prLongDescr = this.project.newProject.longDescription;
+        this.prInfo.topic = ["Hi", "Bla", "sadhasd", "asdasd", "ASdads"];
+        this.prInfo.tags =  this.project.newProject.tags;
     }
   }
 };

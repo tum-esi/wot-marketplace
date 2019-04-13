@@ -47,7 +47,11 @@ export default {
 }
 
 #search-bar:focus {
-  color: #00b4cc;
+  color: #30B8A3;
+}
+
+#search-bar::selection{
+  background-color: #30B8A3 !important;
 }
 
 .search-btn {
