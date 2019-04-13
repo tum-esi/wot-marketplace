@@ -105,36 +105,35 @@ export default {
       // so all GitHub API requests about repo information start at this url
       this.entryPoint = "https://api.github.com/repos";
       // then you have to provide the name of the org and repo
-      this.searchTerm = "/tum-ei-esi/wot-marketplace";
+      this.searchTerm = "/w3c/wot-thing-description";
       // in the end you can put readme which will return a JSON object with the url for readme in different forms
       this.readmeEndPoint = "/readme";
 
+      this.apiGetUrl = this.entryPoint+this.searchTerm+this.readmeEndPoint;
+
       this.download_url = "";
-      // fetch(
-      //   `https://api.github.com/repos${encodeURIComponent(
-      //     this.searchTerm
-      //   )}readme`
-      //   // this.entryPoint+this.searchTerm+this.readmeEndPoint
-      // )
-      fetch(`https://api.github.com/repos/tum-ei-esi/testbench/readme`)
+      
+      fetch(this.apiGetUrl)
         .then(res => res.json())
         .then(json => {
-          console.log("resJSON is ", json)
+          // console.log("resJSON is ", json)
+
           //html_url is what we click on as a user. To parse it you would need additional css from GitHub
           this.html_url = json.html_url;
+
           // download url returns raw.* files, so not rendered
           this.download_url = json.download_url;
           
           console.log("urls are", this.html_url, this.download_url);
         })
         .then(
+          // fetch(`${encodeURIComponent(this.download_url)}`)
           // fetch(this.download_url)
-          fetch(`https://raw.githubusercontent.com/tum-ei-esi/wot-marketplace/ege-frontend/README.md`)
+          fetch(`https://raw.githubusercontent.com/w3c/wot-thing-description/master/README.md`)
           .then(res => res.text())
           .then(
             text => {
               console.log("markdown in text is ", text)
-              //this.readmeMD = text;
               this.prLongDescr = text;
             }
           )
