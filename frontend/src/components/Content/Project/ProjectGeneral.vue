@@ -1,54 +1,40 @@
 <template>
 <div>
+
 <div class="project-general-container">
-<div v-html="htmlData"></div>
-<vue-markdown>
-*first one from vue markdown*
-</vue-markdown>
+
+<!-- Replace markdown value with the readme content to be used for screenshots -->
 
 <VueShowdown
-  markdown="as projectGeneral"
+class="project-general-container"
+  markdown="
+**as projectGeneral** 
+# wow
+* asdas"
   flavor="github"
   :options="{ emoji: true }"/>
 
 <div class="project-general-container">{{projectGeneral}}</div>
+<!-- This should be rendered as markdown in the future -->
 
 </div>
+
 </div>
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown'
-import VueShowdown, { showdown } from 'vue-showdown'
 
-showdown.setFlavor('github')
+import {VueShowdown} from 'vue-showdown'
 
-// Vue.use(VueShowdown) 
+// this.readmetry = "";
 
 export default {
   name: "ProjectGeneral",
   props: ["projectGeneral"],
   components: {
-    VueMarkdown,
     VueShowdown
-  },
-  created(){
-    convert();
-  },
-  data(){
-    return{
-      markdown: '# hello'
-    }
-  },
-  methods: {
-    convert() {
-        let converter = new VueShowdown.Converter(),
-            text = '# hello, markdown!';
-            this.htmlData = converter.makeHtml(text);
-    }
   }
 };
-
 
 </script>
 

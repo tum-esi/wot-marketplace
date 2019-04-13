@@ -79,13 +79,6 @@ export default {
         this.prName = this.project.clickedProject.artistName;
         this.prShortDescr = this.project.clickedProject.collectionCensoredName;
         this.getReadme("something");
-        //
-        // this.prLongDescr = "asfdasd"
-        // this.prLongDescr = this.project.clickedProject.previewUrl;
-        // .then(
-        //   this.prLongDescr = this.project.clickedProject.readmeMD;//
-        // );
-        // this.project.clickedProject.previewUrl;
         this.prTD = this.project.clickedProject.artistViewUrl; // can be replaced with a TD to see highlighting
         this.prInfo.implType = this.project.clickedProject.trackPrice;
         this.prInfo.platform = this.project.clickedProject.trackNumber;
@@ -112,7 +105,7 @@ export default {
       this.apiGetUrl = this.entryPoint+this.searchTerm+this.readmeEndPoint;
 
       this.download_url = "";
-      
+
       fetch(this.apiGetUrl)
         .then(res => res.json())
         .then(json => {
@@ -124,7 +117,7 @@ export default {
           // download url returns raw.* files, so not rendered
           this.download_url = json.download_url;
           
-          console.log("urls are", this.html_url, this.download_url);
+          // console.log("urls are", this.html_url, this.download_url);
         })
         .then(
           // fetch(`${encodeURIComponent(this.download_url)}`)
@@ -133,7 +126,6 @@ export default {
           .then(res => res.text())
           .then(
             text => {
-              console.log("markdown in text is ", text)
               this.prLongDescr = text;
             }
           )
