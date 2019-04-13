@@ -60,6 +60,7 @@ export default {
 .project-item-bottom {
   border-radius: 0 0 5px 5px;
   height: 30%;
+  color: #fff;
 }
 
 .project-item-title {
@@ -78,20 +79,20 @@ export default {
   background-color: grey;
 }
 
-.red-top {
-  border: 3px solid red;
+.colorOne-top {
+  border: 3px solid #B85730;
 }
 
-.red-bottom {
-  background-color: red;
+.colorOne-bottom {
+  background-color: #B85730;
 }
 
-.blue-top {
-  border: 3px solid blue;
+.colorTwo-top {
+  border: 3px solid #116B5E;
 }
 
-.blue-bottom {
-  background-color: blue;
+.colorTwo-bottom {
+  background-color: #116B5E;
 }
 </style>
 

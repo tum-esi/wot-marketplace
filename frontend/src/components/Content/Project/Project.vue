@@ -63,7 +63,7 @@ export default {
         platform: "",
         complexity: "",
         topic: "",
-        tags: ["Hi", "Bla", "sadhasd", "asdasd", "ASdads"],
+        tags: "",
         url: ""
       }
     };
@@ -82,11 +82,14 @@ export default {
         this.prInfo.complexity = this.project.clickedProject.complexity;
         this.prInfo.topic = this.project.clickedProject.topic;
         this.prInfo.url = this.project.clickedProject.github;
+        this.prInfo.tags = this.project.clickedProject.tags;
     }
     if (this.project.newProject) {
         this.prName = this.project.newProject.title;
         this.prShortDescr = this.project.newProject.shortDescription;
         this.prLongDescr = this.project.newProject.longDescription;
+        this.prInfo.topic = this.project.newProject.topic;
+        this.prInfo.tags =  this.project.newProject.tags;
     }
   }
 };
