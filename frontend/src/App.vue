@@ -62,8 +62,8 @@ a {
 }
 
 .btn:active {
-  background: #00b4cc;
-  border-color: #00b4cc;
+  background: #30B8A3;
+  border-color: #30B8A3;
   border-radius: 3px;
   border: none;
 }

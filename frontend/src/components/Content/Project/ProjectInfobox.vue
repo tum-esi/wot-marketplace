@@ -2,12 +2,19 @@
   <div>
     <div class="info-container">
       <h4>General Info</h4>
-      <div class="info-el">Type: {{projectInfo.implementationType}}</div>
-      <div class="info-el">Topic: {{projectInfo.topic}}</div>
+      <div class="info-el">Type: {{projectInfo.implType}}</div>
       <div class="info-el">Platform: {{projectInfo.platform}}</div>
       <div class="info-el">Complexity: {{projectInfo.complexity}}</div>
       <div class="info-el">
-        <a target="_blank" v-bind:href="`${projectInfo.github}`">View on Github</a>
+        Topic:
+        <div
+          class="info-el-topic"
+          v-for="topicInfo in projectInfo.topic"
+          v-bind:key="topicInfo"
+        >{{ topicInfo }}</div>
+      </div>
+      <div class="info-el">
+        <a target="_blank" v-bind:href="`${projectInfo.url}`">View on Github</a>
       </div>
     </div>
     <div class="info-container">
@@ -43,6 +50,17 @@ export default {
 
 .info-el {
   margin-left: 10px;
+  font-size: 14px;
+}
+
+.info-el-topic {
+  display: inline-block;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #f5f5f5;
+  margin: 3px 3px 3px 1px;
+  cursor: default;
   font-size: 14px;
 }
 
