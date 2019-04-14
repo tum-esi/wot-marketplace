@@ -1,14 +1,17 @@
 {
     "name": "DotStar Python",
-    "shortDescription": "commodo ex proident",
-    "longDescription": "cillum aliquip commodo dolore",
+    "shortDescription": "WoTify your DoTStart LED Strips by using python",
+    "longDescription": "# DotStar## Requirements    - flask     - RPI.GPIO    - adafruit     - blinka    - adafruit    - circuitpython     - dotstar     - You have to enable SPI on the board.## Installation    - Install python: `sudo apt-get install python3 python3-pip`     - Install requirements: `pip3 install -r requirement.txt`     - Enable SPI on the Raspberry Pi.You can use this in the GUI or the CLI config interface: `raspi-config`     - To run the program: `python3 dotstar.py`     - Make sure that this script runs automatically on startup. Crontab can do this on Linux.     - The server runs on port 8080",
     "github": "https://github.com/&w",
     "implementationType": "code",
-    "topic": ["robotics", "actuator", "other", "sensor"],
+    "topic": ["lightings"],
     "platform": "raspberry",
-    "tags": ["minim proident ex velit", "nisi sit pariatur laboris", "nulla dolor", "est", "consectetur"],
+    "tags": ["dotstart","led","light"],
     "complexity": "medium",
     "td": {
+        "name": "DotStar RGB LED strip",
+        "id": "de:tum:ei:esi:dotstar:192.168.0.103:8080",
+        "description": "A strip of 118 RGB LEDs that can be controlled remotely.",
         "actions": {
             "shutdown": {
                 "forms": [{
@@ -208,7 +211,7 @@
                             }]
                         }
                     },
-                    "beightness": {
+                    "brightness": {
                         "minimum": 0,
                         "type": "integer",
                         "unit": "%",
@@ -237,9 +240,6 @@
                 "maximum": 100,
                 "title": "LED Brightness"
             }
-        },
-        "name": "DotStar RGB LED strip",
-        "id": "de:tum:ei:esi:dotstar:192.168.0.103:8080",
-        "description": "A strip of 118 RGB LEDs that can be controlled remotely."
+        }
     }
 }
