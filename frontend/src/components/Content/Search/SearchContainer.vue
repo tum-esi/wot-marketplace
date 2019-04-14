@@ -41,7 +41,7 @@ export default {
       this.loading = true;
       this.projects = [];
       fetch(
-        `api/search?q=${encodeURIComponent(
+        `../../api/search?q=${encodeURIComponent(
           this.searchTerm
         )}&count=10`
       )
