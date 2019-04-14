@@ -2,7 +2,7 @@
     "name": "DotStar Python",
     "shortDescription": "WoTify your DoTStart LED Strips by using python",
     "longDescription": "# DotStar## Requirements    - flask     - RPI.GPIO    - adafruit     - blinka    - adafruit    - circuitpython     - dotstar     - You have to enable SPI on the board.## Installation    - Install python: `sudo apt-get install python3 python3-pip`     - Install requirements: `pip3 install -r requirement.txt`     - Enable SPI on the Raspberry Pi.You can use this in the GUI or the CLI config interface: `raspi-config`     - To run the program: `python3 dotstar.py`     - Make sure that this script runs automatically on startup. Crontab can do this on Linux.     - The server runs on port 8080",
-    "github": "https://github.com/&w",
+    "github": "https://github.com/tum-ei-esi/wot-sys",
     "implementationType": "code",
     "topic": ["lightings"],
     "platform": "raspberry",

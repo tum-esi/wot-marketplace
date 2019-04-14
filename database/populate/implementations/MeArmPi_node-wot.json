@@ -2,7 +2,7 @@
     "name": "MeArm Pi node-wot",
     "shortDescription": "WoTifies your MeArm and exposes its basic movements through node-wot",
     "longDescription":"# MeArmPi    ##    Requirements        -        NodeJS 8 or newer -        You have to enable SPI on the board.    ## Installation        -        get the latest node:        ``    `bashcurl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -sudo apt-get install -y nodejs`    `` -    `cd`    inside the wot - mearmpi folder and run: `npm install` -        Build: `npm run build` -        To run the program: `node index.js` -        Make sure that this script runs automatically on startup.Crontab can do this on Linux. -            The server runs on port 8080 ",
-    "github": "https://github.com/*$3azV2",
+    "github": "https://github.com/tum-ei-esi/wot-sys",
     "implementationType": "code",
     "topic": ["actuator", "robotics"],
     "platform": "raspberry",

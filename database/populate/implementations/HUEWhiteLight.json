@@ -2,7 +2,7 @@
     "name": "HUE White Light",
     "shortDescription": "TD of a HUE White Light Bulb",
     "longDescription": "This TD is for the light number 1. you would need to change such occurences of 1 with another number for your other lights",
-    "github": "https://github.com/_E",
+    "github": "https://github.com/tum-ei-esi/wot-sys",
     "implementationType": "template",
     "topic": ["lighting"],
     "platform": "other",

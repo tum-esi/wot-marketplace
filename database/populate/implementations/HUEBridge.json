@@ -2,7 +2,7 @@
     "name": "HUE Bridge Simple",
     "shortDescription": "TD of a HUE Bridge, configured for lights and switches",
     "longDescription": "This bridge has been configured using the white light starter pack that contains 3 white lights and a switch. Any API requests associated with other devices are not included.",
-    "github": "https://github.com/#2E!?O",
+    "github": "https://github.com/tum-ei-esi/wot-sys",
     "implementationType": "template",
     "topic": ["lighting", "other"],
     "platform": "other",

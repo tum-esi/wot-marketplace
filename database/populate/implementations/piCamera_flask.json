@@ -2,7 +2,7 @@
     "name": "piCamera flask",
     "shortDescription": "WoTifies the standard Raspberry Pi camera with Python",
     "longDescription": "# PiCamera    ##    Requirements        -        python >= 3.5 -        picamera -        flask    ## Installation        -        Install python: `sudo apt-get install python3 python3-pip` -        install requirements: `pip3 install -r requirement.txt` -        To run the program: `python3 camera_server.py` -        Make sure that this script runs automatically on startup.Crontab can do this on Linux. -            The server runs on port 8080 ",
-    "github": "https://github.com/E+&_(5-y",
+    "github": "https://github.com/tum-ei-esi/wot-sys",
     "implementationType": "code",
     "topic": ["other"],
     "platform": "raspberry",
