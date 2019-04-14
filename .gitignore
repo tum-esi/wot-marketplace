@@ -152,6 +152,7 @@ dist/
 database/data/*
 !database/data/.keep
 **/package-lock.json
+
 database/populate/implementations/fake*
 
 ### Configuration files ###

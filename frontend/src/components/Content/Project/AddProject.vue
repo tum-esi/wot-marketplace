@@ -84,6 +84,18 @@
       <div class="form-el">
         <div class="form-el-left">
           <h4 class="form-el-left-heading">
+            <label>Thing Description</label>
+          </h4>
+          <p class="form-el-left-text">Paste the Thing Description of your project</p>
+        </div>
+        <div class="form-el-right-td-area">
+            <textarea class="form-el-right-input" type="text" v-model="form.thingDescription"></textarea>
+        </div>
+      </div>
+
+      <div class="form-el">
+        <div class="form-el-left">
+          <h4 class="form-el-left-heading">
             <label>Topic</label>
           </h4>
           <p class="form-el-left-text">Please select at least one topic for your project.</p>
@@ -272,7 +284,6 @@
 </template>
 
 <script>
-// import Project from "@/classes/Project.js";
 
 export default {
   name: "AddProject",
@@ -465,6 +476,16 @@ export default {
   height: 250px;
 }
 
+.form-el-right-td-area {
+  width: 75%;
+  float: left;
+  padding: 10px 10px 0 10px;
+}
+
+.form-el-right-td-area textarea {
+  resize: none;
+  height: 500px;
+}
 .form-el-right-tag-list-input {
   height: 100%;
   cursor: text;

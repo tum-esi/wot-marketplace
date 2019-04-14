@@ -40,6 +40,8 @@ import ProjectInfobox from "./ProjectInfobox.vue";
 import ProjectGeneral from "./ProjectGeneral.vue";
 import ProjectTD from "./ProjectTD.vue";
 
+
+
 export default {
   name: "Project",
   components: {
@@ -73,6 +75,8 @@ export default {
     if(!this.project) return;
     //TODO: Get data from data store
     if (this.project.clickedProject) {
+        this.getReadme("something");
+
         this.prName = this.project.clickedProject.name;
         this.prShortDescr = this.project.clickedProject.shortDescription;
         this.prLongDescr = this.project.clickedProject.longDescription;
@@ -90,6 +94,50 @@ export default {
         this.prLongDescr = this.project.newProject.longDescription;
         this.prInfo.topic = this.project.newProject.topic;
         this.prInfo.tags =  this.project.newProject.tags;
+    }
+  },
+  methods: {
+    getReadme(searchTerm) {
+      // this.searchTerm = searchTerm;
+      // so all GitHub API requests about repo information start at this url
+      this.entryPoint = "https://api.github.com/repos";
+      // then you have to provide the name of the org and repo
+      this.searchTerm = "/w3c/wot-thing-description";
+      // in the end you can put readme which will return a JSON object with the url for readme in different forms
+      this.readmeEndPoint = "/readme";
+
+      this.apiGetUrl = this.entryPoint+this.searchTerm+this.readmeEndPoint;
+
+      this.download_url = "";
+
+      fetch(this.apiGetUrl)
+        .then(res => res.json())
+        .then(json => {
+          // console.log("resJSON is ", json)
+
+          //html_url is what we click on as a user. To parse it you would need additional css from GitHub
+          this.html_url = json.html_url;
+
+          // download url returns raw.* files, so not rendered
+          this.download_url = json.download_url;
+          
+          // console.log("urls are", this.html_url, this.download_url);
+        })
+        .then(
+          // fetch(`${encodeURIComponent(this.download_url)}`)
+          // fetch(this.download_url)
+          fetch(`https://raw.githubusercontent.com/w3c/wot-thing-description/master/README.md`)
+          .then(res => res.text())
+          .then(
+            text => {
+              this.prLongDescr = text;
+            }
+          )
+        )
+        .catch(err => {
+          this.status = "error";
+          this.error = err;
+        });
     }
   }
 };
