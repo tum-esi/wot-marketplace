@@ -26,6 +26,11 @@
             "format": "uri",
             "pattern": "^https://github\\.com/.*"
         },
+        "readme": {
+            "description": "Link to a Readme.md document. It should be the raw Readme file",
+            "type": "string",
+            "format": "uri"
+        },
         "implementationType": {
             "description": "to distinguish between the TD templates and source code with Github",
             "type": "string",
@@ -39,7 +44,7 @@
             "uniqueItems": true,
             "items": {
                 "type": "string",
-                "enum": ["sensor", "actuator", "robotics", "other"]
+                "enum": ["sensor", "actuator", "robotics", "lighting","other"]
             }
         },
         "platform": {
@@ -61,6 +66,18 @@
             "description": "A string indicating whether the usage is complicated, i.e. ESP light sensor is simple and LED Strip is medium. This would translate to the complexity of the client script that can do everything",
             "type": "string",
             "enum": ["simple", "medium", "expert"]
+        },
+        "version": {
+            "description":"Uses the same version style as the TD specification. Can be used to denote the hardware, firmware or software versions",
+            "type": "object",
+            "properties": {
+                "instance": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "instance"
+            ]
         },
         "td": {
             "description": "A TD with simple validation at the moment. Should be changed with a link to the official schema",

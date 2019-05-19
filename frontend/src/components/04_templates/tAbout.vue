@@ -5,11 +5,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "About"
-};
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "tAbout"
+});
 </script>
+
 
 <style scoped>
 .about-container {
@@ -20,4 +22,3 @@ export default {
   padding-bottom: 10px;
 }
 </style>
-

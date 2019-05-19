@@ -555,7 +555,6 @@ export default {
 }
 
 .tag {
-  display: inline-block;
   padding: 3px 5px 3px 5px;
   border: 1px solid #ccc;
   border-radius: 4px;

@@ -5,11 +5,11 @@
       <p class="project-short-description">{{prShortDescr}}</p>
       <div class="project-content-left">
         <div class="project-content-left-container">
-          <ProjectGeneral
+          <aMarkDownBox
             :class="{invisible:buttons.btnG != selected}"
-            v-bind:projectGeneral="prLongDescr"
+            :markDown="prLongDescr"
           />
-          <ProjectTD :class="{invisible:buttons.btnT != selected}" v-bind:projectTD="prTD"/>
+          <aCodeBox  :class="{invisible:buttons.btnT != selected}" :code="prTD"/>
         </div>
         <div class="project-content-left-btns">
           <a
@@ -30,24 +30,23 @@
       </div>
     </div>
     <div class="project-content-right">
-      <ProjectInfobox v-bind:projectInfo="prInfo"/>
+      <mInfoBox :title="'General Information'" :content="projectInfo"/>
+      <mInfoBox :title="'Keywords'" :content="keywords"/>
     </div>
   </div>
 </template>
 
 <script>
-import ProjectInfobox from "./ProjectInfobox.vue";
-import ProjectGeneral from "./ProjectGeneral.vue";
-import ProjectTD from "./ProjectTD.vue";
-
-
+import aCodeBox from "@/components/01_atoms/aCodeBox.vue";
+import aMarkDownBox from "@/components/01_atoms/aMarkDownBox.vue";
+import mInfoBox from "@/components/02_molecules/mInfoBox.vue";
 
 export default {
   name: "Project",
   components: {
-    ProjectInfobox,
-    ProjectGeneral,
-    ProjectTD
+    aCodeBox,
+    aMarkDownBox,
+    mInfoBox
   },
   props: ["project"],
   data() {
@@ -67,7 +66,40 @@ export default {
         topic: "",
         tags: "",
         url: ""
-      }
+      },
+// Dummy data
+      projectInfo: [
+        {
+          title: "Type: ",
+          type: 'text',
+          content: "asdasd"
+        }, 
+        {
+          title: "Platform: ", 
+          type: "list",
+          content: ["a", "b"]
+        }, 
+        {
+          title: "Complexity: ", 
+          type: 'text', 
+          content: "easy"
+        }, 
+        {
+          title: "Topic: ", 
+          type: "tag",
+          content: ["a", "b"]
+        }, 
+        {
+          type: "link", 
+          content: { link: "https://api.github.com/repos", label: "View on Github" }
+        }
+      ], 
+      keywords: [
+        {
+          type: "tag", 
+          content: ["a", "b"]
+        }
+      ]
     };
   },
   created() {
@@ -81,12 +113,13 @@ export default {
         this.prShortDescr = this.project.clickedProject.shortDescription;
         this.prLongDescr = this.project.clickedProject.longDescription;
         this.prTD = this.project.clickedProject.td;
-        this.prInfo.implType = this.project.clickedProject.implementationType;
-        this.prInfo.platform = this.project.clickedProject.platform;
-        this.prInfo.complexity = this.project.clickedProject.complexity;
-        this.prInfo.topic = this.project.clickedProject.topic;
+        this.prInfo.implType = "bla"; //this.project.clickedProject.implementationType;
+        this.prInfo.platform = "a"; //this.project.clickedProject.platform;
+        this.prInfo.complexity = "easy";// this.project.clickedProject.complexity;
+        // this.prInfo.topic = this.project.clickedProject.topic;
+        this.prInfo.topic = ["a", "b"];
         this.prInfo.url = this.project.clickedProject.github;
-        this.prInfo.tags = this.project.clickedProject.tags;
+        this.prInfo.tags = ["a", "b", "c"];
     }
     if (this.project.newProject) {
         this.prName = this.project.newProject.title;
