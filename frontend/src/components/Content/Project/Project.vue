@@ -154,6 +154,7 @@ export default {
   float: left;
   padding-top: 10px;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .project-content-right {
@@ -185,7 +186,9 @@ export default {
 }
 
 .project-content-left-btns a.active {
-  background: #ccc;
+  background: #30B8A3;
+  border-top: 1px solid #30B8A3;
+  border-bottom: 1px solid #30B8A3;
 }
 
 .project-content-left-btns a {

@@ -1,5 +1,6 @@
 <template>
   <div class="bg">
+    <h2>Add a new WoT project to WoTify </h2>
     <form @submit="addProject" class="form-container">
       <div class="form-el">
         <div class="form-el-left">

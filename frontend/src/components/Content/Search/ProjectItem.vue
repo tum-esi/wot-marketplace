@@ -38,7 +38,6 @@ export default {
 <style scoped>
 .project-item-container {
   color: black;
-  margin: 10px;
   border-radius: 5px;
   height: 100%;
 }
