@@ -5,6 +5,7 @@ import pNewProject from './components/05_pages/pNewProject.vue'
 import pProject from './components/05_pages/pProject.vue'
 import tAbout from './components/04_templates/tAbout.vue'
 import tAccount from './components/04_templates/tAccount.vue'
+import tLogin from './components/04_templates/tLogin.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,21 @@ export default new Router({
         {
             path: '/account',
             name: 'Account',
+            component: tAccount
+        }, 
+        {
+            path: '/login',
+            name: 'Login',
+            component: tLogin
+        }, 
+        {
+            path: '/registration',
+            name: 'Registration',
+            component: tAccount
+        }, 
+        {
+            path: '/user',
+            name: 'User Page',
             component: tAccount
         }
     ]
