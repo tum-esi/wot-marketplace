@@ -7,9 +7,10 @@
     <aInput
       class="form-el-right"
       v-model="currentValue"
-      :inputType="inputType"
-      :inputPlaceholder="inputPlaceholder"
+      :inputType="formInputType"
+      :inputPlaceholder="formInputPlaceholder"
       :inputFormValue="formInputValue"
+      :inputStyle="formInputStyle"
     />
   </div>
 </template>
@@ -45,7 +46,7 @@ export default Vue.extend({
     formInputType: {
       type: String,
       required: true,
-      validator: (value: string) =>
+      validator: (value) =>
         ["textarea", "checkbox", "radio", "text"].indexOf(value) !== -1
     },
     /**
@@ -71,6 +72,13 @@ export default Vue.extend({
       type: [String, Number],
       required: false,
       default: null
+    }, 
+    /**
+     * Css classes for your form input. E.g 'textarea-large'
+     */
+    formInputStyle: {
+        type: String, 
+        required: false
     }
   },
   data() {
@@ -91,4 +99,11 @@ export default Vue.extend({
 
 
 <style scoped>
+/* .textarea-large {
+
+}
+
+.textarea-medium {
+
+} */
 </style>

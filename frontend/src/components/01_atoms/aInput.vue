@@ -1,18 +1,8 @@
 <template>
-  <textarea
-    v-if="inputType === 'textarea'"
-    v-model="currentValue"
-    :placeholder="inputPlaceholde"
-    :class="inputClass"
-  />
-  <input
-    v-else-if="inputType === 'checkbox'"
-    v-model="currentValue"
-    :value="inputFormValue"
-    :class="inputClass"
-  >
-  <input v-else-if="inputType === 'radio'">
-  <input v-else type="text" v-model="currentValue" :placeholder="inputPlaceholde" :class="inputClass">
+  <textarea v-if="inputType === 'textarea'" :placeholder="inputPlaceholder" :class="inputStyle"/>
+  <input v-else-if="inputType === 'checkbox'" :value="inputFormValue" :class="inputStyle" type="checkbox">
+  <input v-else-if="inputType === 'radio'" type="radio">
+  <input v-else type="text" :placeholder="inputPlaceholder" :class="inputStyle">
 </template>
 
 <script lang="ts">
@@ -31,7 +21,7 @@ export default Vue.extend({
     inputType: {
       type: String,
       required: true,
-      validator: (value: string) =>
+      validator: value =>
         ["textarea", "checkbox", "radio", "text"].indexOf(value) !== -1
     },
     /**
@@ -49,25 +39,33 @@ export default Vue.extend({
       type: [String, Array, Boolean],
       required: false,
       default: null
-    }, 
+    },
     /**
      * Value for single form element. E.g. checkbox option.
      */
     inputFormValue: {
-        type: [String, Number], 
+      type: [String, Number],
+      required: false,
+      default: null
+    }, 
+    /**
+     * Optional css class for input field. 
+     */
+    inputStyle: {
+        type: String, 
         required: false, 
-        default: null
+        default: ""
     }
-  }, 
+  },
   computed: {
-      currentValue: {
-          get() {
-              return this.inputValue;
-          },
-          set(val) {
-              this.$emit('input', val, this.inputFormValue)
-          }
+    currentValue: {
+      get() {
+        return this.inputValue;
+      },
+      set(val) {
+        this.$emit("input", val, this.inputFormValue);
       }
+    }
   }
 });
 </script>
