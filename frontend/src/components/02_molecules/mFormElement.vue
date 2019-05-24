@@ -26,6 +26,13 @@ export default Vue.extend({
   },
   props: {
     /**
+     * Key for form element.
+     */
+    formKey: {
+      type: String,
+      required: true
+    },
+    /**
      * Title of form element.
      */
     formTitle: {
@@ -91,7 +98,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      currentValue: this.formValue
+      currentValue: null
     };
   },
   watch: {

@@ -5,7 +5,9 @@
       <mFormElement
         v-for="(formElement, index) in formElements"
         :key="index"
+        v-model="filledForm[formElement.formKey]"
         :formStyle="formStyle"
+        :formKey="formElement.formKey"
         :formTitle="formElement.formTitle"
         :formDescription="formElement.formDescription"
         :formInputType="formElement.formInputType"
@@ -31,7 +33,7 @@
 import Vue from "vue";
 import aButton from "@/components/01_atoms/aButton.vue";
 import mFormElement from "@/components/02_molecules/mFormElement.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default Vue.extend({
   name: "tForm",
@@ -41,7 +43,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      filledForm: ""
+      filledForm: []
     };
   },
   computed: {
@@ -62,7 +64,13 @@ export default Vue.extend({
   },
   methods: {
     submitForm() {
+      console.log(this.filledForm);
       //   event.preventDefault();
+    }
+  }, 
+  watch: {
+    filledForm() {
+      console.log("filledForm", this.filledForm);
     }
   }
 });

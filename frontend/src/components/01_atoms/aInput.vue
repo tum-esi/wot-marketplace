@@ -1,6 +1,11 @@
 <template>
   <!-- Textarea -->
-  <textarea v-if="inputType === 'textarea'" :placeholder="inputPlaceholder" :class="inputStyle"/>
+  <textarea
+    v-if="inputType === 'textarea'"
+    v-model="currentValue"
+    :placeholder="inputPlaceholder"
+    :class="inputStyle"
+  />
 
   <!-- Checkboxes: multiple selection is possible -->
   <div v-else-if="inputType === 'checkbox'">
@@ -57,7 +62,13 @@
   </div>
 
   <!-- Normal text input -->
-  <input v-else type="text" :placeholder="inputPlaceholder" :class="inputStyle">
+  <input
+    v-else
+    type="text"
+    v-model="currentValue"
+    :placeholder="inputPlaceholder"
+    :class="inputStyle"
+  >
 </template>
 
 <script lang="ts">
@@ -124,7 +135,7 @@ export default Vue.extend({
         return this.inputValue;
       },
       set(val) {
-        this.$emit("input", val, this.inputFormValue);
+        this.$emit("input", val, this.inputValue);
       }
     }
   },
@@ -142,7 +153,7 @@ export default Vue.extend({
     },
     removeTag() {
       if (this.tags.length && this.tag === "") this.tags.pop();
-    }, 
+    },
     focusInput() {
       this.$refs.tagInput.focus();
     }
