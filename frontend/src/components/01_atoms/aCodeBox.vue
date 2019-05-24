@@ -27,11 +27,11 @@ export default Vue.extend({
   },
   props: {
     /**
-     * The code which should be shown.
+     * The code which should be shown. Needs to be a valid json object.
      */
     code: {
-      // type: String,
-      // required: true
+      // type: Object,
+      required: true
     }
   }
 });

@@ -1,17 +1,18 @@
 <template>
   <div class="form-container">
-    <h2 class="title">Add a new WoT project to WoTify</h2>
+    <!-- <h2 class="title">{{ formTitle }}</h2>
     <form @submit="submitForm" class="form">
       <mFormElement
-        v-for="(formElment, index) in formElements"
+        v-for="(formElment, index) in formFields"
         :key="index"
         v-model="elementInputValue"
-        :formTitle="formElment.title"
-        :formDescription="formElment.description"
-        :formInputType="formElment.formInputType"
-        :formInputPlaceholder="formElment.formInputPlaceholder"
-        :formValue="formElment.formValue"
-        :formInputValue="formElment.formInputValue"
+        :formTitle="formElement.formTitle"
+        :formDescription="formElement.formDescription"
+        :formInputType="formElement.formInputType"
+        :formInputPlaceholder="formElement.formInputPlaceholder"
+        :formValue="formElement.formValue"
+        :inputFormValues="formElement.inputFormValues"
+        :formInputStyle="formElement.formInputStyle"
       />
     </form>
     <aButton
@@ -19,7 +20,7 @@
       :btnLabel="formBtnLabel"
       :btnOnClick="'form-btn-clicked'"
       v-on:form-btn-clicked="submitForm"
-    />
+    /> -->
   </div>
 </template>
 
@@ -36,23 +37,26 @@ export default Vue.extend({
   },
   props: {
     /**
-     * Title which is displayed on top of the form.
-     */
-    formTitle: {
-      type: String,
-      required: true
-    },
-    /**
-     * Label of submit button.
-     */
-    formBtnLabel: {
-      type: String,
-      required: true
-    },
-    filledForm: {}
+    //  * Title which is displayed on top of the form.
+    //  */
+    // formTitle: {
+    //   type: String,
+    //   required: true
+    // },
+    // /**
+    //  * Label of submit button.
+    //  */
+    // formBtnLabel: {
+    //   type: String,
+    //   required: true
+    // },
+    // filledForm: {}
   },
   data() {
     return {
+      
+
+
       elementInputValue: "",
       formElements: [
         {
