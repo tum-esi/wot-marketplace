@@ -12,7 +12,7 @@ import Uuid from "uuid";
 import Bcrypt from "bcrypt";
 import Passport from "passport";
 import PassportLocal from "passport-local";
-import passport = require("passport");
+
 
 // Get correct configuration
 let config = Config[process.env.NODE_ENV || 'development']
@@ -155,7 +155,7 @@ function setupExpress(models) {
 
     // Get the information of a given user
     app.get("/api/users/:userName",
-        passport.authenticate("local", (req, res) => {
+        Passport.authenticate("local", (req, res) => {
             models.UserModel.find(
                 {userName: req.params.userName},
                 (err, result) => {
