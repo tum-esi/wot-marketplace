@@ -5,7 +5,7 @@ enum Platform {
     OTHER = 'other'
 }
 
-enum ImplementationType {
+export enum ImplementationType {
     TEMPLATE = 'template',
     CODE = 'code',
 }
