@@ -78,10 +78,10 @@ function setupExpress(models) {
     let MongoStore = ConnectMongo(Session);
 
     // Add and Configure middleware
-    app.use(favicon(Path.join(__dirname, '../static/favicon.ico')))
-    app.use("/static", Express.static(Path.join(__dirname, "../static")));
-    app.use("/js", Express.static(Path.join(__dirname, "../static/js")));
-    app.use("/css", Express.static(Path.join(__dirname, "../static/css")));
+    app.use(favicon(Path.join(__dirname, '../public/favicon.ico')))
+    app.use("/public", Express.static(Path.join(__dirname, "../public")));
+    app.use("/js", Express.static(Path.join(__dirname, "../public/js")));
+    app.use("/css", Express.static(Path.join(__dirname, "../public/css")));
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
     app.use(Session({

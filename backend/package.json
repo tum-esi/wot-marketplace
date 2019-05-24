@@ -33,6 +33,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "develop": "tsnd --respawn src/server.ts"
+    "develop": "tsnd --respawn src/server.ts",
+    "build-frontend": "npm install --prefix ../frontend && npm run build --prefix ../frontend && cp -R ../frontend/dist/ ./public/",
+    "serve": "npm run build-frontend && npm install && npm run build && npm start"
   }
 }
