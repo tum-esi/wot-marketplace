@@ -58,17 +58,17 @@ export let UserSchema  = new Schema({
     firstName: {
         type: String,
         minlength: 1,
-        maxlength: 50
+        maxlength: 50,
+        trim: true
     },
     lastName: {
         type: String,
         minlength: 1,
-        maxlength: 50
-    },
-    passwordSalt: {
-        type: String,
+        maxlength: 50,
+        trim: true
     },
     passwordHash: {
         type: String,
+        required: true
     }
 })

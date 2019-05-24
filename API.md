@@ -1,7 +1,9 @@
 ## HTML
 
 - `/` : index.html
-- `/static` : Static CSS & JS
+- `/static` : Static/
+- `/js` : static/js
+- `/css`: static/css
 
 
 ## API
@@ -20,10 +22,10 @@
     + GET: JSON containing raw DB data
     + PUT: JSON containing raw DB data
 
-- `/api/validateName`  (check if name is unique, check allowed chars)
+- `/api/validateUsername`  (check if name is unique, check allowed chars)
     + POST: {name: string} 
 
-- `/api/validateUrl`  (check github URL)
+- `/api/validateUrl`  (check github URL) <NOT IMPLEMENTED>
     + POST: {url: string}
 
 - `/api/signup`  (Create new user)
@@ -41,7 +43,7 @@
         password: string 
     }
 
-- `/api/logout`  (logout user) // Not sure this will be needed.
+- `/api/logout`  (logout user)
     + POST: {
         sessionID: string 
     }

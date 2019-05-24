@@ -5,11 +5,14 @@ import Mongoose from "mongoose";
 import { ImplementationSchema, UserSchema } from "./schemas";
 import BodyParser from "body-parser";
 import Session from "express-session";
+import favicon from "serve-favicon";
 import ConnectMongo from "connect-mongo";
 import Config from "../config/config";
 import Uuid from "uuid";
+import Bcrypt from "bcrypt";
 import Passport from "passport";
 import PassportLocal from "passport-local";
+import passport = require("passport");
 
 // Get correct configuration
 let config = Config[process.env.NODE_ENV || 'development']
@@ -36,16 +39,17 @@ function setupMongo() {
 function setupPassport(userModel) {
     Passport.use(new PassportLocal.Strategy(
         {
-            usernameField: 'userName',
+            usernameField: 'username',
             passwordField: 'password'
         },
         (username, password, done) => {
-            userModel.findOne({ username: username }, function (err, user) {
+            console.log(`User trying to login with username: ${username} and password: ${password}`)
+            userModel.findOne({ userName: username }, function (err, user) {
                 if (err) { return done(err); }
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
+                    return done(null, false, { status: 401, message: 'Incorrect username.' });
                 }
-                if (false) { //FIXME: test password
+                if (!Bcrypt.compareSync(password, user.passwordHash)) {
                     return done(null, false, { message: 'Incorrect password.' });
                 }
                 return done(null, user);
@@ -53,11 +57,12 @@ function setupPassport(userModel) {
         }
     ));
 
-    Passport.serializeUser(function(user, done) {
+    Passport.serializeUser((user, done) => {
+        // @ts-ignore
         done(null, user.id);
     });
       
-    Passport.deserializeUser(function(id, done) {
+    Passport.deserializeUser((id, done) => {
         userModel.findById(id, function(err, user) {
             done(err, user);
           });
@@ -73,21 +78,22 @@ function setupExpress(models) {
     let MongoStore = ConnectMongo(Session);
 
     // Add and Configure middleware
+    app.use(favicon(Path.join(__dirname, '../static/favicon.ico')))
+    app.use("/static", Express.static(Path.join(__dirname, "../static")));
+    app.use("/js", Express.static(Path.join(__dirname, "../static/js")));
+    app.use("/css", Express.static(Path.join(__dirname, "../static/css")));
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
     app.use(Session({
         genid: (req) => { return Uuid.v4() },
-        secret: 'random string',  //FIXME: add to config file
+        secret: config.session.secret, 
         resave: false,
         saveUninitialized: true,
         store: new MongoStore({ mongooseConnection: Mongoose.connection })
-        // TODO: Fix session options (like expire ..)
+        // TODO: Fix session options (like expire ..) and cookie options (like httpOnly, secure .. )
     }));
     app.use(Passport.initialize());
     app.use(Passport.session());
-    app.use("/static", Express.static(Path.join(__dirname, "../static")));
-    app.use("/css", Express.static(Path.join(__dirname, "../css")));
-    app.use("/js", Express.static(Path.join(__dirname, "../js")));
 
     // Serve index.html
     app.get("/", (req, res) => {
@@ -96,20 +102,76 @@ function setupExpress(models) {
 
     // Login process
     app.post("/api/login", 
-        Passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'})
-    )
+        Passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login'})
+    );
+
+    // Logout process
+    app.post("/api/logout", (req, res) => {
+        req.logout();
+        res.redirect("/");
+    });
 
     // Signup process
     app.post("/api/signup", (req, res, next) => {
-        let newUser = new models.userModel(req.body)
+        let newUser = new models.userModel({
+            userName: req.body.username,
+            email: req.body.email,
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            passwordHash: Bcrypt.hashSync(req.body.password, 10) 
+            // TODO: check the speed difference between async and sync hashing
+        })
         newUser.save({validateBeforeSave: true}, (err, product) => {
             if (err) {
-                 console.log("ERR: " + err); next(HttpError(400))
+                // TODO: Add correct message in case of failure
+                console.log("ERR: " + err); next(HttpError(400));
             } else { 
-                res.status(201).send("CREATED")
+                res.status(201).send("CREATED");
+                req.login(product, (err) => { if (err) next(err) });
             }
         })
     })
+
+    // return true if a username is allowed for new users
+    app.get("/api/validateUsername", (req, res, next) => {
+        if (req.query.username && req.query.username.length > 4 && req.query.username.length < 40) {
+            models.UserModel.find(
+                {userName: req.query.username},
+                (err, result) => {
+                    if (err) {
+                        next(err);
+                    } else if (!result) {
+                        // TODO: check allowed chars
+                        res.json({allowed: true});
+                    } else {
+                        res.json({allowed: false, reason: "Username already exists."});
+                    }
+                }
+            )
+        } else {
+            res.json({allowed: false, reason: "Username must be between 5 and 39 Characters long."})
+        }
+    })
+
+    // Get the information of a given user
+    app.get("/api/users/:userName",
+        passport.authenticate("local", (req, res) => {
+            models.UserModel.find(
+                {userName: req.params.userName},
+                (err, result) => {
+                    if (err) {
+                        return Error()
+                    } else {
+                        res.json({ //TODO: maybe this can be better with de-construction (...)
+                            username: result.userName,
+                            firstName: result.firstName,
+                            lastName: result.lastName
+                        })
+                    }
+                }
+            )
+        })
+    );
 
     // Process search requests
     app.get("/api/search", (req, res, next) => {
@@ -152,20 +214,25 @@ function setupExpress(models) {
     app.put("/api/project/:projectName", (req, res, next) => {
         let newProject = new models.ImplementationModel(req.body)
         newProject.save({validateBeforeSave: true}, (err, product) => {
-            if (err) { next(err); return console.log("ERR: " + err); }
-            res.status(201).send("CREATED")
+            if (err) { 
+                console.log("ERR: " + err);
+                next(err);
+            } else {
+                res.status(201).send("CREATED");
+            }
         })
     });
 
     // catch 404 and forward to error handler
     app.use((req, res, next) => {
-        next(HttpError(404));
+        next(HttpError(404)); // FIXME: is HttpError needed compared to setting status? what does it add?
     });
     
     // error handler
+    // TODO: Add logging
     app.use((err, req, res, next) => {
         res.status(err.status || 500);
-        res.send()
+        res.send(err.message || "Server Error.");
     });
 
     return app

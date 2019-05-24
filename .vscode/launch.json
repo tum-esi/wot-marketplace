@@ -7,6 +7,17 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch Server",
+            "program": "${workspaceFolder}/backend/src/server.ts",
+            "sourceMaps": true,
+            "preLaunchTask": "npm: build - backend",
+            "outFiles": [
+                "${workspaceFolder}/backend/dist/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/database/populate/generate.js",
             "args": ["5"]
