@@ -82,4 +82,9 @@ export default Vue.extend({
 .btn-right {
   float: right;
 }
+
+.submit-btn {
+    width: 30%;
+    padding: 15px;
+}
 </style>

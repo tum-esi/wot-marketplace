@@ -1,8 +1,8 @@
 <template>
   <div :class="formStyle.wholeEl">
     <div :class="formStyle.leftEl">
-      <label class="form-el-title">{{ formTitle }}</label>
-      <p class="form-el-description">{{ formDescription }}</p>
+      <label :class="formStyle.title">{{ formTitle }}</label>
+      <p :class="formStyle.description">{{ formDescription }}</p>
     </div>
     <aInput
       :class="formStyle.rightEl"
@@ -36,7 +36,7 @@ export default Vue.extend({
      * Custom css class for styling of form element.
      */
     formStyle: {
-      // type: Object as () => { wholeEl: string, leftEl: string, rightEl: string },
+      type: Object,
       required: false,
       default: ""
     },
@@ -110,6 +110,7 @@ export default Vue.extend({
 .big-form-el {
   width: 100%;
   clear: both;
+  padding: 10px;
 }
 
 .big-form-el-left {
@@ -117,19 +118,15 @@ export default Vue.extend({
   display: box;
   box-sizing: border-box;
   float: left;
-  padding: 10px 0 10px 10px;
+  padding-right: 10px;
 }
 
 .big-form-el-right {
   width: 75%;
   float: left;
-  padding: 10px 10px 0 10px;
-}
-/* .textarea-large {
-
 }
 
-.textarea-medium {
-
-} */
+.big-form-title {
+  font-weight: bold;
+}
 </style>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import oSearchContainer from './components/03_organisms/oSearchContainer.vue'
-import pNewProject from './components/05_pages/pNewProject.vue'
+import tFormNewProject from './components/04_templates/tFormNewProject.vue'
 import pProject from './components/05_pages/pProject.vue'
 import tAbout from './components/04_templates/tAbout.vue'
 import tAccount from './components/04_templates/tAccount.vue'
@@ -19,7 +19,7 @@ export default new Router({
         {
             path: '/new-project',
             name: 'AddProject',
-            component: pNewProject
+            component: tFormNewProject
         },
         {
             path: '/project',
