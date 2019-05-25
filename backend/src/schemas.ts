@@ -8,6 +8,10 @@ export let ImplementationSchema  = new Schema({
         required: true,
         trim: true
     },
+    owner: {
+        type: String,
+        required: true
+    },
     shortDescription: {
         type: String,
         minlength: 5,
@@ -70,5 +74,8 @@ export let UserSchema  = new Schema({
     passwordHash: {
         type: String,
         required: true
+    },
+    implementations: {
+        type: Array
     }
 })

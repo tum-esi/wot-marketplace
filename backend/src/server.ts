@@ -1,17 +1,17 @@
 import Express from "express";
 import Path from "path";
-import HttpError from "http-errors";
 import Mongoose from "mongoose";
 import { ImplementationSchema, UserSchema } from "./schemas";
 import BodyParser from "body-parser";
 import Session from "express-session";
-import favicon from "serve-favicon";
+import Favicon from "serve-favicon";
 import ConnectMongo from "connect-mongo";
 import Config from "../config/config";
 import Uuid from "uuid";
 import Bcrypt from "bcrypt";
 import Passport from "passport";
 import PassportLocal from "passport-local";
+import Helmet from "helmet"
 
 
 // Get correct configuration
@@ -32,7 +32,7 @@ function setupMongo() {
     ImplementationSchema.index({'$**': 'text'});
     let ImplementationModel = Mongoose.model("ImplementationModel", ImplementationSchema, "implementations" );
     let UserModel =  Mongoose.model("UserModel", UserSchema, "users");
-    return {ImplementationModel: ImplementationModel, userModel: UserModel}
+    return {ImplementationModel: ImplementationModel, UserModel: UserModel}
 }
 
 
@@ -70,7 +70,7 @@ function setupPassport(userModel) {
 }
 
 
-function setupExpress(models) {
+function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongoose.Document, {}>, UserModel: Mongoose.Model<Mongoose.Document, {}>}
     // Initiate Express server
     let app = Express();
 
@@ -78,19 +78,29 @@ function setupExpress(models) {
     let MongoStore = ConnectMongo(Session);
 
     // Add and Configure middleware
-    app.use(favicon(Path.join(__dirname, '../public/favicon.ico')))
+    app.use(Helmet({
+        frameguard: {action: "deny"},
+        dnsPrefetchControl: false
+    }))
+    app.use(Favicon(Path.join(__dirname, '../public/favicon.ico')))
     app.use("/public", Express.static(Path.join(__dirname, "../public")));
     app.use("/js", Express.static(Path.join(__dirname, "../public/js")));
     app.use("/css", Express.static(Path.join(__dirname, "../public/css")));
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
     app.use(Session({
+        name: config.session.cookieName,
         genid: (req) => { return Uuid.v4() },
         secret: config.session.secret, 
         resave: false,
-        saveUninitialized: true,
-        store: new MongoStore({ mongooseConnection: Mongoose.connection })
-        // TODO: Fix session options (like expire ..) and cookie options (like httpOnly, secure .. )
+        saveUninitialized: false,
+        store: new MongoStore({ mongooseConnection: Mongoose.connection }),
+        cookie: {
+            httpOnly: true,
+            secure: false, //FIXME: change to true after switching to https
+            maxAge: 1000 * 60 * 60 * 24 * 60, // 60days
+            sameSite: "lax"
+        }
     }));
     app.use(Passport.initialize());
     app.use(Passport.session());
@@ -113,7 +123,7 @@ function setupExpress(models) {
 
     // Signup process
     app.post("/api/signup", (req, res, next) => {
-        let newUser = new models.userModel({
+        let newUser = new models.UserModel({
             userName: req.body.username,
             email: req.body.email,
             firstName: req.body.firstname,
@@ -124,7 +134,7 @@ function setupExpress(models) {
         newUser.save({validateBeforeSave: true}, (err, product) => {
             if (err) {
                 // TODO: Add correct message in case of failure
-                console.log("ERR: " + err); next(HttpError(400));
+                console.log("ERR: " + err); next({status: 400, message: err});
             } else { 
                 res.status(201).send("CREATED");
                 req.login(product, (err) => { if (err) next(err) });
@@ -154,24 +164,34 @@ function setupExpress(models) {
     })
 
     // Get the information of a given user
-    app.get("/api/users/:userName",
-        Passport.authenticate("local", (req, res) => {
-            models.UserModel.find(
-                {userName: req.params.userName},
-                (err, result) => {
-                    if (err) {
-                        return Error()
-                    } else {
-                        res.json({ //TODO: maybe this can be better with de-construction (...)
-                            username: result.userName,
-                            firstName: result.firstName,
-                            lastName: result.lastName
-                        })
-                    }
-                }
-            )
-        })
-    );
+    app.get("/api/users/:userName", (req, res, next) => {
+        if (!req.user) {
+            res.status(401).send("Please log-in and try again!")
+        } else if (req.user.userName === req.params.userName) {
+            res.json({ //TODO: maybe this can be better with de-construction (...)
+                username: req.user.userName,
+                firstName: req.user.firstName,
+                lastName: req.user.lastName,
+                email: req.user.email
+            })
+        } else {
+            res.sendStatus(403)
+            // right now, user cant see anything about other users. This will change.
+            // models.UserModel.findOne(
+            //     {userName: req.params.userName},
+            //     (err, result) => {
+            //         if (err) {
+            //             console.warn("Error on /api/users/<username> : " + err)
+            //             next(err)
+            //         } else {
+            //             res.json({
+            //                 username: result.userName
+            //             })
+            //         }
+            //     }
+            // )
+        }
+    });
 
     // Process search requests
     app.get("/api/search", (req, res, next) => {
@@ -212,12 +232,21 @@ function setupExpress(models) {
     // Add a package to the DB
     // TODO: change error handlin to return useful messages
     app.put("/api/project/:projectName", (req, res, next) => {
-        let newProject = new models.ImplementationModel(req.body)
+        if (!req.user) { res.sendStatus(401); return; }
+        let newProject = new models.ImplementationModel({...req.body, owner: req.user.id})
         newProject.save({validateBeforeSave: true}, (err, product) => {
             if (err) { 
                 console.log("ERR: " + err);
-                next(err);
+                next({message: err.message});
             } else {
+                models.UserModel.findOneAndUpdate(
+                    // @ts-ignore
+                    {userName: req.user.userName},
+                    {$push: {implementations: product.id}},
+                    (err, result) => {
+                        if (err) next({message: err})
+                    }
+                )
                 res.status(201).send("CREATED");
             }
         })
@@ -225,7 +254,7 @@ function setupExpress(models) {
 
     // catch 404 and forward to error handler
     app.use((req, res, next) => {
-        next(HttpError(404)); // FIXME: is HttpError needed compared to setting status? what does it add?
+        next({status: 404, message: "URL not found."});
     });
     
     // error handler
@@ -241,7 +270,7 @@ function setupExpress(models) {
 
 function main() {
     let models = setupMongo()
-    setupPassport(models.userModel)
+    setupPassport(models.UserModel)
     let app = setupExpress(models)
     app.listen(config.server.port, () => { console.info(`Server listening on port ${config.server.port}!`) });
 }
