@@ -43,7 +43,6 @@ function setupPassport(userModel) {
             passwordField: 'password'
         },
         (username, password, done) => {
-            console.log(`User trying to login with username: ${username} and password: ${password}`)
             userModel.findOne({ userName: username }, function (err, user) {
                 if (err) { return done(err); }
                 if (!user) {
