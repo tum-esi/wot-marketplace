@@ -120,27 +120,6 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         res.redirect("/");
     });
 
-    // Signup process
-    app.post("/api/signup", (req, res, next) => {
-        let newUser = new models.UserModel({
-            userName: req.body.username,
-            email: req.body.email,
-            firstName: req.body.firstname,
-            lastName: req.body.lastname,
-            passwordHash: Bcrypt.hashSync(req.body.password, 10) 
-            // TODO: check the speed difference between async and sync hashing
-        })
-        newUser.save({validateBeforeSave: true}, (err, product) => {
-            if (err) {
-                // TODO: Add correct message in case of failure
-                console.log("ERR: " + err); next({status: 400, message: err});
-            } else { 
-                res.status(201).send("CREATED");
-                req.login(product, (err) => { if (err) next(err) });
-            }
-        })
-    })
-
     // return true if a username is allowed for new users
     app.get("/api/validateUsername", (req, res, next) => {
         if (req.query.username && req.query.username.length > 4 && req.query.username.length < 40) {
@@ -160,6 +139,27 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         } else {
             res.json({allowed: false, reason: "Username must be between 5 and 39 Characters long."})
         }
+    })
+
+    // Signup process
+    app.post("/api/users", (req, res, next) => {
+        let newUser = new models.UserModel({
+            userName: req.body.username,
+            email: req.body.email,
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            passwordHash: Bcrypt.hashSync(req.body.password, 10) 
+            // TODO: check the speed difference between async and sync hashing
+        })
+        newUser.save({validateBeforeSave: true}, (err, product) => {
+            if (err) {
+                // TODO: Add correct message in case of failure
+                console.log("ERR: " + err); next({status: 400, message: err});
+            } else { 
+                res.status(201).send("CREATED");
+                req.login(product, (err) => { if (err) next(err) });
+            }
+        })
     })
 
     // Get the information of a given user
@@ -192,6 +192,111 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         }
     });
 
+    // Edit a user
+    // FIXME: not implemented
+    app.put("/api/users/:userName", (req, res, next) => {
+        if (!req.user) {
+            res.status(401).send("Please log-in and try again!")
+        } else if (req.user.userName === req.params.userName) {
+            // Update
+            res.sendStatus(501)
+        } else {
+            res.sendStatus(403)
+        }
+    });
+
+    // Get the information of a given user
+    app.delete("/api/users/:userName", (req, res, next) => {
+        if (!req.user) {
+            res.status(401).send("Please log-in and try again!")
+        } else if (req.user.userName === req.params.userName) {
+            models.UserModel.deleteOne(
+                {userName: req.user.userName},
+                (err, result) => {
+                    if (err) {
+                        next({message: err})
+                    } else {
+                        res.sendStatus(204)
+                    }
+                }
+            )
+            req.logout()
+        } else {
+            res.sendStatus(403)
+        }
+    });
+
+    // Add a package to the DB
+    // TODO: change error handlin to return useful messages
+    app.post("/api/projects", (req, res, next) => {
+        if (!req.user) { res.sendStatus(401); return; }
+        let newProject = new models.ImplementationModel({...req.body, owner: req.user.id})
+        newProject.save({validateBeforeSave: true}, (err, product) => {
+            if (err) { 
+                console.log("ERR: " + err);
+                next({message: err.message});
+            } else {
+                models.UserModel.findOneAndUpdate(
+                    // @ts-ignore
+                    {userName: req.user.userName},
+                    {$push: {implementations: product.id}},
+                    (err, result) => {
+                        if (err) next({message: err})
+                    }
+                )
+                res.status(201).send("CREATED");
+            }
+        })
+    });
+
+    // Read a project
+    app.get("/api/projects/:projectName", (req, res) => {
+        models.ImplementationModel.find(
+            {name: req.params.projectName},
+            (err, result) => {
+                res.json(result)
+            }
+        )
+    });
+
+    // Edit a project
+    app.put("/api/projects/:projectName", (req, res, next) => {
+        if (!req.user) { return res.sendStatus(401) }
+        models.ImplementationModel.find(
+            {name: req.params.projectName},
+            (err, result) => {
+                if (result.owner !== req.user!.id) { return res.sendStatus(401) }
+                delete(req.body["owner"])
+                delete(req.body["name"])
+                models.ImplementationModel.update(
+                    {name: req.params.projectName},
+                    req.body,
+                    {runValidators: true},
+                    (err, result) => {
+                        if (err) {next({message: err})}
+                        // TODO: check res.modifiedCount
+                    }
+                )
+            }
+        )
+    });
+
+    // Delete a project
+    // TODO: change error handlin to return useful messages
+    app.delete("/api/projects/:projectName", (req, res, next) => {
+        if (!req.user) { return res.sendStatus(401) }
+        models.ImplementationModel.deleteOne(
+            {
+                name: req.params.projectName,
+                owner: req.user.id
+            },
+            (err, result) => {
+                if (err) { next({message: err}) }
+                else { res.sendStatus(204) }
+            }
+        )
+    })
+
     // Process search requests
     app.get("/api/search", (req, res, next) => {
         models.ImplementationModel.find(
@@ -216,39 +321,6 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                 })
             }
         );
-    });
-
-    // Return a certain package
-    app.get("/api/project/:packageName", (req, res) => {
-        models.ImplementationModel.find(
-            {name: req.params.packageName},
-            (err, result) => {
-                res.json(result)
-            }
-        )
-    });
-
-    // Add a package to the DB
-    // TODO: change error handlin to return useful messages
-    app.put("/api/project/:projectName", (req, res, next) => {
-        if (!req.user) { res.sendStatus(401); return; }
-        let newProject = new models.ImplementationModel({...req.body, owner: req.user.id})
-        newProject.save({validateBeforeSave: true}, (err, product) => {
-            if (err) { 
-                console.log("ERR: " + err);
-                next({message: err.message});
-            } else {
-                models.UserModel.findOneAndUpdate(
-                    // @ts-ignore
-                    {userName: req.user.userName},
-                    {$push: {implementations: product.id}},
-                    (err, result) => {
-                        if (err) next({message: err})
-                    }
-                )
-                res.status(201).send("CREATED");
-            }
-        })
     });
 
     // catch 404 and forward to error handler
