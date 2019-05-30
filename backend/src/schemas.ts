@@ -47,6 +47,7 @@ export let UserSchema  = new Schema({
     userName: {
         type: String,
         minlength: 5,
+        maxlength: 39,
         unique: true,
         required: true,
         trim: true

@@ -7,11 +7,13 @@ import Session from "express-session";
 import Favicon from "serve-favicon";
 import ConnectMongo from "connect-mongo";
 import Config from "../config/config";
+import Logger from "./logger";
 import Uuid from "uuid";
 import Bcrypt from "bcrypt";
 import Passport from "passport";
 import PassportLocal from "passport-local";
-import Helmet from "helmet"
+import Helmet from "helmet";
+import ExpressWinston from "express-winston";
 
 
 // Get correct configuration
@@ -27,8 +29,8 @@ function setupMongo() {
             useCreateIndex: true 
         });
     let db = Mongoose.connection;
-    db.on('error', (err) => console.error("DB connection error: " + err))
-    db.once('open', () => console.log("Successfully connected to database!"))
+    db.on('error', (err) => Logger.error("DB connection error: " + err))
+    db.once('open', () => Logger.info("Successfully connected to database!"))
     ImplementationSchema.index({'$**': 'text'});
     let ImplementationModel = Mongoose.model("ImplementationModel", ImplementationSchema, "implementations" );
     let UserModel =  Mongoose.model("UserModel", UserSchema, "users");
@@ -80,13 +82,17 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     app.use(Helmet({
         frameguard: {action: "deny"},
         dnsPrefetchControl: false
-    }))
+    }));
     app.use(Favicon(Path.join(__dirname, '../public/favicon.ico')))
     app.use("/public", Express.static(Path.join(__dirname, "../public")));
     app.use("/js", Express.static(Path.join(__dirname, "../public/js")));
     app.use("/css", Express.static(Path.join(__dirname, "../public/css")));
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
+    app.use(ExpressWinston.logger({
+        winstonInstance: Logger,
+        ignoredRoutes: ["/api/login"]
+    }));
     app.use(Session({
         name: config.session.cookieName,
         genid: (req) => { return Uuid.v4() },
@@ -110,6 +116,13 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     });
 
     // Login process
+    /**
+     * @api {post} /login Perform a user Login
+     * @apiGroup Users
+     *
+     * @apiParam {String{5..39}} username Username of the user to Log-in.
+     * @apiParam {String} password Password of the user to Log-in.
+     */
     app.post("/api/login", 
         Passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login'})
     );
@@ -132,10 +145,13 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                         // TODO: check allowed chars
                         res.json({allowed: true});
                     } else {
-                        res.json({allowed: false, reason: "Username already exists."});
+                        res.status(400).send("A username must be given: \n/api/validateUsername?username=<user name>")
                     }
                 }
             )
+        } else if (req.query.username) {
+            res.status(400)
+            res.json({allowed: false, reason: "Username must be between 5 and 39 Characters long."})
         } else {
             res.json({allowed: false, reason: "Username must be between 5 and 39 Characters long."})
         }
@@ -154,7 +170,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         newUser.save({validateBeforeSave: true}, (err, product) => {
             if (err) {
                 // TODO: Add correct message in case of failure
-                console.log("ERR: " + err); next({status: 400, message: err});
+                Logger.error("ERR: " + err); next({status: 400, message: err});
             } else { 
                 res.status(201).send("CREATED");
                 req.login(product, (err) => { if (err) next(err) });
@@ -180,7 +196,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
             //     {userName: req.params.userName},
             //     (err, result) => {
             //         if (err) {
-            //             console.warn("Error on /api/users/<username> : " + err)
+            //             Logger.warn("Error on /api/users/<username> : " + err)
             //             next(err)
             //         } else {
             //             res.json({
@@ -233,7 +249,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         let newProject = new models.ImplementationModel({...req.body, owner: req.user.id})
         newProject.save({validateBeforeSave: true}, (err, product) => {
             if (err) { 
-                console.log("ERR: " + err);
+                Logger.error("ERR: " + err);
                 next({message: err.message});
             } else {
                 models.UserModel.findOneAndUpdate(
@@ -250,10 +266,12 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     });
 
     // Read a project
-    app.get("/api/projects/:projectName", (req, res) => {
+    app.get("/api/projects/:projectName", (req, res, next) => {
         models.ImplementationModel.find(
             {name: req.params.projectName},
             (err, result) => {
+                Logger.info("DB ERR:" + err)
+                if (err) { res.sendStatus(404); return; }
                 res.json(result)
             }
         )
@@ -307,9 +325,9 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                 skip: parseInt(req.query.skip, 10)
             },
             (err, indx) => { 
-                if (err) { next(err); return console.log("ERR: " + err); }
+                if (err) { next(err); return Logger.error("ERR: " + err); }
                 models.ImplementationModel.countDocuments({$text: {$search: req.query.q}}, (err, count) => {
-                    if (err) { next(err); return console.log("ERR: " + err); }
+                    if (err) { next(err); return Logger.error("ERR: " + err); }
                     // TODO: Set headers
                     res.json({
                         query: req.query.q,
@@ -323,13 +341,19 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         );
     });
 
-    // catch 404 and forward to error handler
+    // catch all non existing paths and return 404
     app.use((req, res, next) => {
-        next({status: 404, message: "URL not found."});
+        res.status(404);
+        res.send("URL not found.");
     });
     
+    app.use(ExpressWinston.errorLogger({
+        winstonInstance: Logger,
+        dumpExceptions: true,
+        showStack: true
+    }));
+
     // error handler
-    // TODO: Add logging
     app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.send(err.message || "Server Error.");
@@ -343,7 +367,7 @@ function main() {
     let models = setupMongo()
     setupPassport(models.UserModel)
     let app = setupExpress(models)
-    app.listen(config.server.port, () => { console.info(`Server listening on port ${config.server.port}!`) });
+    app.listen(config.server.port, () => { Logger.info(`Server listening on port ${config.server.port}!`) });
 }
 
 

@@ -9,7 +9,8 @@
 ## API
 
 - `/api/search?q=123&count=123&skip=123`  (perform a search)
-    + GET:
+    + GET
+    + returns:
     {
         query: string,
         totalResults: number,
