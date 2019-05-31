@@ -8,6 +8,10 @@ export let ImplementationSchema  = new Schema({
         required: true,
         trim: true
     },
+    owner: {
+        type: String,
+        required: true
+    },
     shortDescription: {
         type: String,
         minlength: 5,
@@ -43,6 +47,7 @@ export let UserSchema  = new Schema({
     userName: {
         type: String,
         minlength: 5,
+        maxlength: 39,
         unique: true,
         required: true,
         trim: true
@@ -58,17 +63,20 @@ export let UserSchema  = new Schema({
     firstName: {
         type: String,
         minlength: 1,
-        maxlength: 50
+        maxlength: 50,
+        trim: true
     },
     lastName: {
         type: String,
         minlength: 1,
-        maxlength: 50
-    },
-    passwordSalt: {
-        type: String,
+        maxlength: 50,
+        trim: true
     },
     passwordHash: {
         type: String,
+        required: true
+    },
+    implementations: {
+        type: Array
     }
 })

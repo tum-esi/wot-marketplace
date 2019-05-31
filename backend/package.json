@@ -9,28 +9,34 @@
     "wot"
   ],
   "devDependencies": {
-    "@types/express": "4.11.1",
-    "@types/mongoose": "5.3.24",
-    "@types/express-session": "1.15.8",
-    "ts-node-dev": "^1.0.0-pre.32",
-    "typescript": "3.4.1"
+    "@types/express": "~4.16.1",
+    "@types/mongoose": "~5.5.3",
+    "@types/express-session": "~1.15.12",
+    "@types/passport": "~1.0.0",
+    "@types/winston": "2.4.4",
+    "ts-node-dev": "^1.0.0-pre.39",
+    "typescript": "~3.5.1"
   },
   "dependencies": {
-    "bcrypt": "3.0.5",
-    "body-parser": "1.18.3",
-    "connect-mongo": "2.0.3",
-    "express": "4.16.4",
-    "express-session": "1.15.6",
-    "http-errors": "1.7.2",
-    "mongodb": "3.2.3",
-    "mongoose": "5.4.22",
-    "passport": "0.4.0",
-    "passport-local": "1.0.0",
-    "uuid": "3.3.2"
+    "bcrypt": "~3.0.6",
+    "body-parser": "~1.19.0",
+    "connect-mongo": "~2.0.3",
+    "express": "~4.17.1",
+    "express-session": "~1.16.1",
+    "express-winston": "^3.1.0",
+    "helmet": "~3.18.0",
+    "mongoose": "~5.5.11",
+    "passport": "~0.4.0",
+    "passport-local": "~1.0.0",
+    "serve-favicon": "~2.5.0",
+    "uuid": "~3.3.2",
+    "winston": "~3.2.1"
   },
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "develop": "tsnd --respawn src/server.ts"
+    "develop": "tsnd --respawn src/server.ts",
+    "build-frontend": "npm install --prefix ../frontend && npm run build --prefix ../frontend && cp -R ../frontend/dist/ ./public/",
+    "serve": "npm run build-frontend && npm install && npm run build && npm start"
   }
 }

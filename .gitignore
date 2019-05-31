@@ -158,9 +158,7 @@ database/populate/implementations/fake*
 ### Configuration files ###
 */config/
 
-### Static files ###
-*/static/
-favicon.ico
-index.html
+### generated frontend files ###
+backend/public/
 
 # End of https://www.gitignore.io/api/node,linux,macos,visualstudiocode

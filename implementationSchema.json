@@ -6,7 +6,8 @@
         "name": {
             "description": "The name of the implementation that will appear also a title",
             "type": "string",
-            "minLength": 5
+            "minLength": 5,
+            "maxLength": 39
         },
         "shortDescription": {
             "description": "Short description of the implementation that appears on search results and as a subtitle under name",
