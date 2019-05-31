@@ -1,6 +1,5 @@
 <template>
     <div class="account-container">
-
     </div>
 </template>
 <script lang="ts">

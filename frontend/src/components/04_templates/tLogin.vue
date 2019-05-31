@@ -1,6 +1,24 @@
 <template>
   <div class="login-container">
     <h2>Login to WoTify</h2>
+    <div>
+    <form @submit="submitForm" class="form">
+      <mFormElement
+        v-for="(formElement, index) in formElements"
+        :key="index"
+        v-model="filledForm[formElement.formKey]"
+        :formStyle="formStyle"
+        :formKey="formElement.formKey"
+        :formTitle="formElement.formTitle"
+        :formDescription="formElement.formDescription"
+        :formInputType="formElement.formInputType"
+        :formInputPlaceholder="formElement.formInputPlaceholder"
+        :formValue="formElement.formValue"
+        :inputFormValues="formElement.inputFormValues"
+        :formInputStyle="formElement.formInputStyle"
+      />
+    </form>
+    </div>
     <div class="submit-btn">
     <aButton class="submit-text"
       :btnValue="filledForm"
@@ -15,27 +33,58 @@
 <script lang="ts">
 import Vue from "vue";
 import aButton from "@/components/01_atoms/aButton.vue";
+import mFormElement from "@/components/02_molecules/mFormElement.vue";
 
 export default Vue.extend({
   name: "tLogin",
   components: {
-    aButton
+    aButton,
+    mFormElement
   },
   props:{
     // formBtnLabel: {
     //   type: String,
     //   required: true
     // },
-    filledForm: {}
+    // filledForm: {}
   },
   data(){
     return{
-      formBtnLabel: "Login"
+      formBtnLabel: "Login",
+      elementInputValue: "",
+      formElements: [
+        {
+          formTitle: "Username",
+          // formDescription: "asdasd",
+          formInputType: "text",
+          formInputPlaceholder: "Type your username",
+          formKey: "mykey1"
+        },
+        {
+          formTitle: "Password",
+          // formDescription: "asdasd",
+          formInputType: "text",
+          formInputPlaceholder: "Type your password",
+          formKey: "mykey2"
+        }
+      ],
+      filledForm: []
     }
   },
   methods: {
-    submitForm(event) {
-      event.preventDefault();
+    submitForm() {
+      var userData = {
+        username:"",
+        password:""
+      };
+      userData.username = this.formElements[0].formValue;
+
+      console.log("submitttted: ",userData);
+    }
+  },
+  watch: {
+    filledForm() {
+      console.log("filledForm", this.filledForm);
     }
   }
 });
@@ -54,10 +103,6 @@ export default Vue.extend({
 }
 .submit-btn {
   text-align: center;
-  /* padding-left: 5%; */
-  /* margin-left: auto;
-  margin-right: auto;
-  width: 40%; */
 }
 .submit-text {
   margin-left: auto;
@@ -65,5 +110,10 @@ export default Vue.extend({
   padding-top: 1px;
   padding-bottom: 3px;
   width: 15%; 
+}
+.form {
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 3px;
 }
 </style>
