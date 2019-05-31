@@ -11,3 +11,8 @@ cd backend && npm run serve
 ```
 
 It should be noted that a configuration file is also needed.
+
+
+## Info
+
+You can use a string escaper to turn multiline READMEs to strings so that they are a JSON string

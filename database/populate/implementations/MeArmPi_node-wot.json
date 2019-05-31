@@ -1,21 +1,26 @@
 {
     "name": "MeArm Pi node-wot",
     "shortDescription": "WoTifies your MeArm and exposes its basic movements through node-wot",
-    "longDescription":"# MeArmPi    ##    Requirements        -        NodeJS 8 or newer -        You have to enable SPI on the board.    ## Installation        -        get the latest node:        ``    `bashcurl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -sudo apt-get install -y nodejs`    `` -    `cd`    inside the wot - mearmpi folder and run: `npm install` -        Build: `npm run build` -        To run the program: `node index.js` -        Make sure that this script runs automatically on startup.Crontab can do this on Linux. -            The server runs on port 8080 ",
-    "github": "https://github.com/tum-ei-esi/wot-sys",
+    "longDescription": "# MeArmPi\r\n\r\n## Network Configuration\r\n\r\n* WiFi SSID and password are stored at: /etc/wpa_supplicant/wpa_supplicant.conf\r\n* You can also launch the desktop and change to another WiFi\r\n\r\n## Requirements\r\n- NodeJS 8 or newer\r\n- You have to enable SPI on the board.\r\n\r\n## Installation\r\n- get the latest node: \r\n```bash\r\ncurl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -\r\nsudo apt-get install -y nodejs\r\n```\r\n- `cd` inside the wot-mearmpi folder and run: `npm install`\r\n- Build: `npm run build`\r\n- To run the program: `node index.js`\r\n- Make sure that this script runs automatically on startup. Crontab can do this on Linux. Run `sudo crontab -e` to get its config\r\n- The server runs on port 8080\r\n",
+    "github": "https://github.com/tum-ei-esi/wot-sys/tree/master/Devices/wot-mearmpi",
     "implementationType": "code",
     "topic": ["actuator", "robotics"],
     "platform": "raspberry",
     "tags": ["robot","node-wot"],
     "complexity": "medium",
     "td": {
-        "@context": "http://www.w3.org/ns/td",
-        "@type": "Thing",
-        "name": "MeArmPi",
-        "description": "MeArm Pi Robotic Arm",
-        "security": [{
-            "scheme": "nosec"
+        "@context": ["https://www.w3.org/2019/wot/td/v1", {
+            "@language": "en"
         }],
+        "@type": "Thing",
+        "title": "MeArmPi",
+        "description": "MeArm Pi Robotic Arm",
+        "securityDefinitions": {
+            "nosec_sc": {
+                "scheme": "nosec"
+            }
+        },
+        "security": "nosec_sc",
         "properties": {
             "gripState": {
                 "type": "string",
@@ -25,9 +30,10 @@
                 "writeOnly": false,
                 "observable": false,
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/properties/gripState",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/properties/gripState",
                     "contentType": "application/json",
-                    "op": ["readproperty"]
+                    "op": ["readproperty"],
+                    "htv:methodName": "GET"
                 }]
             },
             "motorPositions": {
@@ -51,9 +57,10 @@
                 "writeOnly": false,
                 "observable": false,
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/properties/motorPositions",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/properties/motorPositions",
                     "contentType": "application/json",
-                    "op": ["readproperty"]
+                    "op": ["readproperty"],
+                    "htv:methodName": "GET"
                 }]
             }
         },
@@ -61,9 +68,10 @@
             "openGrip": {
                 "description": "Open the robot's Grip.",
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/openGrip",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/openGrip",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
@@ -71,9 +79,10 @@
             "closeGrip": {
                 "description": "Close the robot's Grip.",
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/closeGrip",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/closeGrip",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
@@ -86,9 +95,10 @@
                     "maximum": 90
                 },
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/moveGripTo",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/moveGripTo",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
@@ -101,9 +111,10 @@
                     "maximum": 135
                 },
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/moveUpperTo",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/moveUpperTo",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
@@ -116,9 +127,10 @@
                     "maximum": 135
                 },
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/moveLowerTo",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/moveLowerTo",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
@@ -131,27 +143,30 @@
                     "maximum": 90
                 },
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/moveBaseTo",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/moveBaseTo",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
             },
             "dance": {
                 "forms": [{
-                    "href": "http://192.168.0.104:8080/MeArmPi/actions/dance",
+                    "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/actions/dance",
                     "contentType": "application/json",
-                    "op": ["invokeaction"]
+                    "op": ["invokeaction"],
+                    "htv:methodName": "POST"
                 }],
                 "idempotent": false,
                 "safe": false
             }
         },
-        "id": "de:tum:ei:esi:mearmpi:192.168.0.104",
+        "id": "de:tum:ei:esi:mearmpi:TUMEIESI-MeArmPi-Blue.local",
         "forms": [{
-            "href": "http://192.168.0.104:8080/MeArmPi/all/properties",
-            "contentType": "application/json"
+            "href": "http://TUMEIESI-MeArmPi-Blue.local:8080/MeArmPi/all/properties",
+            "contentType": "application/json",
+            "op": ["readallproperties", "readmultipleproperties", "writeallproperties", "writemultipleproperties"]
         }]
     }
 }

@@ -1,23 +1,21 @@
 {
     "name": "HUE Bridge Simple",
-    "shortDescription": "TD of a HUE Bridge, configured for lights and switches",
-    "longDescription": "This bridge has been configured using the white light starter pack that contains 3 white lights and a switch. Any API requests associated with other devices are not included.",
-    "github": "https://github.com/tum-ei-esi/wot-sys",
+    "shortDescription": "TD of a HUE Bridge, configured for lights, dimmer switch and a software-based daylight sensor",
+    "longDescription": "## Philips HUE Bridge\r\n\r\nThis bridge has been configured using the white light starter pack that contains 3 white lights and a switch. \r\n\r\n### Get it running\r\n\r\n* Follow the Philips HUE in-app guide to get your bridge started.\r\n* Follow the [developer page](https://developers.meethue.com/develop/get-started-2/) to get an API Key\r\n* The base URI is using our API Key, replace it with yours:\r\n  * Look for the base URI in the TD\r\n  * Replace the part after `/api/` with your API key.\r\n  * This TD uses `Philips-hue` as hostname, in case you have multiple HUE Bridges, you will need to change this in the base URI as well",
+    "github": "",
     "implementationType": "template",
     "topic": ["lighting", "other"],
     "platform": "other",
     "tags": ["Philips","HUE","LED"],
     "complexity": "simple",
     "td": {
-        "name": "Hue Bridge",
-        "id": "urn:dev:wot:com:example:servient:huelamp",
+        "title": "Hue Bridge",
+        "id": "urn:dev:ops:32473-HueBridge-1234",
+        "description": "HTTP to Zigbee bridge that can be used to control Hue lights and read the switch state. The different devices have their own TDs",
         "@context": [
-            "http://www.w3.org/ns/td",
+            "https://www.w3.org/2019/wot/td/v1",
             {
-                "http": "http://www.w3.org/2011/http#"
-            },
-            {
-                "htv": "http://www.w3.org/2011/http#"
+                "@language": "en"
             }
         ],
         "securityDefinitions": {
@@ -28,6 +26,7 @@
         "security": [
             "nosec_sc"
         ],
+        "base": "http://Philips-hue.local/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws",
         "properties": {
             "configuration": {
                 "title": "Configuration Settings",
@@ -102,14 +101,15 @@
                     }
                 },
                 "forms": [{
-                    "href": "http://192.168.0.111/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/config",
+                    "href": "/config",
                     "contentType": "application/json",
-                    "http:methodName": "GET",
+                    "htv:methodName": "GET",
                     "op": [
                         "readproperty"
                     ]
                 }],
-                "readOnly": true
+                "readOnly": true,
+                "writeOnly": false
             },
             "all_lights": {
                 "title": "Lights",
@@ -183,18 +183,145 @@
                     }
                 },
                 "forms": [{
-                    "href": "http://192.168.0.111/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/lights",
+                    "href": "/lights",
                     "contentType": "application/json",
                     "htv:methodName": "GET",
                     "op": [
                         "readproperty"
                     ]
                 }],
-                "readOnly": true
+                "readOnly": true,
+                "writeOnly": false
+            },
+            "all_sensors": {
+                "title": "All Sensors",
+                "description": "Gets a list of all sensors that have been added to the bridge.",
+                "type": "object",
+                "readOnly": true,
+                "writeOnly": false,
+                "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "state": {
+                            "type": "object",
+                            "properties": {
+                                "lastupdated": {
+                                    "type": "string",
+                                    "writeOnly": true
+                                },
+                                "additionalProperties": true
+                            }
+                        },
+                        "config": {
+                            "type": "object",
+                            "properties": {
+                                "on": {
+                                    "type": "boolean",
+                                    "writeOnly": false,
+                                    "readOnly": false
+                                },
+                                "additionalProperties": true
+                            }
+                        },
+                        "name": {
+                            "type": "string",
+                            "writeOnly": false,
+                            "readOnly": false
+                        },
+                        "type": {
+                            "type": "string",
+                            "readOnly": true
+                        },
+                        "modelid": {
+                            "type": "string",
+                            "readOnly": true
+                        },
+                        "manufacturername": {
+                            "type": "string",
+                            "readOnly": true
+                        },
+                        "swversion": {
+                            "type": "string",
+                            "readOnly": true
+                        },
+                        "uniqueid": {
+                            "type": "string",
+                            "readOnly": true
+                        }
+                    }
+                },
+                "forms": [{
+                    "href": "/sensors",
+                    "contentType": "application/json",
+                    "htv:methodName": "GET",
+                    "op": [
+                        "readproperty"
+                    ]
+                }]
+            },
+            "get_new_sensors": {
+                "title": "Get New Sensors",
+                "description": "Gets all new sensors since the last scan.",
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "lastscan": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "forms": [{
+                    "href": "/sensors/new",
+                    "contentType": "application/json",
+                    "htv:methodName": "GET",
+                    "op": [
+                        "readproperty"
+                    ]
+                }],
+                "safe": false,
+                "idempotent": false
             }
         },
         "actions": {
-            "search_lights": {
+            "search_new_sensors": {
+                "title": "Search New Sensor",
+                "description": "Starts a search for new sensors.",
+                "output": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "success": {
+                                "type": "object",
+                                "properties": {
+                                    "/sensors": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "forms": [{
+                    "href": "/sensors",
+                    "contentType": "application/json",
+                    "htv:methodName": "POST",
+                    "op": [
+                        "invokeaction"
+                    ]
+                }],
+                "safe": false,
+                "idempotent": false
+            },
+            "search_new_lights": {
                 "title": "Search for New Lights",
                 "description": "Starts searching for new lights.",
                 "input": {
@@ -218,48 +345,16 @@
                     }
                 },
                 "forms": [{
-                    "href": "http://192.168.0.111/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/lights",
+                    "href": "/lights",
                     "contentType": "application/json",
                     "htv:methodName": "POST",
                     "op": [
                         "invokeaction"
                     ]
                 }],
-                "idempotent": true,
-                "safe": false
-            },
-            "delete_light1": {
-                "***IMPORTANT_NOTE***": "DONT USE IT WITHOUT CAUTION",
-                "description": "Deletes a light from the bridge.",
-                "forms": [{
-                    "href": "http://192.168.0.111/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/lights/1",
-                    "contentType": "application/json",
-                    "htv:methodName": "DELETE"
-                }],
-                "safe": false,
-                "idempotent": false
-            },
-            "delete_light3": {
-                "***IMPORTANT_NOTE***": "DONT USE IT WITHOUT CAUTION",
-                "description": "Deletes a light from the bridge.",
-                "forms": [{
-                    "href": "http://192.168.0.111/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/lights/3",
-                    "contentType": "application/json",
-                    "htv:methodName": "DELETE"
-                }],
-                "safe": false,
-                "idempotent": false
-            },
-            "delete_light4": {
-                "***IMPORTANT_NOTE***": "DONT USE IT WITHOUT CAUTION",
-                "description": "Deletes a light from the bridge.",
-                "forms": [{
-                    "href": "http://192.168.0.111/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/lights/4",
-                    "contentType": "application/json",
-                    "htv:methodName": "DELETE"
-                }],
-                "safe": false,
-                "idempotent": false
+                "idempotent": false,
+                "safe": true
+
             }
         }
     }
