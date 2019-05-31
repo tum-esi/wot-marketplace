@@ -24,22 +24,33 @@
             <div class="project-content-right">
                 <mInfoBox :title="'User Information'" :content="userInfo"/>
             </div>
+            <div class="project-content-right">
+                <aButton class="submit-text"
+                :btnValue="filledForm"
+                :btnLabel="logoutBtnLabel"
+                :btnOnClick="'form-btn-clicked'"
+                v-on:form-btn-clicked="submitForm"
+                />
+            </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-
+import aButton from "@/components/01_atoms/aButton.vue";
 import mProjectItem from "@/components/02_molecules/mProjectItem.vue";
 import mInfoBox from "@/components/02_molecules/mInfoBox.vue";
+
 export default Vue.extend({
     name: "tAccount",
     components: {
         mProjectItem,
-        mInfoBox
+        mInfoBox,
+        aButton
   },
   data() {
     return {
+        logoutBtnLabel: "Logout",
         implementations : [
         {
           topic: ["actuator", "other", "sensor", "robotics"],
@@ -94,7 +105,6 @@ export default Vue.extend({
           td: {}
         }
       ],
-      status:"noResult",
       userInfo: [
         {
           title: "Username: ",
@@ -148,6 +158,15 @@ export default Vue.extend({
   float: right;
   padding-right: 20px;
   padding-top: 46px;
+}
+
+
+.submit-text {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  width: 30%; 
 }
 
 #search-results {
