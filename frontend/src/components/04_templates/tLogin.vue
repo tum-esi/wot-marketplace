@@ -88,12 +88,12 @@ export default Vue.extend({
       };
       userData.username = this.formElements[0].formValue;
 
-      console.log("submitttted: ",userData);
+      // console.log("submitttted: ",userData);
     }
   },
   watch: {
     filledForm() {
-      console.log("filledForm", this.filledForm);
+      // console.log("filledForm", this.filledForm);
     }
   }
 });
