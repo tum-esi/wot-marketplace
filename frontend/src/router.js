@@ -6,6 +6,7 @@ import pProject from './components/05_pages/pProject.vue'
 import tAbout from './components/04_templates/tAbout.vue'
 import tAccount from './components/04_templates/tAccount.vue'
 import tLogin from './components/04_templates/tLogin.vue'
+import tRegistration from './components/04_templates/tRegistration.vue'
 
 Vue.use(Router)
 
@@ -45,12 +46,7 @@ export default new Router({
         {
             path: '/registration',
             name: 'Registration',
-            component: tAccount
-        }, 
-        {
-            path: '/user',
-            name: 'User Page',
-            component: tAccount
+            component: tRegistration
         }
     ]
 })

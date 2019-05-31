@@ -162,3 +162,4 @@ database/populate/implementations/fake*
 backend/public/
 
 # End of https://www.gitignore.io/api/node,linux,macos,visualstudiocode
+backend/static/

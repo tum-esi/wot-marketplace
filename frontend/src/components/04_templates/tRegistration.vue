@@ -1,6 +1,7 @@
 <template>
-  <div class="login-container">
-    <h2>Login to WoTify</h2>
+  <div class="registration-container">
+    <h2>Register to WoTify</h2>
+    <p>Fields marked with * are mandatory</p>
     <div>
     <form @submit="submitForm" class="form">
       <mFormElement
@@ -22,17 +23,9 @@
     <div class="submit-btn">
     <aButton class="submit-text"
       :btnValue="filledForm"
-      :btnLabel="submitBtnLabel"
+      :btnLabel="formBtnLabel"
       :btnOnClick="'form-btn-clicked'"
       v-on:form-btn-clicked="submitForm"
-    />
-    </div>
-    <div class="register-btn">
-    <aButton class="submit-text"
-      :btnValue="something"
-      :btnLabel="registerBtnLabel"
-      :btnOnClick="'form-btn-clicked'"
-      v-on:form-btn-clicked="goToRegister"
     />
     </div>
   </div>
@@ -58,23 +51,39 @@ export default Vue.extend({
   },
   data(){
     return{
-      submitBtnLabel: "Login",
-      registerBtnLabel:"Register",
+      formBtnLabel: "Submit",
       elementInputValue: "",
       formElements: [
         {
-          formTitle: "Username",
-          // formDescription: "asdasd",
+          formTitle: "Username*",
           formInputType: "text",
-          formInputPlaceholder: "Type your username",
-          formKey: "mykey1"
+          formInputPlaceholder: "Choose a new username",
+          formKey: "registrationUsername"
         },
         {
-          formTitle: "Password",
-          // formDescription: "asdasd",
+          formTitle: "Password*",
           formInputType: "text",
-          formInputPlaceholder: "Type your password",
-          formKey: "mykey2"
+          // formDescription:"It should be minimum 6 characters",
+          formInputPlaceholder: "Choose a password of minimum 6 characters",
+          formKey: "registrationPassword"
+        },
+        {
+          formTitle: "Email*",
+          formInputType: "text",
+          formInputPlaceholder: "Provide your email",
+          formKey: "registrationEmail"
+        },
+        {
+          formTitle: "First Name",
+          formInputType: "text",
+          formInputPlaceholder: "Not visible to others",
+          formKey: "registrationFirstName"
+        },
+        {
+          formTitle: "Last Name",
+          formInputType: "text",
+          formInputPlaceholder: "Not visible to others",
+          formKey: "registrationLastName"
         }
       ],
       filledForm: []
@@ -101,25 +110,22 @@ export default Vue.extend({
 
 
 <style scoped>
-.login-container {
+.registration-container {
   padding: 10px;
 }
 
-.login-container h2 {
+.registration-container h2 {
   padding-bottom: 10px;
   padding-top: 30px;
   text-align: center;
 }
+.registration-container p {
+  font-size: x-small;
+  text-align: center;
+}
 .submit-btn {
-  padding-top: 5px;
   text-align: center;
 }
-
-.register-btn {
-  padding-top: 3px;
-  text-align: center;
-}
-
 .submit-text {
   margin-left: auto;
   margin-right: auto;
@@ -128,6 +134,8 @@ export default Vue.extend({
   width: 15%; 
 }
 .form {
+  width: 100%;
+  box-sizing: border-box;
   text-align: center;
   padding-top: 1px;
   padding-bottom: 3px;
