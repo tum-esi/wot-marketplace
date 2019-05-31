@@ -29,7 +29,7 @@
     </div>
     <div class="register-btn">
     <aButton class="submit-text"
-      :btnValue="something"
+      :btnValue="registration"
       :btnLabel="registerBtnLabel"
       :btnOnClick="'form-btn-clicked'"
       v-on:form-btn-clicked="goToRegister"
@@ -89,6 +89,11 @@ export default Vue.extend({
       userData.username = this.formElements[0].formValue;
 
       // console.log("submitttted: ",userData);
+    },
+    goToRegister() {
+      this.$router.push({
+        name: "Registration"
+      });
     }
   },
   watch: {
