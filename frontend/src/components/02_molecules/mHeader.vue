@@ -63,12 +63,13 @@ export default Vue.extend({
 
 <style scoped>
 .header-container {
-  background: #30b8a3;
+  background: #1C1C1C;
   color: #000;
   padding: 10px;
   overflow: hidden;
   width: 100%;
   font-size: 20px;
+  border-bottom: 5px solid #30b8a3;
 }
 
 .header-element {

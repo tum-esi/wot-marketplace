@@ -1,147 +1,128 @@
 <template>
-    <div class="account-container">
-        <div>
-            <div class="project-content-left">
-                <h2>Implementations</h2>
-                <div v-if="implementations.length === 0">
-                    You haven't contributed any implementations to WoTify yet
-                </div>
-                <div id="search-results">
-                    <mProjectItem
-                        v-for="(implementation, index) in implementations"
-                        :key="index"
-                        :projectName="implementation.name"
-                        :projectShortDescription="implementation.shortDescription"
-                        :projectPlatform="implementation.platform"
-                        :projectImplementationType="implementation.implementationType"
-                        :projectOnClick="'project-item-clicked'"
-                        v-on:project-item-clicked="projectItemClicked"
-                    />
-                </div>
-            </div>
+  <div v-if="isUserLoggedIn" class="account-container">
+    <div>
+      <div class="project-content-left">
+        <h2>Projects</h2>
+        <div
+          v-if="implementations.length === 0"
+        >You haven't contributed any implementations to WoTify yet</div>
+        <div id="search-results">
+          <mProjectItem
+            v-for="(implementation, index) in implementations"
+            :key="index"
+            :projectName="implementation.name"
+            :projectShortDescription="implementation.shortDescription"
+            :projectPlatform="implementation.platform"
+            :projectImplementationType="implementation.implementationType"
+            :projectOnClick="'project-item-clicked'"
+            v-on:project-item-clicked="projectItemClicked"
+          />
         </div>
-        <div>
-            <div class="project-content-right">
-                <mInfoBox :title="'User Information'" :content="userInfo"/>
-            </div>
-            <div class="project-content-right">
-                <aButton class="submit-text"
-                :btnValue="filledForm"
-                :btnLabel="logoutBtnLabel"
-                :btnOnClick="'form-btn-clicked'"
-                v-on:form-btn-clicked="submitForm"
-                />
-            </div>
-        </div>
+      </div>
     </div>
+    <div>
+      <div class="project-content-right">
+        <mInfoBox :title="'User Information'" :content="userInfo"/>
+      </div>
+      <div class="project-content-right">
+        <aButton
+          class="submit-text"
+          :btnLabel="'Logout'"
+          :btnOnClick="'logout'"
+          :btnClass="'logout-btn'"
+          v-on:logout="logoutBtnClicked"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 import aButton from "@/components/01_atoms/aButton.vue";
 import mProjectItem from "@/components/02_molecules/mProjectItem.vue";
 import mInfoBox from "@/components/02_molecules/mInfoBox.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default Vue.extend({
-    name: "tAccount",
-    components: {
-        mProjectItem,
-        mInfoBox,
-        aButton
+  name: "tAccount",
+  components: {
+    mProjectItem,
+    mInfoBox,
+    aButton
+  },
+  created() {
+    this.checkUserLoggedIn();
   },
   data() {
     return {
-        logoutBtnLabel: "Logout",
-        implementations : [
-        {
-          topic: ["actuator", "other", "sensor", "robotics"],
-          tags: ["python", "sensehat"],
-          _id: "5cb1c65f1c9d440000eb922d",
-          name: "SenseHAT_python",
-          shortDescription: "senseHAT WoT implementation in python",
-          longDescription: "sit ipsum exercitation",
-          github: "https://github.com/DK<~LeZK3s",
-          implementationType: "code",
-          platform: "arduino",
-          complexity: "expert",
-          td: {}
-        },
-                {
-          topic: ["actuator", "other", "sensor", "robotics"],
-          tags: ["python", "sensehat"],
-          _id: "5cb1c65f1c9d440000eb922d",
-          name: "SenseHAT_python",
-          shortDescription: "senseHAT WoT implementation in python",
-          longDescription: "sit ipsum exercitation",
-          github: "https://github.com/DK<~LeZK3s",
-          implementationType: "code",
-          platform: "arduino",
-          complexity: "expert",
-          td: {}
-        },
-                {
-          topic: ["actuator", "other", "sensor", "robotics"],
-          tags: ["python", "sensehat"],
-          _id: "5cb1c65f1c9d440000eb922d",
-          name: "SenseHAT_python",
-          shortDescription: "senseHAT WoT implementation in python",
-          longDescription: "sit ipsum exercitation",
-          github: "https://github.com/DK<~LeZK3s",
-          implementationType: "code",
-          platform: "arduino",
-          complexity: "expert",
-          td: {}
-        },
-                {
-          topic: ["actuator", "other", "sensor", "robotics"],
-          tags: ["python", "sensehat"],
-          _id: "5cb1c65f1c9d440000eb922d",
-          name: "SenseHAT_python",
-          shortDescription: "senseHAT WoT implementation in python",
-          longDescription: "sit ipsum exercitation",
-          github: "https://github.com/DK<~LeZK3s",
-          implementationType: "code",
-          platform: "arduino",
-          complexity: "expert",
-          td: {}
-        }
-      ],
+      isUserLoggedIn: false,
+      implementations: [],
       userInfo: [
         {
           title: "Username: ",
-          type: 'text',
-          content: "jackblack"
-        }, 
-        {
-          title: "Email: ", 
-          type: "link",
-          content: { link: "mailto:jackblack@black.com", label: "jackblack@black.com" }
-        }, 
-        {
-          title: "First Name: ", 
-          type: 'text', 
-          content: "Jack"
-        }, 
-        {
-          title: "Last Name", 
           type: "text",
-          content: "Black"
+          content: ""
+        },
+        {
+          title: "Email: ",
+          type: "link",
+          content: {
+            link: "",
+            label: ""
+          }
         }
-      ], 
+      ]
     };
   },
-  methods:{
+  mounted() {
+    this.getUserData();
+  },
+  computed: {
+    ...mapGetters("user", ["getUserLoggedIn", "getCurrenUser"])
+  },
+  methods: {
+    ...mapActions("user", ["logout"]),
+    async logoutBtnClicked() {
+      // await this.logout();
+      this.$router.push({ name: "Login" });
+    },
     projectItemClicked(clickedProject) {
       this.$router.push({
         name: "Project",
-        params: { project: { clickedProject } }
+        params: { id: clickedProject }
       });
+    },
+    async checkUserLoggedIn() {
+      this.isUserLoggedIn = await this.getUserLoggedIn;
+      if (!this.isUserLoggedIn) this.$router.push({ name: "Login" });
+    },
+    async getUserData() {
+      let currentUser = await this.getCurrenUser;
+      console.log('currentUser', currentUser);
+      this.implementations = currentUser.implementations;
+      this.userInfo[0].content = currentUser.name;
+      this.userInfo[1].content.link = `mailto:${currentUser.email}`;
+      this.userInfo[1].content.label = currentUser.email;
+      if (currentUser.firstName) {
+        this.userInfo.push({
+          title: "First Name: ",
+          type: "text",
+          content: currentUser.firstName
+        });
+      }
+      if (currentUser.lastName) {
+        this.userInfo.push({
+          title: "Last Name",
+          type: "text",
+          content: currentUser.lastName
+        });
+      }
     }
   }
-})
+});
 </script>
 
 <style scoped>
-
 .project-content-left {
   width: 75%;
   float: left;
@@ -149,24 +130,15 @@ export default Vue.extend({
   position: relative;
   margin-bottom: 10px;
 }
-.project-content-left h2{
-    padding-left: 20px;
+.project-content-left h2 {
+  padding-left: 20px;
 }
 
 .project-content-right {
   width: 25%;
   float: right;
-  padding-right: 20px;
+  padding-right: 15px;
   padding-top: 46px;
-}
-
-
-.submit-text {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1px;
-  padding-bottom: 3px;
-  width: 30%; 
 }
 
 #search-results {
@@ -175,5 +147,4 @@ export default Vue.extend({
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
 }
-
 </style>

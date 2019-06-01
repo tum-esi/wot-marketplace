@@ -43,7 +43,7 @@ a {
 
 .btn {
   color: #ffffff;
-  background: #000;
+  background: #1C1C1C;
   display: inline-block;
   border-color: #000;
   cursor: pointer;

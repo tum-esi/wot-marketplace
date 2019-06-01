@@ -61,6 +61,14 @@
     </ul>
   </div>
 
+   <input
+    v-else-if="inputType === 'password'"
+    type="password"
+    v-model="currentValue"
+    :placeholder="inputPlaceholder"
+    :class="inputStyle"
+  >
+
   <!-- Normal text input -->
   <input
     v-else
@@ -88,7 +96,7 @@ export default Vue.extend({
       type: String,
       required: true,
       validator: value =>
-        ["textarea", "checkbox", "radio", "text", "tag"].indexOf(value) !== -1
+        ["textarea", "checkbox", "radio", "text", "tag", "password"].indexOf(value) !== -1
     },
     /**
      * Placeholder for text input fields.

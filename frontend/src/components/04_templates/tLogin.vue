@@ -2,38 +2,38 @@
   <div class="login-container">
     <h2>Login to WoTify</h2>
     <div>
-    <form @submit="submitForm" class="form">
-      <mFormElement
-        v-for="(formElement, index) in formElements"
-        :key="index"
-        v-model="filledForm[formElement.formKey]"
-        :formStyle="formStyle"
-        :formKey="formElement.formKey"
-        :formTitle="formElement.formTitle"
-        :formDescription="formElement.formDescription"
-        :formInputType="formElement.formInputType"
-        :formInputPlaceholder="formElement.formInputPlaceholder"
-        :formValue="formElement.formValue"
-        :inputFormValues="formElement.inputFormValues"
-        :formInputStyle="formElement.formInputStyle"
-      />
-    </form>
+      <form @submit="submitForm" class="form">
+        <mFormElement
+          v-for="(formElement, index) in formElements"
+          :key="index"
+          v-model="filledForm[formElement.formKey]"
+          :formStyle="''"
+          :formKey="formElement.formKey"
+          :formTitle="formElement.formTitle"
+          :formDescription="formElement.formDescription"
+          :formInputType="formElement.formInputType"
+          :formInputPlaceholder="formElement.formInputPlaceholder"
+          :formValue="formElement.formValue"
+          :inputFormValues="formElement.inputFormValues"
+          :formInputStyle="formElement.formInputStyle"
+        />
+      </form>
     </div>
     <div class="submit-btn">
-    <aButton class="submit-text"
-      :btnValue="filledForm"
-      :btnLabel="submitBtnLabel"
-      :btnOnClick="'form-btn-clicked'"
-      v-on:form-btn-clicked="submitForm"
-    />
+      <aButton
+        :btnClass="'login-btn'"
+        :btnLabel="'Login'"
+        :btnOnClick="'form-btn-clicked'"
+        v-on:form-btn-clicked="submitForm"
+      />
     </div>
     <div class="register-btn">
-    <aButton class="submit-text"
-      :btnValue="registration"
-      :btnLabel="registerBtnLabel"
-      :btnOnClick="'form-btn-clicked'"
-      v-on:form-btn-clicked="goToRegister"
-    />
+      <aButton
+        :btnClass="'login-btn'"
+        :btnLabel="'Register'"
+        :btnOnClick="'form-btn-clicked'"
+        v-on:form-btn-clicked="goToRegister"
+      />
     </div>
   </div>
 </template>
@@ -49,17 +49,8 @@ export default Vue.extend({
     aButton,
     mFormElement
   },
-  props:{
-    // formBtnLabel: {
-    //   type: String,
-    //   required: true
-    // },
-    // filledForm: {}
-  },
-  data(){
-    return{
-      submitBtnLabel: "Login",
-      registerBtnLabel:"Register",
+  data() {
+    return {
       elementInputValue: "",
       formElements: [
         {
@@ -67,24 +58,24 @@ export default Vue.extend({
           // formDescription: "asdasd",
           formInputType: "text",
           formInputPlaceholder: "Type your username",
-          formKey: "mykey1"
+          formKey: "username"
         },
         {
           formTitle: "Password",
           // formDescription: "asdasd",
           formInputType: "text",
           formInputPlaceholder: "Type your password",
-          formKey: "mykey2"
+          formKey: "password"
         }
       ],
       filledForm: []
-    }
+    };
   },
   methods: {
     submitForm() {
       var userData = {
-        username:"",
-        password:""
+        username: "",
+        password: ""
       };
       userData.username = this.formElements[0].formValue;
 
@@ -125,13 +116,6 @@ export default Vue.extend({
   text-align: center;
 }
 
-.submit-text {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1px;
-  padding-bottom: 3px;
-  width: 15%; 
-}
 .form {
   text-align: center;
   padding-top: 1px;

@@ -87,4 +87,20 @@ export default Vue.extend({
     width: 30%;
     padding: 15px;
 }
+
+.logout-btn {
+  vertical-align: top;
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border: none;
+}
+
+.login-btn {
+  vertical-align: top;
+  width: 15%;
+  height: 50px;
+  padding: 10px;
+  border: none;
+}
 </style>

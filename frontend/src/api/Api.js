@@ -3,6 +3,9 @@ import axios from "axios";
 const baseUrl = "/api/";
 const searchUrl = "search?q="
 const projectUrl = "projects/"
+const loginUrl = "login"
+const logoutUrl = "logout"
+const registerUrl = "users"
 const searchOptions = {
     count: "&count=",
     skip: "&skip="
@@ -33,12 +36,8 @@ export async function getProjects(searchTerm, options) {
         let response = await axios.get(
             `${baseUrl}${searchUrl}${encodeURIComponent(searchTerm)}${searchOption}`
         );
-        // eslint-disable-next-line 
-        console.log(response.data.results)
         return response.data.results;
     } catch (error) {
-        // eslint-disable-next-line 
-        console.log("=== error", error);
         throw error;
     }
 }
@@ -49,8 +48,6 @@ export async function getProjects(searchTerm, options) {
  */
 export async function loadProject(projectId) {
     if (!projectId) return;
-
-    // load project from backend
     let project = null;
     try {
         project = await axios.get(
@@ -60,20 +57,6 @@ export async function loadProject(projectId) {
         throw error;
     }
     return project;
-    // return [
-    //     {
-    //         name: "SenseHAT_python",
-    //         shortDescription: "senseHAT WoT implementation in python",
-    //         longDescription: projectDescription,
-    //         td: {},
-    //         implementationType: "code",
-    //         platform: "arduino",
-    //         complexity: "expert",
-    //         topic: ["actuator", "other", "sensor", "robotics"],
-    //         github: "https://github.com/DK<~LeZK3s",
-    //         tags: ["python", "sensehat"],
-    //     }
-    // ];
 }
 
 /**
@@ -90,10 +73,45 @@ export async function addNewProject(newProject) {
     }
 }
 
-// export function register(newUser) {
+export async function register(newUser) {
+    if (!newUser) return;
+    try {
+        await axios.post(`${baseUrl}${registerUrl}`, newUser);
+    } catch (error) {
+        throw error;
+    }
+}
 
-// }
+export async function login(userCredentials) {
+    if (!userCredentials) return;
+    try {
+        await axios.post(`${baseUrl}${loginUrl}`, userCredentials);
+    } catch (error) {
+        throw error;
+    }
+}
 
-// export function login(userCredentials) {
+export async function logout(currentUser) {
+    if (!currentUser) return;
+    try {
+        await axios.post(`${baseUrl}${logoutUrl}`, currentUser);
+    } catch (error) {
+        throw error;
+    }
+}
 
-// }
+// Dummy project 
+    // return [
+    //     {
+    //         name: "SenseHAT_python",
+    //         shortDescription: "senseHAT WoT implementation in python",
+    //         longDescription: projectDescription,
+    //         td: {},
+    //         implementationType: "code",
+    //         platform: "arduino",
+    //         complexity: "expert",
+    //         topic: ["actuator", "other", "sensor", "robotics"],
+    //         github: "https://github.com/DK<~LeZK3s",
+    //         tags: ["python", "sensehat"],
+    //     }
+    // ];

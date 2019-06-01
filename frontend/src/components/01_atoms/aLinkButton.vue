@@ -10,7 +10,7 @@
 import Vue from "vue";
 
 /**
- * A basic router link button, emits a passed event with an optional passed value. 
+ * A basic router link button, emits a passed event with an optional passed value.
  */
 
 export default Vue.extend({
@@ -76,11 +76,26 @@ export default Vue.extend({
   width: 150px;
   height: 50px;
   padding: 10px;
+  background: #1C1C1C;
+  color: #fff;
   border: none;
+  font-size: 20px;
+  border-radius: 3px;
+}
+
+.link-btn:hover {
+  background: #333;
+}
+
+.link-btn:focus {
+  outline: none;
+  outline-offset: none;
 }
 
 .underlined {
   padding-bottom: 7px;
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #30b8a3;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
 }
 </style>

@@ -8,7 +8,7 @@
         v-for="(formElement, index) in formElements"
         :key="index"
         v-model="filledForm[formElement.formKey]"
-        :formStyle="formStyle"
+        :formStyle="''"
         :formKey="formElement.formKey"
         :formTitle="formElement.formTitle"
         :formDescription="formElement.formDescription"
@@ -62,7 +62,7 @@ export default Vue.extend({
         },
         {
           formTitle: "Password*",
-          formInputType: "text",
+          formInputType: "password",
           // formDescription:"It should be minimum 6 characters",
           formInputPlaceholder: "Choose a password of minimum 6 characters",
           formKey: "registrationPassword"

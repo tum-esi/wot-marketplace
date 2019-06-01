@@ -43,7 +43,7 @@ export default Vue.extend({
      * Custom css class for styling of form element.
      */
     formStyle: {
-      type: Object,
+      type: [Object, String],
       required: false
     },
     /**np
@@ -61,7 +61,7 @@ export default Vue.extend({
       type: String,
       required: true,
       validator: value =>
-        ["textarea", "checkbox", "radio", "text", "tag"].indexOf(value) !== -1
+        ["textarea", "checkbox", "radio", "text", "tag", "password"].indexOf(value) !== -1
     },
     /**
      * Placeholder for input fields.
