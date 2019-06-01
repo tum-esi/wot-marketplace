@@ -18,7 +18,8 @@ export default Vue.extend({
   },
   props: {
     markDown: {
-      required: true
+      required: false,
+      default: ""
     }
   }
 });

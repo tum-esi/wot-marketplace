@@ -22,10 +22,9 @@ export default new Router({
             component: tFormNewProject
         },
         {
-            path: '/project',
+            path: '/project/:id',
             name: 'Project',
             component: pProject,
-            props: true
         },
         {
             path: '/about',

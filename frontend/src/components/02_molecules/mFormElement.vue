@@ -44,10 +44,9 @@ export default Vue.extend({
      */
     formStyle: {
       type: Object,
-      required: false,
-      default: ""
+      required: false
     },
-    /**
+    /**np
      * Short description of form element below title.
      */
     formDescription: {
@@ -122,7 +121,7 @@ export default Vue.extend({
 
 .big-form-el-left {
   width: 25%;
-  display: box;
+  display: block;
   box-sizing: border-box;
   float: left;
   padding-right: 10px;

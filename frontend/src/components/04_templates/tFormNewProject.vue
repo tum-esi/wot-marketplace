@@ -43,7 +43,18 @@ export default Vue.extend({
   },
   data() {
     return {
-      filledForm: []
+      filledForm: {
+        name: "", 
+        shortDescription: "",
+        longDescription: "",
+        github: "",
+        td: "",
+        topic: [],
+        implementation: "",
+        platform: "",
+        tags: [],
+        complexity: "",
+      }
     };
   },
   computed: {
@@ -63,14 +74,20 @@ export default Vue.extend({
     }
   },
   methods: {
+    ...mapActions("project", [
+      "addNewProject"
+    ]),
     submitForm() {
-      console.log(this.filledForm);
+      // eslint-disable-next-line
+      console.log("filledForm", this.filledForm);
+      this.addNewProject({ newProject : this.filledForm});
       //   event.preventDefault();
     }
   }, 
   watch: {
     filledForm() {
-      console.log("filledForm", this.filledForm);
+      // eslint-disable-next-line
+      console.log("filledForm watch", this.filledForm);
     }
   }
 });
