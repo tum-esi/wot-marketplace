@@ -31,7 +31,7 @@ export default Vue.extend({
         },
         {
           linkBtnStyle: "header-nav-element",
-          linkBtnValue: "About",
+          linkBtnValue: "Account",
           linkBtnIsActive: false,
           linkBtnLabel: "Account"
         },

@@ -1,28 +1,33 @@
 {
     "name": "piCamera flask",
     "shortDescription": "WoTifies the standard Raspberry Pi camera with Python",
-    "longDescription": "# PiCamera    ##    Requirements        -        python >= 3.5 -        picamera -        flask    ## Installation        -        Install python: `sudo apt-get install python3 python3-pip` -        install requirements: `pip3 install -r requirement.txt` -        To run the program: `python3 camera_server.py` -        Make sure that this script runs automatically on startup.Crontab can do this on Linux. -            The server runs on port 8080 ",
-    "github": "https://github.com/tum-ei-esi/wot-sys",
+    "longDescription": "# PiCamera\r\n\r\n## Network Configuration\r\n\r\nWiFi SSID and password are stored at: /etc/wpa_supplicant/wpa_supplicant.conf\r\n\r\n## Requirements\r\n- python >= 3.5\r\n- picamera\r\n- flask\r\n\r\n## Installation\r\n- Install python: `sudo apt-get install python3 python3-pip`\r\n- install requirements: `pip3 install -r requirement.txt`\r\n- To run the program: `python3 camera_server.py`\r\n- Make sure that this script runs automatically on startup. Crontab can do this on Linux. Use `crontab -e` to configure crontab. Actually launch.sh does the launch\r\n- The server runs on port 8080",
+    "github": "https://github.com/tum-ei-esi/wot-sys/tree/master/Devices/camera",
     "implementationType": "code",
     "topic": ["other"],
     "platform": "raspberry",
     "tags": ["camera","picamera"],
     "complexity": "simple",
     "td": {
+        "@context": ["https://www.w3.org/2019/wot/td/v1", {
+            "@language": "en"
+        }],
         "actions": {},
-        "description": "a camera mounted on Raspberry Pi",
-        "id": "esi:picamera:192.168.0.108",
-        "name": "piCamera",
+        "description": "A camera mounted on Raspberry Pi",
+        "descriptions": {
+            "en": "A camera mounted on Raspberry Pi"
+        },
+        "id": "esi:picamera:TUMEIESI-Rpi-Camera.local",
         "properties": {
             "configuration": {
-                "description": "configuration of the camera",
+                "description": "Configuration of the camera",
                 "forms": [{
-                    "contenttype": "application/json",
-                    "href": "http://192.168.0.108:8080/properties/configuration"
+                    "contentType": "application/json",
+                    "href": "http://TUMEIESI-Rpi-Camera.local:8080/properties/configuration"
                 }],
                 "properties": {
                     "brightness": {
-                        "description": "brightness of the camera",
+                        "description": "Brightness of the camera",
                         "maximum": 100,
                         "minimum": 0,
                         "readOnly": false,
@@ -30,17 +35,17 @@
                         "writeOnly": false
                     },
                     "size": {
-                        "description": "size (width, height) of the frame",
+                        "description": "Size (width, height) of the frame",
                         "properties": {
                             "height": {
-                                "description": "height of the camera",
+                                "description": "Height of the camera",
                                 "minimum": 0,
                                 "readOnly": false,
                                 "type": "number",
                                 "writeOnly": false
                             },
                             "width": {
-                                "description": "width of the camera",
+                                "description": "Width of the camera",
                                 "minimum": 0,
                                 "readOnly": false,
                                 "type": "number",
@@ -60,15 +65,19 @@
             "frame": {
                 "description": "frame of the current camera",
                 "forms": [{
-                    "contenttype": "image/jpeg",
-                    "href": "http://192.168.0.108:8080/properties/frame"
+                    "contentType": "image/jpeg",
+                    "href": "http://TUMEIESI-Rpi-Camera.local:8080/properties/frame"
                 }],
-                "readOnly": false,
+                "readOnly": true,
                 "writeOnly": false
             }
         },
-        "security": [{
-            "scheme": "nosec"
-        }]
+        "security": "nosec_sc",
+        "securityDefinitions": {
+            "nosec_sc": {
+                "scheme": "nosec"
+            }
+        },
+        "title": "piCamera"
     }
 }

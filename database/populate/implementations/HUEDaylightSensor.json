@@ -1,0 +1,108 @@
+{
+    "name": "HUE Daylight Sensor",
+    "shortDescription": "TD of a HUE Daylight Sensor",
+    "longDescription": "## Philips HUE Software-based Daylight Sensor\r\n\r\nThis is a TD of a daylight sensor that runs on a Philips HUE Bridge and that can be used to learn whether there is daylight in the Bridge's location or not. It is based on the GPS location.\r\n\r\n### Get it running\r\n\r\n* Follow the Philips HUE in-app guide to get your bridge started.\r\n* Follow the [developer page](https://developers.meethue.com/develop/get-started-2/) to get an API Key\r\n* The base URI is using our API Key and Sensor number, replace them with yours:\r\n  * Look for the base URI in the TD\r\n  * Replace the part between `/api/` and `/sensors/` with your API key.\r\n  * This TD is representing the sensor number 1. You should replace the part after `/sensors/` with your sensor's number.\r\n  * This TD uses `Philips-hue` as hostname, in case you have multiple HUE Bridges, you will need to change this in the base URI as well\r\n",
+    "github": "",
+    "implementationType": "template",
+    "topic": ["sensor"],
+    "platform": "other",
+    "tags": ["Philips", "HUE", "Sensor"],
+    "complexity": "simple",
+    "td": {
+        "title": "Hue Daylight Sensor",
+        "description": "A virtual sensor that provides daylight information based on location information",
+        "id": "urn:dev:ops:32473-HueDaylight-1234",
+        "@context": [
+            "https://www.w3.org/2019/wot/td/v1",
+            {
+                "@language": "en"
+            }
+        ],
+        "securityDefinitions": {
+            "nosec_sc": {
+                "scheme": "nosec"
+            }
+        },
+        "security": [
+            "nosec_sc"
+        ],
+        "base": "http://Philips-hue.local/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/sensors/1",
+        "properties": {
+            "sensorInformation": {
+                "description": "Daylight Sensor information from the bridge",
+                "type": "object",
+                "properties": {
+                    "state": {
+                        "type": "object",
+                        "readOnly": true,
+                        "writeOnly": false,
+                        "properties": {
+                            "daylight": {
+                                "description": "Whether there is daylight or not",
+                                "type": "boolean"
+                            },
+                            "lastupdated": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "config": {
+                        "readOnly": false,
+                        "writeOnly": false,
+                        "type": "object",
+                        "properties": {
+                            "on": {
+                                "type": "boolean"
+                            },
+                            "configured": {
+                                "type": "boolean"
+                            },
+                            "sunriseoffset": {
+                                "type": "integer"
+                            },
+                            "sunsetoffset": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": false,
+                        "writeOnly": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "Daylight",
+                        "readOnly": true,
+                        "writeOnly": false
+                    },
+                    "modelid": {
+                        "type": "string",
+                        "const": "PHDL00",
+                        "readOnly": true,
+                        "writeOnly": false
+                    },
+                    "manufacturername": {
+                        "type": "string",
+                        "const": "Philips",
+                        "readOnly": true,
+                        "writeOnly": false
+                    },
+                    "swversion": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                },
+                "forms": [{
+                    "href": "",
+                    "contentType": "application/json",
+                    "htv:methodName": "GET",
+                    "op": [
+                        "readproperty"
+                    ]
+                }]
+            }
+        }
+    }
+}

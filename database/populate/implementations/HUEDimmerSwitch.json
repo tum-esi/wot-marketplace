@@ -1,0 +1,118 @@
+{
+    "name": "HUE Dimmer Switch",
+    "shortDescription": "TD of a HUE Dimmer Switch",
+    "longDescription": "## Philips HUE Dimmer Switch\r\n\r\nThis is a TD of a dimmer switch that connects to a Philips HUE Bridge and that can be used to turn on and off different HUE Lights.\r\n\r\n### Get it running\r\n\r\n* Follow the Philips HUE in-app guide to get your bridge started.\r\n* Follow the [developer page](https://developers.meethue.com/develop/get-started-2/) to get an API Key\r\n* The base URI is using our API Key and Sensor number, replace them with yours:\r\n  * Look for the base URI in the TD\r\n  * Replace the part between `/api/` and `/sensors/` with your API key.\r\n  * This TD is representing the sensor number 2. You should replace the part after `/sensors/` with your sensor's number.\r\n  * This TD uses `Philips-hue` as hostname, in case you have multiple HUE Bridges, you will need to change this in the base URI as well\r\n",
+    "github": "",
+    "implementationType": "template",
+    "topic": ["lighting"],
+    "platform": "other",
+    "tags": ["Philips", "HUE", "Switch"],
+    "complexity": "simple",
+    "td": {
+        "title": "Hue Dimmer Switch",
+        "description": "A controller to switch off and on all the lights or to dim them",
+        "id": "urn:dev:ops:32473-HueSwitch-1234",
+        "@context": [
+            "https://www.w3.org/2019/wot/td/v1",
+            {
+                "@language": "en"
+            }
+        ],
+        "securityDefinitions": {
+            "nosec_sc": {
+                "scheme": "nosec"
+            }
+        },
+        "security": [
+            "nosec_sc"
+        ],
+        "base": "http://Philips-hue.local/api/R6D7CYQFzXckikMPLEL8WbSZWg9XKkEyx-NrgKws/sensors/2",
+        "properties": {
+            "switchInformation": {
+                "description": "Switch information from the bridge with the given id.",
+                "type": "object",
+                "properties": {
+                    "state": {
+                        "type": "object",
+                        "description": "When the switch last pressed and what button was pressed and how it was pressed",
+                        "readOnly": true,
+                        "writeOnly": false,
+                        "properties": {
+                            "buttonevent": {
+                                "description": "*2 means short release, * means long release. 1* is the turn on button, 2* is the brighten button, 3* is the dim button, 4* is the turn off button",
+                                "type": "integer",
+                                "enum": [1002, 1003, 2002, 2003, 3002, 3003, 4002, 4003]
+                            },
+                            "lastupdated": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "config": {
+                        "type": "object",
+                        "properties": {
+                            "on": {
+                                "type": "boolean",
+                                "readOnly": false,
+                                "writeOnly": false
+                            },
+                            "battery": {
+                                "type": "integer",
+                                "maximum": 100,
+                                "readOnly": false,
+                                "writeOnly": false
+                            },
+                            "reachable": {
+                                "type": "boolean",
+                                "readOnly": false,
+                                "writeOnly": false
+                            }
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": false,
+                        "writeOnly": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "ZLLSwitch",
+                        "readOnly": true,
+                        "writeOnly": false
+                    },
+                    "modelid": {
+                        "type": "string",
+                        "const": "RWL021",
+                        "readOnly": true,
+                        "writeOnly": false
+                    },
+                    "manufacturername": {
+                        "type": "string",
+                        "const": "Philips",
+                        "readOnly": true,
+                        "writeOnly": false
+                    },
+                    "swversion": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "uniqueid": {
+                        "type": "string",
+                        "const": "00:17:88:01:04:ec:52:d2-02-fc00",
+                        "readOnly": true,
+                        "writeOnly": false
+                    }
+                },
+                "forms": [{
+                    "href": "",
+                    "contentType": "application/json",
+                    "htv:methodName": "GET",
+                    "op": [
+                        "readproperty"
+                    ]
+                }]
+            }
+        }
+    }
+}
