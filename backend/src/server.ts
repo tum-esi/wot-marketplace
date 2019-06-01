@@ -299,8 +299,10 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // Process search requests
     app.get("/api/search", (req, res, next) => {
+        let search: Object = {$text: {$search: req.query.q}}
+        if (!req.query.q) search = {}
         models.ImplementationModel.find(
-            {$text: {$search: req.query.q}},
+            search,
             null,
             {
                 limit: parseInt(req.query.count, 10),
@@ -310,7 +312,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
             },
             (err, indx) => { 
                 if (err) { next(err); return Logger.error("ERR: " + err); }
-                models.ImplementationModel.countDocuments({$text: {$search: req.query.q}}, (err, count) => {
+                models.ImplementationModel.countDocuments(search, (err, count) => {
                     if (err) { next(err); return Logger.error("ERR: " + err); }
                     // TODO: Set headers
                     res.json({
@@ -327,7 +329,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // catch all non existing paths and return 404
     app.use((req, res, next) => {
-        res.status(404).redirect("/");
+        res.status(404).redirect("/");  //FIXME: remove redirect once frontend is ready
     });
     
     app.use(ExpressWinston.errorLogger({
