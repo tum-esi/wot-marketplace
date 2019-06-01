@@ -1,11 +1,12 @@
 import Express from "express";
 import Path from "path";
 import Mongoose from "mongoose";
-import { ImplementationSchema, UserSchema } from "./schemas";
+import Models from "./database/db";
 import BodyParser from "body-parser";
 import Session from "express-session";
 import Favicon from "serve-favicon";
 import ConnectMongo from "connect-mongo";
+import Slashes from "connect-slashes";
 import Config from "../config/config";
 import Logger from "./logger";
 import Uuid from "uuid";
@@ -14,28 +15,7 @@ import Passport from "passport";
 import PassportLocal from "passport-local";
 import Helmet from "helmet";
 import ExpressWinston from "express-winston";
-
-
-// Get correct configuration
-let config = Config[process.env.NODE_ENV || 'development']
-
-
-// Setup MongoDB connection
-function setupMongo() {
-    Mongoose.connect(
-        config.database.url, 
-        { 
-            useNewUrlParser: true, 
-            useCreateIndex: true 
-        });
-    let db = Mongoose.connection;
-    db.on('error', (err) => Logger.error("DB connection error: " + err))
-    db.once('open', () => Logger.info("Successfully connected to database!"))
-    ImplementationSchema.index({'$**': 'text'});
-    let ImplementationModel = Mongoose.model("ImplementationModel", ImplementationSchema, "implementations" );
-    let UserModel =  Mongoose.model("UserModel", UserSchema, "users");
-    return {ImplementationModel: ImplementationModel, UserModel: UserModel}
-}
+import HttpError from "http-errors";
 
 
 function setupPassport(userModel) {
@@ -87,6 +67,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     app.use("/public", Express.static(Path.join(__dirname, "../public")));
     app.use("/js", Express.static(Path.join(__dirname, "../public/js")));
     app.use("/css", Express.static(Path.join(__dirname, "../public/css")));
+    app.use(Slashes());
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
     app.use(ExpressWinston.logger({
@@ -94,9 +75,9 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         ignoredRoutes: ["/api/login"]
     }));
     app.use(Session({
-        name: config.session.cookieName,
+        name: Config.session.cookieName,
         genid: (req) => { return Uuid.v4() },
-        secret: config.session.secret, 
+        secret: Config.session.secret, 
         resave: false,
         saveUninitialized: false,
         store: new MongoStore({ mongooseConnection: Mongoose.connection }),
@@ -112,7 +93,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // Serve index.html
     app.get("/", (req, res) => {
-        res.sendFile(Path.join(__dirname, config.index));
+        res.sendFile(Path.join(__dirname, Config.index));
     });
 
     // Login process
@@ -170,7 +151,8 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         newUser.save({validateBeforeSave: true}, (err, product) => {
             if (err) {
                 // TODO: Add correct message in case of failure
-                Logger.error("ERR: " + err); next({status: 400, message: err});
+                Logger.error("ERR: " + err);
+                next(HttpError(400, err));
             } else { 
                 res.status(201).send("CREATED");
                 req.login(product, (err) => { if (err) next(err) });
@@ -322,7 +304,9 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
             null,
             {
                 limit: parseInt(req.query.count, 10),
-                skip: parseInt(req.query.skip, 10)
+                skip: parseInt(req.query.skip, 10),
+                projection: { score: {$meta: "textScore" }},
+                sort: { score: {$meta: "textScore" }}
             },
             (err, indx) => { 
                 if (err) { next(err); return Logger.error("ERR: " + err); }
@@ -343,8 +327,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // catch all non existing paths and return 404
     app.use((req, res, next) => {
-        res.status(404);
-        res.send("URL not found.");
+        res.status(404).redirect("/");
     });
     
     app.use(ExpressWinston.errorLogger({
@@ -364,10 +347,9 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
 
 function main() {
-    let models = setupMongo()
-    setupPassport(models.UserModel)
-    let app = setupExpress(models)
-    app.listen(config.server.port, () => { Logger.info(`Server listening on port ${config.server.port}!`) });
+    setupPassport(Models.UserModel)
+    let app = setupExpress(Models)
+    app.listen(Config.server.port, () => { Logger.info(`Server listening on port ${Config.server.port}!`) });
 }
 
 
