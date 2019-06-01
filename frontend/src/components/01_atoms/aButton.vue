@@ -99,7 +99,7 @@ export default Vue.extend({
 .login-btn {
   vertical-align: top;
   width: 15%;
-  height: 50px;
+  height: 40px;
   padding: 10px;
   border: none;
 }

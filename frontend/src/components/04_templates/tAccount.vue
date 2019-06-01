@@ -65,11 +65,8 @@ export default Vue.extend({
         },
         {
           title: "Email: ",
-          type: "link",
-          content: {
-            link: "",
-            label: ""
-          }
+          type: "text",
+          content: ""
         }
       ]
     };
@@ -101,8 +98,7 @@ export default Vue.extend({
       console.log('currentUser', currentUser);
       this.implementations = currentUser.implementations;
       this.userInfo[0].content = currentUser.name;
-      this.userInfo[1].content.link = `mailto:${currentUser.email}`;
-      this.userInfo[1].content.label = currentUser.email;
+      this.userInfo[1].content = currentUser.email;
       if (currentUser.firstName) {
         this.userInfo.push({
           title: "First Name: ",

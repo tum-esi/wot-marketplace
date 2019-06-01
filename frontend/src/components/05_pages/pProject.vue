@@ -144,7 +144,7 @@ export default {
   display: inline-block;
   padding: 40px 0 0 0;
   position: relative;
-  /* display:none; */
+  background: #fff;
 }
 
 .project-content-left-btns {

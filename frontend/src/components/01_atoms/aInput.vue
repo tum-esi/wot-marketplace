@@ -8,7 +8,7 @@
   />
 
   <!-- Checkboxes: multiple selection is possible -->
-  <div v-else-if="inputType === 'checkbox'">
+  <!-- <div v-else-if="inputType === 'checkbox'">
     <div
       class="checkbox-item"
       v-for="(inputFormValueElement, index) in inputFormValues"
@@ -17,16 +17,17 @@
       <input
         type="checkbox"
         class="checkbox-el"
+        v-model="currentValue"
         :class="inputStyle"
         :value="inputFormValueElement"
         :id="inputFormValueElement"
       >
       <label class="checkbox-label" :for="inputFormValueElement">{{ inputFormValueElement }}</label>
     </div>
-  </div>
+  </div>-->
 
   <!-- Radio elements: only single option -->
-  <div v-else-if="inputType === 'radio'">
+  <!-- <div v-else-if="inputType === 'radio'">
     <div
       class="checkbox-item"
       v-for="(inputFormValueElement, index) in inputFormValues"
@@ -41,6 +42,17 @@
       >
       <label class="checkbox-label" :for="inputFormValueElement">{{ inputFormValueElement }}</label>
     </div>
+  </div>-->
+  <div v-else-if="inputType === 'radio'">
+    <input
+      type="radio"
+      class="checkbox-el"
+      v-model="currentValue"
+      :class="inputStyle"
+      :value="inputFormValues"
+      :id="inputFormValues"
+    >
+    <label class="checkbox-label" :for="inputFormValues">{{ inputFormValues }}</label>
   </div>
 
   <!-- Tags -->
@@ -61,7 +73,7 @@
     </ul>
   </div>
 
-   <input
+  <input
     v-else-if="inputType === 'password'"
     type="password"
     v-model="currentValue"
@@ -96,7 +108,9 @@ export default Vue.extend({
       type: String,
       required: true,
       validator: value =>
-        ["textarea", "checkbox", "radio", "text", "tag", "password"].indexOf(value) !== -1
+        ["textarea", "checkbox", "radio", "text", "tag", "password"].indexOf(
+          value
+        ) !== -1
     },
     /**
      * Placeholder for text input fields.
@@ -140,9 +154,13 @@ export default Vue.extend({
   computed: {
     currentValue: {
       get() {
+        // console.log(`==aInput== [${this.inputType}]get: ${this.inputValue}`);
         return this.inputValue;
       },
       set(val) {
+        // console.log(
+        //   // `==aInput== [${this.inputType}]set: ${val}, ${this.inputValue}`
+        // );
         this.$emit("input", val, this.inputValue);
       }
     }
@@ -270,5 +288,16 @@ export default Vue.extend({
   cursor: default;
   font-size: 14px;
   float: left;
+}
+
+.login-input {
+  width: 15%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #999;
+  font-size: 16px;
+  outline: none;
+  resize: none;
 }
 </style>

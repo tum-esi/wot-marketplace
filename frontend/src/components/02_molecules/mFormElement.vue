@@ -4,7 +4,23 @@
       <label :class="formStyle.title">{{ formTitle }}</label>
       <p :class="formStyle.description">{{ formDescription }}</p>
     </div>
+    <div
+      v-if="formInputType === 'radio' || formInputType === 'checkbox'"
+      :class="formStyle.rightEl"
+    >
+      <aInput
+        v-for="(inputElement, index) in inputFormValues"
+        :key="index"
+        :class="`${formStyle.rightEl} checkbox-item`"
+        v-model="currentValue"
+        :inputType="formInputType"
+        :inputPlaceholder="formInputPlaceholder"
+        :inputFormValues="inputElement"
+        :inputStyle="formInputStyle"
+      />
+    </div>
     <aInput
+      v-else
       :class="formStyle.rightEl"
       v-model="currentValue"
       :inputType="formInputType"
@@ -44,7 +60,8 @@ export default Vue.extend({
      */
     formStyle: {
       type: [Object, String],
-      required: false
+      required: false,
+      default: ""
     },
     /**np
      * Short description of form element below title.
@@ -61,7 +78,9 @@ export default Vue.extend({
       type: String,
       required: true,
       validator: value =>
-        ["textarea", "checkbox", "radio", "text", "tag", "password"].indexOf(value) !== -1
+        ["textarea", "checkbox", "radio", "text", "tag", "password"].indexOf(
+          value
+        ) !== -1
     },
     /**
      * Placeholder for input fields.
@@ -134,5 +153,10 @@ export default Vue.extend({
 
 .big-form-title {
   font-weight: bold;
+}
+
+.login-form-title {
+  color: #1C1C1C;
+  font-size: 20px;
 }
 </style>

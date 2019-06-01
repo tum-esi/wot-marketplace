@@ -42,6 +42,7 @@ export default Vue.extend({
   word-wrap: normal;
   padding: 5px 10px;
   color: #222;
+  background: #fff;
 }
 
 .code-container code {

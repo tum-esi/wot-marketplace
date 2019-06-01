@@ -7,7 +7,7 @@
           v-for="(formElement, index) in formElements"
           :key="index"
           v-model="filledForm[formElement.formKey]"
-          :formStyle="''"
+          :formStyle="formStyle"
           :formKey="formElement.formKey"
           :formTitle="formElement.formTitle"
           :formDescription="formElement.formDescription"
@@ -52,20 +52,23 @@ export default Vue.extend({
   data() {
     return {
       elementInputValue: "",
+      formStyle: {
+        title: "login-form-title"
+      },
       formElements: [
         {
           formTitle: "Username",
-          // formDescription: "asdasd",
           formInputType: "text",
           formInputPlaceholder: "Type your username",
-          formKey: "username"
+          formKey: "username",
+          formInputStyle: "login-input"
         },
         {
           formTitle: "Password",
-          // formDescription: "asdasd",
-          formInputType: "text",
+          formInputType: "password",
           formInputPlaceholder: "Type your password",
-          formKey: "password"
+          formKey: "password",
+          formInputStyle: "login-input"
         }
       ],
       filledForm: []

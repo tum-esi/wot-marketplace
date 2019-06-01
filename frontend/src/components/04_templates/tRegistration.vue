@@ -3,30 +3,30 @@
     <h2>Register to WoTify</h2>
     <p>Fields marked with * are mandatory</p>
     <div>
-    <form @submit="submitForm" class="form">
-      <mFormElement
-        v-for="(formElement, index) in formElements"
-        :key="index"
-        v-model="filledForm[formElement.formKey]"
-        :formStyle="''"
-        :formKey="formElement.formKey"
-        :formTitle="formElement.formTitle"
-        :formDescription="formElement.formDescription"
-        :formInputType="formElement.formInputType"
-        :formInputPlaceholder="formElement.formInputPlaceholder"
-        :formValue="formElement.formValue"
-        :inputFormValues="formElement.inputFormValues"
-        :formInputStyle="formElement.formInputStyle"
-      />
-    </form>
+      <form @submit="submitForm" class="form">
+        <mFormElement
+          v-for="(formElement, index) in formElements"
+          :key="index"
+          v-model="filledForm[formElement.formKey]"
+          :formStyle="formStyle"
+          :formKey="formElement.formKey"
+          :formTitle="formElement.formTitle"
+          :formDescription="formElement.formDescription"
+          :formInputType="formElement.formInputType"
+          :formInputPlaceholder="formElement.formInputPlaceholder"
+          :formValue="formElement.formValue"
+          :inputFormValues="formElement.inputFormValues"
+          :formInputStyle="formElement.formInputStyle"
+        />
+      </form>
     </div>
     <div class="submit-btn">
-    <aButton class="submit-text"
-      :btnValue="filledForm"
-      :btnLabel="formBtnLabel"
-      :btnOnClick="'form-btn-clicked'"
-      v-on:form-btn-clicked="submitForm"
-    />
+      <aButton
+        :btnClass="'login-btn'"
+        :btnLabel="'Submit'"
+        :btnOnClick="'form-btn-clicked'"
+        v-on:form-btn-clicked="submitForm"
+      />
     </div>
   </div>
 </template>
@@ -42,62 +42,61 @@ export default Vue.extend({
     aButton,
     mFormElement
   },
-  props:{
-    // formBtnLabel: {
-    //   type: String,
-    //   required: true
-    // },
-    // filledForm: {}
-  },
-  data(){
-    return{
-      formBtnLabel: "Submit",
+  data() {
+    return {
       elementInputValue: "",
+      formStyle: {
+        title: "login-form-title"
+      },
       formElements: [
         {
           formTitle: "Username*",
           formInputType: "text",
           formInputPlaceholder: "Choose a new username",
-          formKey: "registrationUsername"
+          formKey: "registrationUsername",
+          formInputStyle: "login-input"
         },
         {
           formTitle: "Password*",
           formInputType: "password",
-          // formDescription:"It should be minimum 6 characters",
           formInputPlaceholder: "Choose a password of minimum 6 characters",
-          formKey: "registrationPassword"
+          formKey: "registrationPassword",
+          formInputStyle: "login-input"
         },
         {
           formTitle: "Email*",
           formInputType: "text",
           formInputPlaceholder: "Provide your email",
-          formKey: "registrationEmail"
+          formKey: "registrationEmail",
+          formInputStyle: "login-input"
         },
         {
           formTitle: "First Name",
           formInputType: "text",
           formInputPlaceholder: "Not visible to others",
-          formKey: "registrationFirstName"
+          formKey: "registrationFirstName",
+          formInputStyle: "login-input"
         },
         {
           formTitle: "Last Name",
           formInputType: "text",
           formInputPlaceholder: "Not visible to others",
-          formKey: "registrationLastName"
+          formKey: "registrationLastName",
+          formInputStyle: "login-input"
         }
       ],
       filledForm: []
-    }
+    };
   },
   methods: {
     submitForm() {
       var userData = {
-        username:"",
-        password:""
+        username: "",
+        password: ""
       };
       userData.username = this.formElements[0].formValue;
 
-      console.log("submitttted: ",userData);
+      console.log("submitttted: ", userData);
     }
   },
   watch: {
@@ -116,7 +115,7 @@ export default Vue.extend({
 
 .registration-container h2 {
   padding-bottom: 10px;
-  padding-top: 30px;
+  padding-top: 10px;
   text-align: center;
 }
 .registration-container p {
@@ -131,7 +130,7 @@ export default Vue.extend({
   margin-right: auto;
   padding-top: 1px;
   padding-bottom: 3px;
-  width: 15%; 
+  width: 15%;
 }
 .form {
   width: 100%;

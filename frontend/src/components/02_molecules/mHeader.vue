@@ -3,7 +3,7 @@
     <li v-for="(element, index) in navElements" :key="index" :class="element.linkBtnStyle">
       <aLinkButton
         :linkBtnValue="element.linkBtnValue"
-        :linkBtnIsActive="isActive(element.linkBtnValue) && $route.name === element.linkBtnValue && element.linkBtnLabel !== 'Wotify'"
+        :linkBtnIsActive="(isActive(element.linkBtnValue) && $route.name === element.linkBtnValue && element.linkBtnLabel !== 'wotify') || ($route.name === 'Login' && element.linkBtnValue === 'Account') || ($route.name === 'Registration' && element.linkBtnValue === 'Account')"
         :linkBtnLabel="element.linkBtnLabel"
         :linkBtnOnClick="'nav-link-clicked'"
         v-on:nav-link-clicked="navLinkClicked"
@@ -26,12 +26,12 @@ export default Vue.extend({
   },
   data() {
     return {
-      activeItem: 'home',
+      activeItem: "home",
       navElements: [
         {
           linkBtnStyle: "header-element header-title",
           linkBtnValue: "home",
-          linkBtnLabel: "Wotify"
+          linkBtnLabel: "wotify"
         },
         {
           linkBtnStyle: "header-nav-element",
@@ -53,14 +53,17 @@ export default Vue.extend({
   },
   methods: {
     navLinkClicked(clickedLink) {
-      console.log('clickedLink', clickedLink);
       this.setActive(clickedLink);
       this.$router.push({
         name: clickedLink
       });
     },
     setActive(navItem) {
-      this.activeItem = navItem;
+      if (navItem === "Login" || navItem === "Registration") {
+        this.activeItem = "Account";
+      } else {
+        this.activeItem = navItem;
+      }
     },
     isActive(navItem) {
       return this.activeItem === navItem;
@@ -72,7 +75,7 @@ export default Vue.extend({
 
 <style scoped>
 .header-container {
-  background: #1C1C1C;
+  background: #1c1c1c;
   color: #000;
   padding: 10px;
   overflow: hidden;

@@ -28,5 +28,6 @@ export default Vue.extend({
 <style scoped>
 .markdown-container {
   padding: 5px 10px;
+  background: #fff;
 }
 </style>
