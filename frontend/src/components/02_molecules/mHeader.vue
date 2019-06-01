@@ -3,7 +3,7 @@
     <li v-for="(element, index) in navElements" :key="index" :class="element.linkBtnStyle">
       <aLinkButton
         :linkBtnValue="element.linkBtnValue"
-        :linkBtnIsActive="element.linkBtnIsActive"
+        :linkBtnIsActive="isActive(element.linkBtnValue) && $route.name === element.linkBtnValue && element.linkBtnLabel !== 'Wotify'"
         :linkBtnLabel="element.linkBtnLabel"
         :linkBtnOnClick="'nav-link-clicked'"
         v-on:nav-link-clicked="navLinkClicked"
@@ -21,8 +21,12 @@ export default Vue.extend({
   components: {
     aLinkButton
   },
+  updated() {
+    this.setActive(this.$route.name);
+  },
   data() {
     return {
+      activeItem: 'home',
       navElements: [
         {
           linkBtnStyle: "header-element header-title",
@@ -32,19 +36,16 @@ export default Vue.extend({
         {
           linkBtnStyle: "header-nav-element",
           linkBtnValue: "Account",
-          linkBtnIsActive: false,
           linkBtnLabel: "Account"
         },
         {
           linkBtnStyle: "header-nav-element",
           linkBtnValue: "AddProject",
-          linkBtnIsActive: false,
           linkBtnLabel: "New Project"
         },
         {
           linkBtnStyle: "header-nav-element",
           linkBtnValue: "home",
-          linkBtnIsActive: true,
           linkBtnLabel: "Search"
         }
       ]
@@ -52,9 +53,17 @@ export default Vue.extend({
   },
   methods: {
     navLinkClicked(clickedLink) {
+      console.log('clickedLink', clickedLink);
+      this.setActive(clickedLink);
       this.$router.push({
         name: clickedLink
       });
+    },
+    setActive(navItem) {
+      this.activeItem = navItem;
+    },
+    isActive(navItem) {
+      return this.activeItem === navItem;
     }
   }
 });
