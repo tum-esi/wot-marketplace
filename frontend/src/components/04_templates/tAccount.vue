@@ -92,13 +92,18 @@ export default Vue.extend({
     async checkUserLoggedIn() {
       this.isUserLoggedIn = await this.getUserLoggedIn;
       console.log("inside Account: checkUserloggedIn", this.isUserLoggedIn);
-      if (!this.isUserLoggedIn) this.$router.push({ name: "Login" });
+      if (!this.isUserLoggedIn) {
+        this.$router.push({ name: "Login" });
+      } else {
+        this.getUserData();
+      }
     },
     async getUserData() {
       let currentUser = await this.getCurrenUser;
       console.log("currentUser", currentUser);
       if (currentUser) {
-        this.implementations = currentUser.implementations;
+        if (currentUser.implementations)
+          this.implementations = currentUser.implementations;
         this.userInfo[0].content = currentUser.username;
         this.userInfo[1].content = currentUser.email;
       }

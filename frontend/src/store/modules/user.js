@@ -19,6 +19,7 @@ export default {
             console.log('users: newUser: ', newUser);
             if (newUser) {
                 commit('setCurrentUser', newUser);
+                commit('setUserLoggedIn', true);
                 return newUser;
             } else {
                 return "error";
