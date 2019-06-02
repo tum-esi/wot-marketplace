@@ -62,7 +62,6 @@ export default Vue.extend({
 
 .search-btn a {
   color: #fff;
-  font-size: 20px;
 }
 </style>
 

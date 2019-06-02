@@ -53,35 +53,35 @@ export default Vue.extend({
         {
           formTitle: "Username*",
           formInputType: "text",
-          formInputPlaceholder: "Choose a new username",
+          formInputPlaceholder: "Username needs to be min. 5 characters.",
           formKey: "registrationUsername",
           formInputStyle: "login-input"
         },
         {
           formTitle: "Password*",
           formInputType: "password",
-          formInputPlaceholder: "Choose a password of minimum 6 characters",
+          formInputPlaceholder: "Password needs to be min. 6 characters.",
           formKey: "registrationPassword",
           formInputStyle: "login-input"
         },
         {
           formTitle: "Email*",
           formInputType: "text",
-          formInputPlaceholder: "Provide your email",
+          formInputPlaceholder: "Enter email address.",
           formKey: "registrationEmail",
           formInputStyle: "login-input"
         },
         {
           formTitle: "First Name",
           formInputType: "text",
-          formInputPlaceholder: "Not visible to others",
+          formInputPlaceholder: "Add your first name.",
           formKey: "registrationFirstName",
           formInputStyle: "login-input"
         },
         {
           formTitle: "Last Name",
           formInputType: "text",
-          formInputPlaceholder: "Not visible to others",
+          formInputPlaceholder: "Add your last name.",
           formKey: "registrationLastName",
           formInputStyle: "login-input"
         }
@@ -90,14 +90,22 @@ export default Vue.extend({
     };
   },
   methods: {
+    // TODO: 
+    // - Missing required field
+    // - Already registered
+    // - Already logged in --> redirect to account 
+    // - Too less chars on Username 
     ...mapActions("user", ["register"]),
     async submitForm() {
+      if (
+        this.filledForm.registrationUsername
+      )
       if (
         this.filledForm.registrationUsername &&
         this.filledForm.registrationPassword &&
         this.filledForm.registrationEmail
       ) {
-        console.log("Registration: form is ok:", this.filledForm);
+        // console.log("Registration: form is ok:", this.filledForm);
         let registeredUser = await this.register({
           newUser: {
             password: this.filledForm.registrationPassword,
@@ -107,15 +115,18 @@ export default Vue.extend({
             lastname: this.filledForm.registrationLastName
           }
         });
-        console.log("Registration: user was registered?:", registeredUser);
+        // console.log("Registration: user was registered?:", registeredUser);
         if (registeredUser) {
-          console.log("Registration: successfull!:", registeredUser);
+          // console.log("Registration: successfull!:", registeredUser);
           this.$router.push({
             name: "Account"
           });
+        } else {
+          // Could not 
         }
       } else {
-        console.log("Registration: please fill form");
+        // FIXME: Required fields are not filled
+        // console.log("Registration: please fill form");
       }
     }
   },

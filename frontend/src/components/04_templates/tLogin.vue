@@ -81,10 +81,14 @@ export default Vue.extend({
     };
   },
   methods: {
+    // TODO: 
+    // - login name not correct
+    // - already logged in --> redirect to account page
+    // - password or username wrong
     ...mapActions("user", ["login"]),
     async submitForm() {
       if (this.filledForm.username && this.filledForm.password) {
-        console.log("Login: form ok:", this.filledForm);
+        // console.log("Login: form ok:", this.filledForm);
         let user = await this.login({
           email: this.filledForm.username,
           password: this.filledForm.password
@@ -94,7 +98,7 @@ export default Vue.extend({
         });
       } else {
         this.hasErrors = true;
-        console.log("Login: form not ok:", this.filledForm);
+        // console.log("Login: form not ok:", this.filledForm);
         //TODO: fill form
       }
     },

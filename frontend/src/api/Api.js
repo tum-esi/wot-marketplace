@@ -17,8 +17,6 @@ const searchOptions = {
  * @param {Object} options possible search options. e.g { count : 10, skip : 1}
  */
 export async function getProjects(searchTerm, options) {
-    if (!searchTerm) return "";
-
     // Get possible additional search options 
     let searchOption = "";
     for (var key in options) {
@@ -69,21 +67,22 @@ export async function addNewProject(newProject) {
         let response = await axios.post(`${baseUrl}${projectUrl}`, newProject);
         return response.data;
     } catch (error) {
+        window.alert("You are missing some required fields, or your TD does not have the right form.");
         throw error;
     }
 }
 
 export async function getUser(userName) {
-      // eslint-disable-next-line
-      console.log('api getUser oben:', userName);
+    // eslint-disable-next-line
+    // console.log('api getUser oben:', userName);
     if (!userName) return;
     try {
-         // eslint-disable-next-line
-    console.log('api url:', `${baseUrl}${registerUrl}/${userName}`);
+        // eslint-disable-next-line
+        // console.log('api url:', `${baseUrl}${registerUrl}/${userName}`);
         let response = await axios.get(`${baseUrl}${registerUrl}/${userName}`);
 
-            // eslint-disable-next-line
-    console.log('api getUser:', response);
+        // eslint-disable-next-line
+        // console.log('api getUser:', response);
         return response.data;
     } catch (error) {
         throw error;
@@ -92,7 +91,7 @@ export async function getUser(userName) {
 
 export async function register(newUser) {
     // eslint-disable-next-line
-    console.log('api register:', newUser);
+    // console.log('api register:', newUser);
     if (!newUser) return;
     try {
         let response = await axios.post(`${baseUrl}${registerUrl}`, { email: newUser.email, password: newUser.password, username: newUser.username, firstname: newUser.firstName, lastname: newUser.lastName });
@@ -104,19 +103,20 @@ export async function register(newUser) {
 
 export async function login(userCredentials) {
     // eslint-disable-next-line
-    console.log('api login:', userCredentials);
+    // console.log('api login:', userCredentials);
     if (!userCredentials) return;
     try {
         let response = await axios.post(`${baseUrl}${loginUrl}`, { username: userCredentials.email, password: userCredentials.password });
         return response.data;
     } catch (error) {
+        window.alert("")
         throw error;
     }
 }
 
 export async function logout(currentUser) {
     // eslint-disable-next-line
-    console.log('api logout:', currentUser);
+    // console.log('api logout:', currentUser);
     if (!currentUser) return;
     try {
         await axios.post(`${baseUrl}${logoutUrl}`, currentUser);

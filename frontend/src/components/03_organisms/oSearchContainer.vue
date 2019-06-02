@@ -62,6 +62,7 @@ export default {
     };
   },
   methods: {
+    // TODO: display if you don't get any search results 
     ...mapActions("project", ["loadProjectItems"]),
     async searchBtnClicked(searchTerm) {
       this.projects = await this.loadProjectItems({

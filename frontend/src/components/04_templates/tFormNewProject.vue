@@ -81,6 +81,12 @@ export default Vue.extend({
     }
   },
   methods: {
+    // Possible errors on form validation: 
+    // - missing required field
+    // - td has the wrong format
+    // - user is not logged in --> disable button maybe
+    // - title not long enough, etc. 
+    
     ...mapActions("project", ["addNewProject", "loadProject"]),
     async submitForm() {
       // eslint-disable-next-line
@@ -92,9 +98,15 @@ export default Vue.extend({
         this.filledForm.implementationType &&
         this.filledForm.platform
       ) {
-        console.log("filledForm", this.filledForm);
+        // console.log("filledForm", this.filledForm);
         // Api needs td as object not as string from textarea
-        this.filledForm.td = JSON.parse(this.filledForm.td);
+        try {
+          this.filledForm.td = JSON.parse(this.filledForm.td);
+        } catch(error) {
+          // this.hasErrors = true;
+          // console.log('json errr', error);
+          return;
+        }
         await this.addNewProject({
           newProject: this.filledForm
         });
@@ -115,7 +127,7 @@ export default Vue.extend({
   watch: {
     filledForm() {
       // eslint-disable-next-line
-      console.log("filledForm watch", this.filledForm);
+      // console.log("filledForm watch", this.filledForm);
     }
   }
 });

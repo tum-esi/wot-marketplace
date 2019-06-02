@@ -9,7 +9,7 @@ export default {
     },
     actions: {
         async getUser({ commit }, payload ) {
-            console.log("user: payload.username:", payload.username);
+            // console.log("user: payload.username:", payload.username);
             let user = await Api.getUser(payload.username);
             if (user)   {
                 commit('setCurrentUser', user);
@@ -26,7 +26,7 @@ export default {
             }
             let newUser = await Api.register(payload.newUser);
             // eslint-disable-next-line
-            console.log('users: newUser: ', newUser);
+            // console.log('users: newUser: ', newUser);
             if (newUser) {
                 commit('setCurrentUser', newUser);
                 commit('setUserLoggedIn', true);
@@ -39,7 +39,7 @@ export default {
             let user = await Api.login({ email: payload.email, password: payload.password });
             if (user) {
                 // eslint-disable-next-line
-                console.log('users: loggedin: ', user);
+                // console.log('users: loggedin: ', user);
                 commit('setCurrentUser', user);
                 commit('setUserLoggedIn', true);
                 return user;

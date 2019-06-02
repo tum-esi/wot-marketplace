@@ -7,7 +7,7 @@ export default {
             {
                 formKey: "name",
                 formTitle: "Title *",
-                formDescription: "Give your project a short and descriptive title.",
+                formDescription: "Give your project a short and descriptive title (min. 5 characters).",
                 formInputType: "text",
                 formInputError: "Please enter a title for your project.",
                 formInputStyle: "big-form-input",
@@ -16,7 +16,7 @@ export default {
             {
                 formKey: "shortDescription",
                 formTitle: "Short Description *",
-                formDescription: "Describe this project in one sentence (max. 180 characters).",
+                formDescription: "Describe this project in one sentence (min. 5, max. 180 characters).",
                 formInputType: "text",
                 formInputError: "Please enter a short description for your project.",
                 formInputStyle: "big-form-input",
@@ -25,7 +25,7 @@ export default {
             {
                 formKey: "longDescription",
                 formTitle: "Description / README  *",
-                formDescription: "If you have a README for your project provide here. Just copy it from your repository. If not, describe this project in more detail. How can it be used? Use markdown syntax.",
+                formDescription: "If you have a README for your project provide here. Just copy it from your repository. If not, describe this project in more detail. How can it be used? Use markdown syntax. (Min. 5 characters)",
                 formInputType: "textarea",
                 formInputError: "Please enter a avlid Url.",
                 formInputStyle: "big-form-input textarea-medium",
@@ -34,7 +34,7 @@ export default {
             {
                 formKey: "td",
                 formTitle: "Thing Description *",
-                formDescription: "Paste the Thing Description of your project.",
+                formDescription: "Paste the Thing Description of your project in a JSON format.",
                 formInputType: "textarea",
                 formInputStyle: "big-form-input textarea-medium"
             },
