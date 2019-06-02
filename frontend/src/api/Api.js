@@ -89,7 +89,7 @@ export async function login(userCredentials) {
     console.log('api login:', userCredentials);
     if (!userCredentials) return;
     try {
-        await axios.post(`${baseUrl}${loginUrl}`, { email: userCredentials.email, password: userCredentials.password });
+        await axios.post(`${baseUrl}${loginUrl}`, { username: userCredentials.email, password: userCredentials.password });
     } catch (error) {
         throw error;
     }

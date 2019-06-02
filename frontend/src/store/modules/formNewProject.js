@@ -62,7 +62,7 @@ export default {
                 formInputError: "Please select one option."
             },
             {
-                formKey: "implementation",
+                formKey: "implementationType",
                 formTitle: "Implementation type",
                 formDescription: "Is this thing a Thing Description template or source code?",
                 formInputType: "radio",

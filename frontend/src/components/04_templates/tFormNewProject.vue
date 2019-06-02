@@ -51,16 +51,16 @@ export default Vue.extend({
     return {
       hasErrors: false,
       filledForm: {
-        name: "",
-        shortDescription: "",
-        longDescription: "",
-        github: "",
-        td: "",
-        topic: [],
-        implementation: "",
-        platform: "",
-        tags: [],
-        complexity: ""
+        name:  undefined,
+        shortDescription:  undefined,
+        longDescription:  undefined,
+        github:  undefined,
+        td:  undefined,
+        topic:  undefined,
+        implementationType: undefined,
+        platform: undefined,
+        tags:  undefined,
+        complexity: undefined
       }
     };
   },
