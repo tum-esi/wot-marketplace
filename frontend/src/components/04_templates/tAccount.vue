@@ -78,7 +78,7 @@ export default Vue.extend({
     ...mapGetters("user", ["getUserLoggedIn", "getCurrenUser"])
   },
   methods: {
-    ...mapActions("user", ["logout"]),
+    ...mapActions("user", ["logout", "getUser"]),
     async logoutBtnClicked() {
       await this.logout();
       this.$router.push({ name: "Login" });
@@ -99,7 +99,8 @@ export default Vue.extend({
       }
     },
     async getUserData() {
-      let currentUser = await this.getCurrenUser;
+      let currentUser = await this.getCurrenUser.username;
+      currentUser = await this.getUser({ username: currentUser});
       console.log("currentUser", currentUser);
       if (currentUser) {
         if (currentUser.implementations)

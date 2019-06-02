@@ -8,6 +8,16 @@ export default {
         isUserLoggedIn: false
     },
     actions: {
+        async getUser({ commit }, payload ) {
+            console.log("user: payload.username:", payload.username);
+            let user = await Api.getUser(payload.username);
+            if (user)   {
+                commit('setCurrentUser', user);
+                return user;
+            } else {
+                return "error";
+            }              
+        }, 
         async register({ commit }, payload) {
             if (payload.newUser) {
                 commit('setNewUser', payload.newUser);

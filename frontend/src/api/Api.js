@@ -73,6 +73,23 @@ export async function addNewProject(newProject) {
     }
 }
 
+export async function getUser(userName) {
+      // eslint-disable-next-line
+      console.log('api getUser oben:', userName);
+    if (!userName) return;
+    try {
+         // eslint-disable-next-line
+    console.log('api url:', `${baseUrl}${registerUrl}/${userName}`);
+        let response = await axios.get(`${baseUrl}${registerUrl}/${userName}`);
+
+            // eslint-disable-next-line
+    console.log('api getUser:', response);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function register(newUser) {
     // eslint-disable-next-line
     console.log('api register:', newUser);
