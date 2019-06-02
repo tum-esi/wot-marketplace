@@ -99,21 +99,21 @@ export default Vue.extend({
       console.log("currentUser", currentUser);
       if (currentUser) {
         this.implementations = currentUser.implementations;
-        this.userInfo[0].content = currentUser.name;
+        this.userInfo[0].content = currentUser.username;
         this.userInfo[1].content = currentUser.email;
       }
-      if (currentUser.firstName) {
+      if (currentUser.firstname) {
         this.userInfo.push({
           title: "First Name: ",
           type: "text",
-          content: currentUser.firstName
+          content: currentUser.firstname
         });
       }
-      if (currentUser.lastName) {
+      if (currentUser.lastname) {
         this.userInfo.push({
           title: "Last Name",
           type: "text",
-          content: currentUser.lastName
+          content: currentUser.lastname
         });
       }
     }

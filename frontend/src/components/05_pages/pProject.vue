@@ -145,6 +145,7 @@ export default {
   display: inline-block;
   position: relative;
   background: #fff;
+  margin-bottom: 50px;
 }
 
 .project-content-left-btns {

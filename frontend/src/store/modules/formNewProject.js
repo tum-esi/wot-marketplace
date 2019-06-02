@@ -32,18 +32,18 @@ export default {
                 formOnClick: "on-required-input-clicked"
             },
             {
+                formKey: "td",
+                formTitle: "Thing Description *",
+                formDescription: "Paste the Thing Description of your project.",
+                formInputType: "textarea",
+                formInputStyle: "big-form-input textarea-medium"
+            },
+            {
                 formKey: "github",
                 formTitle: "Repository Url",
                 formDescription: "Add the URL of the repository, where your WoT project is hosted. Make sure it is publiclly available.",
                 formInputType: "text",
                 formInputStyle: "big-form-input"
-            },
-            {
-                formKey: "td",
-                formTitle: "Thing Description",
-                formDescription: "Paste the Thing Description of your project.",
-                formInputType: "textarea",
-                formInputStyle: "big-form-input textarea-medium"
             },
             {
                 formKey: "topic",

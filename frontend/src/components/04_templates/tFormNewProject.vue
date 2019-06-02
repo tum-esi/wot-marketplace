@@ -58,7 +58,7 @@ export default Vue.extend({
         td:  undefined,
         topic:  undefined,
         implementationType: undefined,
-        platform: undefined,
+        platform: "other",
         tags:  undefined,
         complexity: undefined
       }

@@ -66,8 +66,8 @@ export async function loadProject(projectId) {
 export async function addNewProject(newProject) {
     if (!newProject) return;
     try {
-        await axios.post(`${baseUrl}${projectUrl}`, newProject);
-        return "success";
+        let response = await axios.post(`${baseUrl}${projectUrl}`, newProject);
+        return response.data;
     } catch (error) {
         throw error;
     }
@@ -78,7 +78,8 @@ export async function register(newUser) {
     console.log('api register:', newUser);
     if (!newUser) return;
     try {
-        await axios.post(`${baseUrl}${registerUrl}`, { email: newUser.email, password: newUser.password, username: newUser.username, firstname: newUser.firstName, lastname: newUser.lastName });
+        let response = await axios.post(`${baseUrl}${registerUrl}`, { email: newUser.email, password: newUser.password, username: newUser.username, firstname: newUser.firstName, lastname: newUser.lastName });
+        return response.data;
     } catch (error) {
         throw error;
     }
@@ -89,7 +90,8 @@ export async function login(userCredentials) {
     console.log('api login:', userCredentials);
     if (!userCredentials) return;
     try {
-        await axios.post(`${baseUrl}${loginUrl}`, { username: userCredentials.email, password: userCredentials.password });
+        let response = await axios.post(`${baseUrl}${loginUrl}`, { username: userCredentials.email, password: userCredentials.password });
+        return response.data;
     } catch (error) {
         throw error;
     }
