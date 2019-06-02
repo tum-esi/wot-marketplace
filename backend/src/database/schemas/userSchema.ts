@@ -15,7 +15,9 @@ export default new Schema({
         maxlength: 50,
         unique: true,
         required: true,
-        trim: true
+        lowercase: true,
+        trim: true,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     firstName: {
         type: String,
