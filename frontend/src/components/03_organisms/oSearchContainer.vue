@@ -13,15 +13,15 @@
       </div>
     </div>
     <!-- Search status container -->
-    <mStatus
+    <!-- <mStatus
       v-bind:class="{invisible: !loading && status != 'load'}"
       v-bind:status="status"
       v-bind:propSearchTerm="searchTerm"
-    />
-    <div
+    />-->
+    <!-- <div
       class="status-container"
       v-bind:class="{invisible: status != 'noResult'}"
-    >There are no projects for "{{ searchTerm }}"</div>
+    >There are no projects for "{{ searchTerm }}"</div>-->
     <!-- Search results -->
     <div id="search-results">
       <mProjectItem
@@ -41,10 +41,10 @@
 <script>
 import aButton from "@/components/01_atoms/aButton.vue";
 import mSearchbar from "@/components/02_molecules/mSearchbar.vue";
-import mStatus from "@/components/02_molecules/mStatus.vue";
+// import mStatus from "@/components/02_molecules/mStatus.vue";
 import mProjectItem from "@/components/02_molecules/mProjectItem.vue";
 
-import fetch from "node-fetch";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "oSearchContainer",
@@ -52,39 +52,22 @@ export default {
     aButton,
     mProjectItem,
     mSearchbar,
-    mStatus
+    // mStatus
   },
   data() {
     return {
-      searchTerm: "",
-      loading: false,
-      status: "",
+      searchOptions: { count: 10, skip: 0 },
       projects: [],
       err: undefined
     };
   },
   methods: {
-    searchBtnClicked(searchTerm) {
-      this.searchTerm = searchTerm;
-      this.status = "load";
-      this.loading = true;
-      this.projects = [
-        {
-          topic: ["actuator", "other", "sensor", "robotics"],
-          tags: ["python", "sensehat"],
-          _id: "5cb1c65f1c9d440000eb922d",
-          name: "SenseHAT_python",
-          shortDescription: "senseHAT WoT implementation in python",
-          longDescription: "sit ipsum exercitation",
-          github: "https://github.com/DK<~LeZK3s",
-          implementationType: "code",
-          platform: "arduino",
-          complexity: "expert",
-          td: {}
-        }
-      ];
-      this.loading = false;
-      this.status = "";
+    ...mapActions("project", ["loadProjectItems"]),
+    async searchBtnClicked(searchTerm) {
+      this.projects = await this.loadProjectItems({
+        searchTerm,
+        searchOptions: this.searchOptions
+      });
     },
     projectBtnClicked() {
       this.$router.push({
@@ -94,7 +77,7 @@ export default {
     projectItemClicked(clickedProject) {
       this.$router.push({
         name: "Project",
-        params: { project: { clickedProject } }
+        params: { id: clickedProject }
       });
     }
   }

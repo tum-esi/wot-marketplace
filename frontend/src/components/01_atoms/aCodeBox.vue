@@ -1,7 +1,6 @@
 <template>
   <div class="code-container">
     <vue-json-pretty
-      :path="'res'"
       :data="code"
       :showDoubleQuotes="true"
       :showLine="true"
@@ -43,6 +42,7 @@ export default Vue.extend({
   word-wrap: normal;
   padding: 5px 10px;
   color: #222;
+  background: #fff;
 }
 
 .code-container code {
@@ -50,3 +50,46 @@ export default Vue.extend({
   tab-size: 4;
 }
 </style>
+
+
+ "properties": {
+            "humidity": {
+                "type": "number",
+                "description": "The percentage of relative humidity.",
+                "readOnly": true,
+                "writeOnly": false,
+                "observable": false,
+                "forms": [{
+                    "href": 
+"http://192.168.0.106:8080/SenseHat/properties/humidity",
+                    "contentType": "application/json",
+                    "op": ["readproperty"]
+                }]
+            },
+            "temperature": {
+                "type": "number",
+                "description": "The current temperature in degrees 
+Celsius.",
+                "readOnly": true,
+                "writeOnly": false,
+                "observable": false,
+                "forms": [{
+                    "href": 
+"http://192.168.0.106:8080/SenseHat/properties/temperature",
+                    "contentType": "application/json",
+                    "op": ["readproperty"]
+                }]
+            },
+            "pressure": {
+                "type": "number",
+                "description": "The current pressure in Millibars.",
+                "readOnly": true,
+                "writeOnly": false,
+                "observable": false,
+                "forms": [{
+                    "href": 
+"http://192.168.0.106:8080/SenseHat/properties/pressure",
+                    "contentType": "application/json",
+                    "op": ["readproperty"]
+                }]
+            },

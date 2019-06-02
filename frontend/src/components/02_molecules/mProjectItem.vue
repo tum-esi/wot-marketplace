@@ -51,20 +51,18 @@ export default Vue.extend({
       type: String,
       required: true
       //   validator: (value: string) => ["template", "code"].indexOf(value) !== -1
-    }, 
+    },
     /**
-     * 
+     *
      */
     projectOnClick: {
-        type: String, 
-        required: true
+      type: String,
+      required: true
     }
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
-     getColor(section) {
+    getColor(section) {
       let color = "";
       switch (this.projectImplementationType) {
         case "template":
@@ -93,6 +91,7 @@ export default Vue.extend({
   color: black;
   border-radius: 5px;
   height: 100%;
+  background: #fff;
 }
 
 .project-item-container:hover {
@@ -106,14 +105,17 @@ export default Vue.extend({
 .project-item-top {
   border-bottom: none;
   border-radius: 5px 5px 0 0;
-  height: 70%;
+  height: 100px;
   padding: 10px;
+  overflow: hidden;
 }
 
 .project-item-bottom {
   border-radius: 0 0 5px 5px;
-  height: 30%;
+  height: 40px;
   color: #fff;
+  display: flex;
+  align-items: center;
 }
 
 .project-item-title {
@@ -129,7 +131,7 @@ export default Vue.extend({
 }
 
 .project-item-platform {
-    padding: 10px;
+  padding: 10px;
 }
 
 .default-top {

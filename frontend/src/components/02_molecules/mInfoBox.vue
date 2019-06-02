@@ -1,7 +1,11 @@
 <template>
   <div class="infobox-container">
     <h4 class="infobox-title">{{ title }}</h4>
-    <div v-for="(element, index) in content" :key="index">
+    <div
+      v-for="(element, index) in content"
+      :key="index"
+      :class="{ 'info-el-content-link-container' : element.type === 'link'}"
+    >
       <label v-if="element.title" class="info-el-label">{{ element.title }}</label>
       <label v-if="element.type === 'text'" class="info-el-content-text">{{ element.content }}</label>
       <a
@@ -66,6 +70,7 @@ export default Vue.extend({
   border: 1px solid #ccc;
   border-radius: 3px;
   margin-bottom: 10px;
+  background: #fff;
 }
 
 .infobox-title {
@@ -84,6 +89,11 @@ export default Vue.extend({
   font-size: 14px;
 }
 
+.info-el-content-link-container {
+  text-align: center;
+  padding-top: 8px;
+}
+
 .info-el-content-link {
   display: inline-block;
   padding: 3px 5px 3px 5px;
@@ -93,6 +103,8 @@ export default Vue.extend({
   margin: 3px 3px 3px 1px;
   cursor: default;
   font-size: 14px;
+  width: 100%;
+  color: #000;
 }
 
 .info-el-content-list {

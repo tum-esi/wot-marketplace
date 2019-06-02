@@ -27,11 +27,6 @@
             "format": "uri",
             "pattern": "^https://github\\.com/.*"
         },
-        "readme": {
-            "description": "Link to a Readme.md document. It should be the raw Readme file",
-            "type": "string",
-            "format": "uri"
-        },
         "implementationType": {
             "description": "to distinguish between the TD templates and source code with Github",
             "type": "string",
@@ -114,5 +109,5 @@
             ]
         }
     },
-    "required": ["name", "shortDescription", "longDescription", "github", "implementationType", "topic", "platform", "tags", "complexity", "td"]
+    "required": ["name", "shortDescription", "longDescription", "implementationType", "platform", "td"]
 }

@@ -1,15 +1,6 @@
 <template>
-  <!-- Textarea -->
-  <textarea
-    v-if="inputType === 'textarea'"
-    v-model="currentValue"
-    :placeholder="inputPlaceholder"
-    :class="inputStyle"
-    @click="inputClicked"
-  />
-
   <!-- Checkboxes: multiple selection is possible -->
-  <!-- <div v-else-if="inputType === 'checkbox'">
+  <div v-if="inputType === 'checkbox'">
     <div
       class="checkbox-item"
       v-for="(inputFormValueElement, index) in inputFormValues"
@@ -21,14 +12,14 @@
         v-model="currentValue"
         :class="inputStyle"
         :value="inputFormValueElement"
-        :id="inputFormValueElement"
+        :id="`${inputFormValueElement}checkbox`"
       >
-      <label class="checkbox-label" :for="inputFormValueElement">{{ inputFormValueElement }}</label>
+      <label class="checkbox-label" :for="`${inputFormValueElement}checkbox`">{{ inputFormValueElement }}</label>
     </div>
-  </div>-->
+  </div>
 
   <!-- Radio elements: only single option -->
-  <!-- <div v-else-if="inputType === 'radio'">
+  <div v-else-if="inputType === 'radio'">
     <div
       class="checkbox-item"
       v-for="(inputFormValueElement, index) in inputFormValues"
@@ -37,14 +28,15 @@
       <input
         type="radio"
         class="checkbox-el"
+        :v-model="currentValue"
         :class="inputStyle"
         :value="inputFormValueElement"
-        :id="inputFormValueElement"
+        :id="`${inputFormValueElement}radio`"
       >
-      <label class="checkbox-label" :for="inputFormValueElement">{{ inputFormValueElement }}</label>
+      <label class="checkbox-label" :for="`${inputFormValueElement}radio`">{{ inputFormValueElement }}</label>
     </div>
-  </div>-->
-  <div v-else-if="inputType === 'radio'">
+  </div>
+  <!-- <div v-else-if="inputType === 'radio'">
     <input
       type="radio"
       class="checkbox-el"
@@ -54,7 +46,7 @@
       :id="inputFormValues"
     >
     <label class="checkbox-label" :for="inputFormValues">{{ inputFormValues }}</label>
-  </div>
+  </div>-->
 
   <!-- Tags -->
   <div v-else-if="inputType === 'tag'">
@@ -73,32 +65,13 @@
       </li>
     </ul>
   </div>
-
-  <input
-    v-else-if="inputType === 'password'"
-    type="password"
-    v-model="currentValue"
-    :placeholder="inputPlaceholder"
-    :class="inputStyle"
-    @click="inputClicked"
-  >
-
-  <!-- Normal text input -->
-  <input
-    v-else
-    type="text"
-    v-model="currentValue"
-    :placeholder="inputPlaceholder"
-    :class="inputStyle"
-    @click="inputClicked"
-  >
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
 /**
- * A basic input field for a form. Can be a textarea, checkbox, radiobutton or basic input field.
+ * An input type with several options. Can be checkbox, radiobutton or tag list.
  */
 
 export default Vue.extend({
@@ -116,35 +89,12 @@ export default Vue.extend({
         ) !== -1
     },
     /**
-     * Placeholder for text input fields.
-     */
-    inputPlaceholder: {
-      type: String,
-      required: false,
-      default: null
-    },
-    /**
-     * Inital input value. Can be an array for checkboxes.
-     */
-    inputValue: {
-      type: [String, Array, Boolean],
-      required: false,
-      default: null
-    },
-    /**
      * Value for single form element. E.g. checkbox option.
      */
     inputFormValues: {
       //   type: [String, Number],
       required: false,
       default: null
-    },
-    /**
-     * Emits event when required input field is clicked.
-     */
-    inputOnClick: {
-      type: String,
-      required: false
     },
     /**
      * Optional css class for input field.
@@ -158,7 +108,8 @@ export default Vue.extend({
   data() {
     return {
       tag: "",
-      tags: []
+      tags: [],
+      selection: [] // For checkboxes
     };
   },
   computed: {
@@ -169,9 +120,9 @@ export default Vue.extend({
       },
       set(val) {
         // console.log(
-        //   // `==aInput== [${this.inputType}]set: ${val}, ${this.inputValue}`
+        // //   `==aInput== [${this.inputType}]set: ${val}, ${this.inputValue}`
         // );
-        this.$emit("input", val, this.inputValue);
+        this.$emit("input", val);
       }
     }
   },
@@ -192,11 +143,6 @@ export default Vue.extend({
     },
     focusInput() {
       this.$refs.tagInput.focus();
-    }, 
-    inputClicked() {
-      if (this.inputOnClick) {
-        this.$emit(this.inputOnClick);
-      }
     }
   }
 });
@@ -204,8 +150,11 @@ export default Vue.extend({
 
 <style scoped>
 .checkbox-item {
-  width: 20%;
+  width: 30%;
   float: left;
+  text-overflow: hidden;
+  display: flex;
+  align-items: baseline;
 }
 
 .checkbox-el {
@@ -256,32 +205,6 @@ export default Vue.extend({
   font-size: 14px;
 }
 
-.big-form-input {
-  height: 40px;
-  padding: 10px;
-  border-radius: 3px;
-  border: 1px solid #999;
-  font-size: 20px;
-  outline: none;
-  resize: none;
-}
-
-.big-form-input:focus {
-  box-shadow: 0 0 5px #25e4d4;
-}
-
-.textarea-small {
-  height: 45px;
-}
-
-.textarea-medium {
-  height: 250px;
-}
-
-.textarea-large {
-  height: 500px;
-}
-
 .add-tags {
   list-style-type: none;
   margin: 0px;
@@ -303,16 +226,5 @@ export default Vue.extend({
   cursor: default;
   font-size: 14px;
   float: left;
-}
-
-.login-input {
-  width: 15%;
-  height: 40px;
-  padding: 10px;
-  border-radius: 3px;
-  border: 1px solid #999;
-  font-size: 16px;
-  outline: none;
-  resize: none;
 }
 </style>

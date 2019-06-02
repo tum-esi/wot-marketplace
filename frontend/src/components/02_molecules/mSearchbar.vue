@@ -42,26 +42,27 @@ export default Vue.extend({
 #search-bar {
   width: 50%;
   height: 50px;
-  border: 3px solid #000;
+  border: 3px solid #1C1C1C;
   padding: 10px;
   border-radius: 3px;
   outline: none;
-  color: #000;
+  color: #1C1C1C;
   vertical-align: top;
   margin-right: 10px;
   font-size: 20px;
 }
 
 #search-bar:focus {
-  color: #30b8a3;
+    box-shadow: inset 0 0 3px #25e4d4;
 }
 
 #search-bar::selection {
-  background-color: #30b8a3 !important;
+   background: #949494;
 }
 
 .search-btn a {
   color: #fff;
+  font-size: 20px;
 }
 </style>
 
