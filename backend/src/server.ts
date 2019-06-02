@@ -105,7 +105,10 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
      * @apiParam {String} password Password of the user to Log-in.
      */
     app.post("/api/login", 
-        Passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login'})
+        Passport.authenticate('local'),
+        (req, res, next) => {
+            res.sendStatus(200);
+        }
     );
 
     // Logout process
