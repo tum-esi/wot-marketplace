@@ -108,7 +108,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     app.post("/api/login", 
         Passport.authenticate('local'),
         (req, res, next) => {
-            models.userModel.findById(req.user, function(err, user) {
+            models.UserModel.findById(req.user, function(err, user) {
                 if (err) { 
                     next(err) 
                 } else if (!user) { 
