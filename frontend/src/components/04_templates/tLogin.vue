@@ -19,6 +19,10 @@
         />
       </form>
     </div>
+    <span
+      :class="{ 'invisible' : !hasErrors }"
+      class="error-mgs"
+    >Username or password not correct.</span>
     <div class="submit-btn">
       <aButton
         :btnClass="'login-btn'"
@@ -42,6 +46,7 @@
 import Vue from "vue";
 import aButton from "@/components/01_atoms/aButton.vue";
 import mFormElement from "@/components/02_molecules/mFormElement.vue";
+import { mapActions } from "vuex";
 
 export default Vue.extend({
   name: "tLogin",
@@ -51,6 +56,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      hasErrors: false,
       elementInputValue: "",
       formStyle: {
         title: "login-form-title"
@@ -75,14 +81,22 @@ export default Vue.extend({
     };
   },
   methods: {
-    submitForm() {
-      var userData = {
-        username: "",
-        password: ""
-      };
-      userData.username = this.formElements[0].formValue;
-
-      // console.log("submitttted: ",userData);
+    ...mapActions("user", ["login"]),
+    async submitForm() {
+      if (this.filledForm.username && this.filledForm.password) {
+        console.log("Login: form ok:", this.filledForm);
+        let user = await this.login({
+          email: this.filledForm.username,
+          password: this.filledForm.password
+        });
+        this.$router.push({
+          name: "Account"
+        });
+      } else {
+        this.hasErrors = true;
+        console.log("Login: form not ok:", this.filledForm);
+        //TODO: fill form
+      }
     },
     goToRegister() {
       this.$router.push({
@@ -91,9 +105,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    filledForm() {
-      // console.log("filledForm", this.filledForm);
-    }
+    filledForm() {}
   }
 });
 </script>
@@ -123,5 +135,13 @@ export default Vue.extend({
   text-align: center;
   padding-top: 1px;
   padding-bottom: 3px;
+}
+
+.error-mgs {
+  color: red;
+}
+
+.invisible {
+  display: none;
 }
 </style>

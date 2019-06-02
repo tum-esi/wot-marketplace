@@ -3,64 +3,64 @@ import * as Api from '@/api/Api';
 export default {
     namespaced: true,
     state: {
-        currentUser: 
-        { name: "Musti", firstName: "Manuela", lastName: "Mustermann", email: "manuela-mustermann@wot.com",
-        implementations: [
-            {
-              topic: ["actuator", "other", "sensor", "robotics"],
-              tags: ["python", "sensehat"],
-              _id: "5cb1c65f1c9d440000eb922d",
-              name: "SenseHAT_python",
-              shortDescription: "senseHAT WoT implementation in python",
-              longDescription: "sit ipsum exercitation",
-              github: "https://github.com/DK<~LeZK3s",
-              implementationType: "code",
-              platform: "arduino",
-              complexity: "expert",
-              td: {}
-            },
-            {
-              topic: ["actuator", "other", "sensor", "robotics"],
-              tags: ["python", "sensehat"],
-              _id: "5cb1c65f1c9d440000eb922d",
-              name: "SenseHAT_python",
-              shortDescription: "senseHAT WoT implementation in python",
-              longDescription: "sit ipsum exercitation",
-              github: "https://github.com/DK<~LeZK3s",
-              implementationType: "code",
-              platform: "arduino",
-              complexity: "expert",
-              td: {}
-            },
-            {
-              topic: ["actuator", "other", "sensor", "robotics"],
-              tags: ["python", "sensehat"],
-              _id: "5cb1c65f1c9d440000eb922d",
-              name: "SenseHAT_python",
-              shortDescription: "senseHAT WoT implementation in python",
-              longDescription: "sit ipsum exercitation",
-              github: "https://github.com/DK<~LeZK3s",
-              implementationType: "code",
-              platform: "arduino",
-              complexity: "expert",
-              td: {}
-            },
-            {
-              topic: ["actuator", "other", "sensor", "robotics"],
-              tags: ["python", "sensehat"],
-              _id: "5cb1c65f1c9d440000eb922d",
-              name: "SenseHAT_python",
-              shortDescription: "senseHAT WoT implementation in python",
-              longDescription: "sit ipsum exercitation",
-              github: "https://github.com/DK<~LeZK3s",
-              implementationType: "code",
-              platform: "arduino",
-              complexity: "expert",
-              td: {}
-            }
-          ] },
+        currentUser: {},
+        // { name: "Musti", firstName: "Manuela", lastName: "Mustermann", email: "manuela-mustermann@wot.com",
+        // implementations: [
+        //     {
+        //       topic: ["actuator", "other", "sensor", "robotics"],
+        //       tags: ["python", "sensehat"],
+        //       _id: "5cb1c65f1c9d440000eb922d",
+        //       name: "SenseHAT_python",
+        //       shortDescription: "senseHAT WoT implementation in python",
+        //       longDescription: "sit ipsum exercitation",
+        //       github: "https://github.com/DK<~LeZK3s",
+        //       implementationType: "code",
+        //       platform: "arduino",
+        //       complexity: "expert",
+        //       td: {}
+        //     },
+        //     {
+        //       topic: ["actuator", "other", "sensor", "robotics"],
+        //       tags: ["python", "sensehat"],
+        //       _id: "5cb1c65f1c9d440000eb922d",
+        //       name: "SenseHAT_python",
+        //       shortDescription: "senseHAT WoT implementation in python",
+        //       longDescription: "sit ipsum exercitation",
+        //       github: "https://github.com/DK<~LeZK3s",
+        //       implementationType: "code",
+        //       platform: "arduino",
+        //       complexity: "expert",
+        //       td: {}
+        //     },
+        //     {
+        //       topic: ["actuator", "other", "sensor", "robotics"],
+        //       tags: ["python", "sensehat"],
+        //       _id: "5cb1c65f1c9d440000eb922d",
+        //       name: "SenseHAT_python",
+        //       shortDescription: "senseHAT WoT implementation in python",
+        //       longDescription: "sit ipsum exercitation",
+        //       github: "https://github.com/DK<~LeZK3s",
+        //       implementationType: "code",
+        //       platform: "arduino",
+        //       complexity: "expert",
+        //       td: {}
+        //     },
+        //     {
+        //       topic: ["actuator", "other", "sensor", "robotics"],
+        //       tags: ["python", "sensehat"],
+        //       _id: "5cb1c65f1c9d440000eb922d",
+        //       name: "SenseHAT_python",
+        //       shortDescription: "senseHAT WoT implementation in python",
+        //       longDescription: "sit ipsum exercitation",
+        //       github: "https://github.com/DK<~LeZK3s",
+        //       implementationType: "code",
+        //       platform: "arduino",
+        //       complexity: "expert",
+        //       td: {}
+        //     }
+        //   ] },
         newUser: {},
-        isUserLoggedIn: true
+        isUserLoggedIn: false
     },
     actions: {
         async register({ commit }, payload) {
@@ -69,9 +69,12 @@ export default {
             } else {
                 return;
             }
-            let newUser = await Api.register({ newUser: payload.newUser });
+            let newUser = await Api.register(payload.newUser);
+            // eslint-disable-next-line
+            console.log('users: newUser: ', newUser);
             if (newUser) {
                 commit('setCurrentUser', newUser);
+                return newUser;
             } else {
                 return "error";
             }

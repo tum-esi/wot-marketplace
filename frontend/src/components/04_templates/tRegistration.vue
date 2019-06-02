@@ -35,6 +35,7 @@
 import Vue from "vue";
 import aButton from "@/components/01_atoms/aButton.vue";
 import mFormElement from "@/components/02_molecules/mFormElement.vue";
+import { mapActions } from "vuex";
 
 export default Vue.extend({
   name: "tLogin",
@@ -89,19 +90,38 @@ export default Vue.extend({
     };
   },
   methods: {
-    submitForm() {
-      var userData = {
-        username: "",
-        password: ""
-      };
-      userData.username = this.formElements[0].formValue;
-
-      console.log("submitttted: ", userData);
+    ...mapActions("user", ["register"]),
+    async submitForm() {
+      if (
+        this.filledForm.registrationUsername &&
+        this.filledForm.registrationPassword &&
+        this.filledForm.registrationEmail
+      ) {
+        console.log("Registration: form is ok:", this.filledForm);
+        let registeredUser = await this.register({
+          newUser: {
+            password: this.filledForm.registrationPassword,
+            username: this.filledForm.registrationUsername,
+            email: this.filledForm.registrationEmail,
+            firstname: this.filledForm.registrationFirstName,
+            lastname: this.filledForm.registrationLastName
+          }
+        });
+        console.log("Registration: user was registered?:", registeredUser);
+        if (registeredUser) {
+          console.log("Registration: successfull!:", registeredUser);
+          this.$router.push({
+            name: "Account"
+          });
+        }
+      } else {
+        console.log("Registration: please fill form");
+      }
     }
   },
   watch: {
     filledForm() {
-      console.log("filledForm", this.filledForm);
+      // console.log("filledForm", this.filledForm);
     }
   }
 });
