@@ -87,9 +87,14 @@ export default Vue.extend({
       if (
         this.filledForm.name &&
         this.filledForm.shortDescription &&
-        this.filledForm.longDescription
+        this.filledForm.longDescription &&
+        this.filledForm.td && 
+        this.filledForm.implementationType &&
+        this.filledForm.platform
       ) {
         console.log("filledForm", this.filledForm);
+        // Api needs td as object not as string from textarea
+        this.filledForm.td = JSON.parse(this.filledForm.td);
         await this.addNewProject({
           newProject: this.filledForm
         });
