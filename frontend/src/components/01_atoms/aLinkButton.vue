@@ -1,7 +1,7 @@
 <template>
   <button
     class="link-btn"
-    :class="{ 'underlined' : linkBtnIsActive, linkBtnClass }"
+    :class="{ 'underlined' : linkBtnIsActive }"
     @click="onClick"
   >{{ linkBtnLabel }}</button>
 </template>
@@ -97,5 +97,9 @@ export default Vue.extend({
   border-bottom: 3px solid #30b8a3;
   border-bottom-left-radius: 0%;
   border-bottom-right-radius: 0%;
+}
+
+.footer-btn {
+  font-size: 10px;
 }
 </style>

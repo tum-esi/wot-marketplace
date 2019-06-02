@@ -8,14 +8,11 @@
       v-if="formInputType === 'radio' || formInputType === 'checkbox'"
       :class="formStyle.rightEl"
     >
-      <aInput
-        v-for="(inputElement, index) in inputFormValues"
-        :key="index"
+      <aOptionInput
         :class="`${formStyle.rightEl} checkbox-item`"
         v-model="currentValue"
         :inputType="formInputType"
-        :inputPlaceholder="formInputPlaceholder"
-        :inputFormValues="inputElement"
+        :inputFormValues="inputFormValues"
         :inputStyle="formInputStyle"
       />
     </div>
@@ -27,6 +24,8 @@
       :inputPlaceholder="formInputPlaceholder"
       :inputFormValues="inputFormValues"
       :inputStyle="formInputStyle"
+      :inputOnClick="formOnClick"
+      v-on:on-required-input-clicked="$emit('on-required-input-clicked')"
     />
   </div>
 </template>
@@ -34,11 +33,13 @@
 <script lang="ts">
 import Vue from "vue";
 import aInput from "@/components/01_atoms/aInput.vue";
+import aOptionInput from "@/components/01_atoms/aOptionInput.vue";
 
 export default Vue.extend({
   name: "mFormelement",
   components: {
-    aInput
+    aInput,
+    aOptionInput
   },
   props: {
     /**
@@ -105,6 +106,13 @@ export default Vue.extend({
       type: [String, Number, Array],
       required: false,
       default: null
+    },
+    /**
+     * Emits click events for required form elements. 
+     */
+    formOnClick: {
+      type: String,
+      required: false
     },
     /**
      * Css classes for your form input. E.g 'textarea-large'

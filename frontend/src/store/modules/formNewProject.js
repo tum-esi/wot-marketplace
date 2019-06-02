@@ -6,27 +6,30 @@ export default {
         formFields: [
             {
                 formKey: "name",
-                formTitle: "Title",
+                formTitle: "Title *",
                 formDescription: "Give your project a short and descriptive title.",
                 formInputType: "text",
                 formInputError: "Please enter a title for your project.",
-                formInputStyle: "big-form-input"
+                formInputStyle: "big-form-input",
+                formOnClick: "on-required-input-clicked"
             },
             {
                 formKey: "shortDescription",
-                formTitle: "Short Description",
+                formTitle: "Short Description *",
                 formDescription: "Describe this project in one sentence (max. 180 characters).",
                 formInputType: "text",
                 formInputError: "Please enter a short description for your project.",
-                formInputStyle: "big-form-input"
+                formInputStyle: "big-form-input",
+                formOnClick: "on-required-input-clicked"
             },
             {
                 formKey: "longDescription",
-                formTitle: "Description / README",
+                formTitle: "Description / README  *",
                 formDescription: "If you have a README for your project provide here. Just copy it from your repository. If not, describe this project in more detail. How can it be used? Use markdown syntax.",
                 formInputType: "textarea",
                 formInputError: "Please enter a avlid Url.",
-                formInputStyle: "big-form-input textarea-medium"
+                formInputStyle: "big-form-input textarea-medium",
+                formOnClick: "on-required-input-clicked"
             },
             {
                 formKey: "github",
@@ -71,7 +74,7 @@ export default {
                 formTitle: "Project Complexity",
                 formDescription: "Is this a beginner, an advanced or an expert project? Please select an appropriate complexity.",
                 formInputType: "radio",
-                inputFormValues: ['beginner', 'medium', 'expert'],
+                inputFormValues: ['Beginner', 'Medium', 'Expert'],
                 formInputError: "Please select one option."
             },
             {

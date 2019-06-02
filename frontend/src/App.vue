@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <mHeader />
+    <mHeader/>
     <router-view/>
-    <mFooter />
+    <mFooter/>
   </div>
 </template>
 
@@ -28,10 +28,17 @@ export default {
   padding: 0;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.6em;;
+  line-height: 1.6em;
   background: #eee;
+  min-height: 100%;
+  margin: 0 0 50px 0;
 }
 
 a {
@@ -44,7 +51,7 @@ a {
 
 .btn {
   color: #ffffff;
-  background: #1C1C1C;
+  background: #1c1c1c;
   display: inline-block;
   border-color: #000;
   cursor: pointer;
@@ -63,8 +70,8 @@ a {
 }
 
 .btn:active {
-  background: #30B8A3;
-  border-color: #30B8A3;
+  background: #30b8a3;
+  border-color: #30b8a3;
   border-radius: 3px;
   border: none;
 }

@@ -6,7 +6,7 @@
 import Vue from "vue";
 
 /**
- * A basic button, emits a passed event with an optional passed value. 
+ * A basic button, emits a passed event with an optional passed value.
  */
 
 export default Vue.extend({
@@ -61,9 +61,9 @@ export default Vue.extend({
       }
 
       if (this.btnValue) {
-          this.$emit(this.btnOnClick, this.btnValue);  
-      } else { 
-          this.$emit(this.btnOnClick);
+        this.$emit(this.btnOnClick, this.btnValue);
+      } else {
+        this.$emit(this.btnOnClick);
       }
     }
   }
@@ -84,8 +84,9 @@ export default Vue.extend({
 }
 
 .submit-btn {
-    width: 30%;
-    padding: 15px;
+  width: 30%;
+  padding: 15px;
+  margin-left: auto;
 }
 
 .logout-btn {

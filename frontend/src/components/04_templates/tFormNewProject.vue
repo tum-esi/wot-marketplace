@@ -15,8 +15,14 @@
         :formValue="formElement.formValue"
         :inputFormValues="formElement.inputFormValues"
         :formInputStyle="formElement.formInputStyle"
+        :formOnClick="formElement.formOnClick"
+        v-on:on-required-input-clicked="hasErrors = false"
       />
       <div class="submit-btn-container">
+        <span
+          :class="{ 'invisible' : !hasErrors }"
+          class="error-mgs"
+        >Please fill out all required fields in this form.</span>
         <aButton
           :btnValue="filledForm"
           :btnLabel="'Create Project'"
@@ -43,8 +49,9 @@ export default Vue.extend({
   },
   data() {
     return {
+      hasErrors: false,
       filledForm: {
-        name: "", 
+        name: "",
         shortDescription: "",
         longDescription: "",
         github: "",
@@ -53,7 +60,7 @@ export default Vue.extend({
         implementation: "",
         platform: "",
         tags: [],
-        complexity: "",
+        complexity: ""
       }
     };
   },
@@ -74,16 +81,29 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions("project", [
-      "addNewProject"
-    ]),
-    submitForm() {
+    ...mapActions("project", ["addNewProject"]),
+    async submitForm() {
       // eslint-disable-next-line
-      console.log("filledForm", this.filledForm);
-      this.addNewProject({ newProject : this.filledForm});
-      //   event.preventDefault();
+      if (
+        this.filledForm.name &&
+        this.filledForm.shortDescription &&
+        this.filledForm.longDescription
+      ) {
+        console.log("filledForm", this.filledForm);
+        let newProject = await this.addNewProject({
+          newProject: this.filledForm
+        });
+        if (newProject) {
+          this.$router.push({
+            name: "Project",
+            params: { id: newProject.name }
+          });
+        }
+      } else {
+        this.hasErrors = true;
+      }
     }
-  }, 
+  },
   watch: {
     filledForm() {
       // eslint-disable-next-line
@@ -111,10 +131,14 @@ export default Vue.extend({
 .submit-btn-container {
   clear: both;
   width: 100%;
-  display: inline-block;
-  text-align: right;
+  display: flex;
+  align-items: baseline;
   padding: 10px;
   border-top: 1px solid #999;
   margin-top: 10px;
+}
+
+.error-mgs {
+  color: red;
 }
 </style>

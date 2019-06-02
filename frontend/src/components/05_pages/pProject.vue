@@ -4,10 +4,6 @@
       <h1 class="project-title">{{name}}</h1>
       <p class="project-short-description">{{description}}</p>
       <div class="project-content-left">
-        <div class="project-content-left-container">
-          <aMarkDownBox :class="{invisible:buttons.btnG != selected}" :markDown="markdown"/>
-          <aCodeBox :class="{invisible:buttons.btnT != selected}" :code="thingDescription"/>
-        </div>
         <div class="project-content-left-btns">
           <a
             href="#"
@@ -24,11 +20,15 @@
             @click="selected = buttons.btnT"
           >Thing Description</a>
         </div>
+        <div class="project-content-left-container">
+          <aMarkDownBox :class="{invisible:buttons.btnG != selected}" :markDown="markdown"/>
+          <aCodeBox :class="{invisible:buttons.btnT != selected}" :code="thingDescription"/>
+        </div>
       </div>
     </div>
     <div class="project-content-right">
       <mInfoBox :title="'General Information'" :content="info"/>
-      <mInfoBox :title="'Keywords'" :content="keywords"/>
+      <mInfoBox v-if="keywords[0].content" :title="'Keywords'" :content="keywords"/>
     </div>
   </div>
 </template>
@@ -139,50 +139,60 @@ export default {
   width: 100%;
   min-height: 500px;
   border: 1px solid #ccc;
+  border-top: none;
   font-size: 14px;
   border-radius: 3px;
   display: inline-block;
-  padding: 40px 0 0 0;
   position: relative;
   background: #fff;
 }
 
 .project-content-left-btns {
-  position: absolute;
-  top: 0;
-  height: 40px;
   width: 100%;
   text-align: left;
-  margin: 11px 2px 0 0;
-  border-bottom: 1px solid #ccc;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  display: inline-flex;
+  align-items: baseline;
 }
 
 .project-content-left-btns a.active {
-  background: #30b8a3;
-  border-top: 1px solid #30b8a3;
-  border-bottom: 1px solid #30b8a3;
+  background: #1c1c1c;
+  color: #fff;
+  /* border-top: 1px solid #30b8a3;
+  border-bottom: 1px solid #30b8a3; */
 }
 
 .project-content-left-btns a {
   background: #fff;
-  padding: 10px;
   height: 100%;
   text-align: center;
   color: #000;
-  font-size: 1.25em;
+  font-size: 20px;
   display: inline-block;
+  padding: 15px 20px 15px 20px;
 }
 
 .project-content-left-btns a:hover {
-  background: #999;
-  border-color: #999;
+  background: #30b8a3;
+  border-color: #30b8a3;
+  color: #fff;
+  outline: none;
+}
+
+.project-content-left-btns a:active a:hover {
+  background: #333;
+  border-color: #333;
+  color: #fff;
   outline: none;
 }
 
 .project-content-left-btns .left {
   border-top-left-radius: 3px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  /* border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; */
 }
 
 .project-content-left-btns .middle {
