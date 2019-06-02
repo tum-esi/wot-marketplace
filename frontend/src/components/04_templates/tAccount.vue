@@ -80,7 +80,7 @@ export default Vue.extend({
   methods: {
     ...mapActions("user", ["logout"]),
     async logoutBtnClicked() {
-      // await this.logout();
+      await this.logout();
       this.$router.push({ name: "Login" });
     },
     projectItemClicked(clickedProject) {
@@ -91,14 +91,17 @@ export default Vue.extend({
     },
     async checkUserLoggedIn() {
       this.isUserLoggedIn = await this.getUserLoggedIn;
+      console.log("inside Account: checkUserloggedIn", this.isUserLoggedIn);
       if (!this.isUserLoggedIn) this.$router.push({ name: "Login" });
     },
     async getUserData() {
       let currentUser = await this.getCurrenUser;
-      console.log('currentUser', currentUser);
-      this.implementations = currentUser.implementations;
-      this.userInfo[0].content = currentUser.name;
-      this.userInfo[1].content = currentUser.email;
+      console.log("currentUser", currentUser);
+      if (currentUser) {
+        this.implementations = currentUser.implementations;
+        this.userInfo[0].content = currentUser.name;
+        this.userInfo[1].content = currentUser.email;
+      }
       if (currentUser.firstName) {
         this.userInfo.push({
           title: "First Name: ",

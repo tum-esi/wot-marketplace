@@ -66,7 +66,7 @@ export async function loadProject(projectId) {
 export async function addNewProject(newProject) {
     if (!newProject) return;
     try {
-        await axios.post(newProject);
+        await axios.post(`${baseUrl}${projectUrl}`, newProject);
         return "success";
     } catch (error) {
         throw error;
@@ -74,24 +74,30 @@ export async function addNewProject(newProject) {
 }
 
 export async function register(newUser) {
+    // eslint-disable-next-line
+    console.log('api register:', newUser);
     if (!newUser) return;
     try {
-        await axios.post(`${baseUrl}${registerUrl}`, newUser);
+        await axios.post(`${baseUrl}${registerUrl}`, { email: newUser.email, password: newUser.password, username: newUser.username, firstname: newUser.firstName, lastname: newUser.lastName });
     } catch (error) {
         throw error;
     }
 }
 
 export async function login(userCredentials) {
+    // eslint-disable-next-line
+    console.log('api login:', userCredentials);
     if (!userCredentials) return;
     try {
-        await axios.post(`${baseUrl}${loginUrl}`, userCredentials);
+        await axios.post(`${baseUrl}${loginUrl}`, { email: userCredentials.email, password: userCredentials.password });
     } catch (error) {
         throw error;
     }
 }
 
 export async function logout(currentUser) {
+    // eslint-disable-next-line
+    console.log('api logout:', currentUser);
     if (!currentUser) return;
     try {
         await axios.post(`${baseUrl}${logoutUrl}`, currentUser);

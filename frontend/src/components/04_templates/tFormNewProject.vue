@@ -81,7 +81,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapActions("project", ["addNewProject"]),
+    ...mapActions("project", ["addNewProject", "loadProject"]),
     async submitForm() {
       // eslint-disable-next-line
       if (
@@ -90,8 +90,11 @@ export default Vue.extend({
         this.filledForm.longDescription
       ) {
         console.log("filledForm", this.filledForm);
-        let newProject = await this.addNewProject({
+        await this.addNewProject({
           newProject: this.filledForm
+        });
+        let newProject = await this.loadProject({
+          projectId: this.filledForm.name
         });
         if (newProject) {
           this.$router.push({

@@ -12,7 +12,6 @@ export default {
         async addNewProject({ commit }, payload) {
             await Api.addNewProject(payload.newProject);
             commit('setNewProject', payload.newProject);
-            return await this.loadProject({ projectId: payload.newProject.name });
         },
         async loadProjectItems({ commit }, payload) {
             let newProjectItems = await Api.getProjects(payload.searchTerm, payload.searchOptions);
