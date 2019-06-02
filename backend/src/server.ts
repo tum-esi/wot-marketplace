@@ -107,7 +107,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     app.post("/api/login", 
         Passport.authenticate('local'),
         (req, res, next) => {
-            res.sendStatus(200);
+            res.status(200).json("logged In") //FIXME:
         }
     );
 
@@ -159,9 +159,16 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                 // TODO: Add correct message in case of failure
                 Logger.error("ERR: " + err);
                 next(HttpError(400, err));
-            } else { 
-                res.status(201).send("CREATED");
+            } else if (product) { 
+                res.status(201).send({
+                    username: product.userName,
+                    firstname: product.firstName,
+                    lastname: product.lastName,
+                    email: product.email
+                });
                 req.login(product, (err) => { if (err) next(err) });
+            } else {
+                next()
             }
         })
     })
@@ -198,10 +205,10 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // Edit a user
     // FIXME: not implemented
-    app.put("/api/users/:userName", (req, res, next) => {
+    app.put("/api/users/:username", (req, res, next) => {
         if (!req.user) {
             res.status(401).send("Please log-in and try again!")
-        } else if (req.user.userName === req.params.userName) {
+        } else if (req.user.userName === req.params.username) {
             // Update
             res.sendStatus(501)
         } else {
