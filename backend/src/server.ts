@@ -105,7 +105,10 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
      * @apiParam {String} password Password of the user to Log-in.
      */
     app.post("/api/login", 
-        Passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login'})
+        Passport.authenticate('local'),
+        (req, res, next) => {
+            res.sendStatus(200);
+        }
     );
 
     // Logout process
@@ -140,6 +143,9 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // Signup process
     app.post("/api/users", (req, res, next) => {
+        if (!req.body.password || !req.body.username || !req.body.password) {
+            return res.status(400).send("A username, email address and password are required to register a new user.")
+        }
         let newUser = new models.UserModel({
             userName: req.body.username,
             email: req.body.email,
