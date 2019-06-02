@@ -6,7 +6,7 @@ const fs = require('fs');
 // Connection URL
 var localUrl = 'mongodb://localhost:27017/';
 
-var onlineUrl = "mongodb+srv://esi:youcantimagine@wotify-uwq9g.mongodb.net/test?retryWrites=true"
+var onlineUrl = "mongodb+srv://user:pw@wotify-uwq9g.mongodb.net/test?retryWrites=true"
 
 var databaseName = "wotify_development"
 var collectionName = "implementations"
