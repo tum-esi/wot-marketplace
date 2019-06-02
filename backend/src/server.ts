@@ -2,6 +2,7 @@ import Express from "express";
 import Path from "path";
 import Mongoose from "mongoose";
 import Models from "./database/db";
+import Helpers from "./helpers";
 import BodyParser from "body-parser";
 import Session from "express-session";
 import Favicon from "serve-favicon";
@@ -111,15 +112,9 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                 if (err) { 
                     next(err) 
                 } else if (!user) { 
-                    next(HttpError(500)) 
+                    next(HttpError(500))
                 } else {
-                    res.json({
-                        username: user.userName,
-                        firstname: user.firstName,
-                        lastname: user.lastName,
-                        email: user.email,
-                        implementations: user.implementations
-                    })
+                    res.json(Helpers.publicUser(user))
                 }
             });
         }
@@ -128,7 +123,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     // Logout process
     app.post("/api/logout", (req, res) => {
         req.logout();
-        res.redirect("/");
+        res.redirect("/");  //FIXME: return 204
     });
 
     // return true if a username is allowed for new users
@@ -174,13 +169,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                 Logger.error("ERR: " + err);
                 next(HttpError(400, err));
             } else if (product) { 
-                res.status(201).json({
-                    username: product.userName,
-                    firstname: product.firstName,
-                    lastname: product.lastName,
-                    email: product.email,
-                    implementations: product.implementations
-                });
+                res.status(201).json(Helpers.publicUser(product));
                 req.login(product, (err) => { if (err) next(err) });
             } else {
                 next()
@@ -261,16 +250,19 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
             if (err) { 
                 Logger.error("ERR: " + err);
                 next({message: err.message});
-            } else {
+            } else if (product) {
                 models.UserModel.findOneAndUpdate(
                     // @ts-ignore
                     {userName: req.user.userName},
-                    {$push: {implementations: product.id}},
+                    {$push: {implementations: Helpers.publicProject(product)}},
                     (err, result) => {
-                        if (err) next({message: err})
+                        if (err) {
+                            next({message: err})
+                        } else {
+                            res.status(201).json(Helpers.publicProject(product));
+                        }
                     }
                 )
-                res.status(201).send("CREATED");
             }
         })
     });
@@ -303,6 +295,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                     (err, result) => {
                         if (err) {next({message: err})}
                         // TODO: check res.modifiedCount
+                        res.status(200).json(Helpers.publicProject(result))
                     }
                 )
             }
