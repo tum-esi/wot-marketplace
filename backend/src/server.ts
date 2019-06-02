@@ -72,7 +72,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     app.use(BodyParser.json());
     app.use(ExpressWinston.logger({
         winstonInstance: Logger,
-        ignoredRoutes: ["/api/login"]
+        ignoredRoutes: ["/api/login", "/api/users"]  //FIXME:
     }));
     app.use(Session({
         name: Config.session.cookieName,
@@ -107,7 +107,21 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     app.post("/api/login", 
         Passport.authenticate('local'),
         (req, res, next) => {
-            res.status(200).json("logged In") //FIXME:
+            models.userModel.findById(req.user, function(err, user) {
+                if (err) { 
+                    next(err) 
+                } else if (!user) { 
+                    next(HttpError(500)) 
+                } else {
+                    res.json({
+                        username: user.userName,
+                        firstname: user.firstName,
+                        lastname: user.lastName,
+                        email: user.email,
+                        implementations: user.implementations
+                    })
+                }
+            });
         }
     );
 
@@ -160,11 +174,12 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
                 Logger.error("ERR: " + err);
                 next(HttpError(400, err));
             } else if (product) { 
-                res.status(201).send({
+                res.status(201).json({
                     username: product.userName,
                     firstname: product.firstName,
                     lastname: product.lastName,
-                    email: product.email
+                    email: product.email,
+                    implementations: product.implementations
                 });
                 req.login(product, (err) => { if (err) next(err) });
             } else {

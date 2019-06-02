@@ -54,7 +54,7 @@ export default new Schema({
         })
     },
     td: {
-        type: Map,
+        type: String,
         required: true
     }
 })
