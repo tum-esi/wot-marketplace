@@ -54,7 +54,7 @@ export default new Schema({
         })
     },
     td: {
-        type: String,
+        type: Object,
         required: true
     }
 })

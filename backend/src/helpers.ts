@@ -22,7 +22,7 @@ export function publicProject(project: any) {
         tags: project.tags,
         complexity: project.complexity,
         version: project.version,
-        td: project.td,
+        td: project.td
     }
 }
 

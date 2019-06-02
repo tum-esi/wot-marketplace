@@ -182,12 +182,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         if (!req.user) {
             res.status(401).send("Please log-in and try again!")
         } else if (req.user.userName === req.params.userName) {
-            res.json({ //TODO: maybe this can be better with de-construction (...)
-                username: req.user.userName,
-                firstName: req.user.firstName,
-                lastName: req.user.lastName,
-                email: req.user.email
-            })
+            res.json(Helpers.publicUser(req.user))
         } else {
             res.sendStatus(403)
             // right now, user cant see anything about other users. This will change.
@@ -350,7 +345,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
 
     // catch all non existing paths and return 404
     app.use((req, res, next) => {
-        res.status(404).redirect("/");  //FIXME: remove redirect once frontend is ready
+        res.sendStatus(404);  //FIXME: remove redirect once frontend is ready
     });
     
     app.use(ExpressWinston.errorLogger({
