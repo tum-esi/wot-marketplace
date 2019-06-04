@@ -101,7 +101,7 @@ export default {
         projectId: this.$route.params.id
       });
       if (typeof response === String) {
-        console.log("API ERROR: ", response);
+        // console.log("API ERROR: ", response);
       } else {
         let project = response;
         this.name = project.name;

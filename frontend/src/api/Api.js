@@ -79,9 +79,9 @@ export async function loadProject(projectId) {
 export async function addNewProject(newProject) {
     if (!newProject) return getErrorMessage('newProject');
     try {
-        let response = await axios.post(`${baseUrl}${projectUrl}`, newProject);
+        let response = "";
+        response = await axios.post(`${baseUrl}${projectUrl}`, newProject);
         console.log('API: ', response);
-        console.log('API.data: ', response.data);
         return response.data;
     } catch (error) {
         return getErrorMessage(error.response.status);
