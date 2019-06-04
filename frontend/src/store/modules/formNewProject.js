@@ -44,45 +44,45 @@ export default {
                 formDescription: "Add the URL of the repository, where your WoT project is hosted. Make sure it is publiclly available.",
                 formInputType: "text",
                 formInputStyle: "big-form-input"
-            },
-            {
-                formKey: "topic",
-                formTitle: "Topic",
-                formDescription: "Please select at least one topic.",
-                formInputType: "radio",
-                inputFormValues: ['Sensor', 'Robotics', 'Actuator', 'Other'],
-                formInputError: "Please select at least one option."
-            },
-            {
-                formKey: "platform",
-                formTitle: "Platform",
-                formDescription: "Please choose the according platform.",
-                formInputType: "radio",
-                inputFormValues: ['Raspberry', 'Arduino', 'ESP', 'Other'],
-                formInputError: "Please select one option."
-            },
-            {
-                formKey: "implementationType",
-                formTitle: "Implementation type",
-                formDescription: "Is this thing a Thing Description template or source code?",
-                formInputType: "radio",
-                inputFormValues: ['Template', 'Code'],
-                formInputError: "Please select one option."
-            },
-            {
-                formKey: "complexity",
-                formTitle: "Project Complexity",
-                formDescription: "Is this a beginner, an advanced or an expert project? Please select an appropriate complexity.",
-                formInputType: "radio",
-                inputFormValues: ['Beginner', 'Medium', 'Expert'],
-                formInputError: "Please select one option."
-            },
-            {
-                formKey: "tags",
-                formTitle: "Tags",
-                formDescription: "Add some tags that will help others find your project. Comma or space separate the tags.",
-                formInputType: "tag"
             }
+            // {
+            //     formKey: "topic",
+            //     formTitle: "Topic",
+            //     formDescription: "Please select at least one topic.",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Sensor', 'Robotics', 'Actuator', 'Other'],
+            //     formInputError: "Please select at least one option."
+            // },
+            // {
+            //     formKey: "platform",
+            //     formTitle: "Platform",
+            //     formDescription: "Please choose the according platform.",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Raspberry', 'Arduino', 'ESP', 'Other'],
+            //     formInputError: "Please select one option."
+            // },
+            // {
+            //     formKey: "implementationType",
+            //     formTitle: "Implementation type",
+            //     formDescription: "Is this thing a Thing Description template or source code?",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Template', 'Code'],
+            //     formInputError: "Please select one option."
+            // },
+            // {
+            //     formKey: "complexity",
+            //     formTitle: "Project Complexity",
+            //     formDescription: "Is this a beginner, an advanced or an expert project? Please select an appropriate complexity.",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Beginner', 'Medium', 'Expert'],
+            //     formInputError: "Please select one option."
+            // },
+            // {
+            //     formKey: "tags",
+            //     formTitle: "Tags",
+            //     formDescription: "Add some tags that will help others find your project. Comma or space separate the tags.",
+            //     formInputType: "tag"
+            // }
         ]
     },
     actions: {

@@ -194,6 +194,7 @@ export default Vue.extend({
       this.$refs.tagInput.focus();
     }, 
     inputClicked() {
+      this.$emit('input-clicked');
       if (this.inputOnClick) {
         this.$emit(this.inputOnClick);
       }

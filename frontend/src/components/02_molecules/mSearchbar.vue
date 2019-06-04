@@ -6,6 +6,7 @@
       id="search-bar"
       placeholder="Search WoTify library"
       @keyup.enter="searchBtnClicked"
+      @click="searchBarClicked"
     >
     <aButton
       :btnLabel="'Search'"
@@ -33,6 +34,9 @@ export default Vue.extend({
   methods: {
     searchBtnClicked() {
       this.$emit("search-btn-clicked", this.searchTerm);
+    }, 
+    searchBarClicked(){
+      this.$emit("searchbar-clicked");
     }
   }
 });
