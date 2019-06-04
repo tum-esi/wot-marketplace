@@ -178,10 +178,10 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     })
 
     // Get the information of a given user
-    app.get("/api/users/:userName", (req, res, next) => {
+    app.get("/api/users/:username", (req, res, next) => {
         if (!req.user) {
             res.status(401).send("Please log-in and try again!")
-        } else if (req.user.userName === req.params.userName) {
+        } else if (req.user.userName === req.params.username) {
             res.json(Helpers.publicUser(req.user))
         } else {
             res.sendStatus(403)
@@ -216,17 +216,23 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
     });
 
     // Get the information of a given user
-    app.delete("/api/users/:userName", (req, res, next) => {
+    app.delete("/api/users/:username", (req, res, next) => {
         if (!req.user) {
             res.status(401).send("Please log-in and try again!")
-        } else if (req.user.userName === req.params.userName) {
+        } else if (req.user.userName === req.params.username) {
             models.UserModel.deleteOne(
                 {userName: req.user.userName},
                 (err, result) => {
                     if (err) {
                         next({message: err})
-                    } else {
-                        res.sendStatus(204)
+                    } else {  //FIXME: what if user is deleted but impl.delete fails ?
+                        models.ImplementationModel.deleteMany(
+                            {owner: req.user.id},
+                            (err, deleted) => {
+                                if (err) return next(HttpError(500, err))
+                                res.sendStatus(204)
+                            }
+                        )
                     }
                 }
             )
