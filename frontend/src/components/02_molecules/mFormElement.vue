@@ -25,6 +25,7 @@
       :inputFormValues="inputFormValues"
       :inputStyle="formInputStyle"
       :inputOnClick="formOnClick"
+      v-on:input-clicked="$emit('input-clicked')"
       v-on:on-required-input-clicked="$emit('on-required-input-clicked')"
     />
   </div>
@@ -165,6 +166,6 @@ export default Vue.extend({
 
 .login-form-title {
   color: #1C1C1C;
-  font-size: 20px;
+  font-size: 16px;
 }
 </style>

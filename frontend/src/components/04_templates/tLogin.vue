@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <h2>Login to WoTify</h2>
-    <div>
+    <div class="form-container">
       <form @submit="submitForm" class="form">
         <mFormElement
           v-for="(formElement, index) in formElements"
@@ -16,13 +16,11 @@
           :formValue="formElement.formValue"
           :inputFormValues="formElement.inputFormValues"
           :formInputStyle="formElement.formInputStyle"
+          v-on:input-clicked="resetErrors"
         />
       </form>
+    <span :class="{ 'invisible' : !hasErrors }" class="error-mgs">{{ errorMessage }}</span>
     </div>
-    <span
-      :class="{ 'invisible' : !hasErrors }"
-      class="error-mgs"
-    >Username or password not correct.</span>
     <div class="submit-btn">
       <aButton
         :btnClass="'login-btn'"
@@ -57,6 +55,7 @@ export default Vue.extend({
   data() {
     return {
       hasErrors: false,
+      errorMessage: "",
       elementInputValue: "",
       formStyle: {
         title: "login-form-title"
@@ -81,32 +80,41 @@ export default Vue.extend({
     };
   },
   methods: {
-    // TODO: 
-    // - login name not correct
-    // - already logged in --> redirect to account page
-    // - password or username wrong
     ...mapActions("user", ["login"]),
     async submitForm() {
-      if (this.filledForm.username && this.filledForm.password) {
-        // console.log("Login: form ok:", this.filledForm);
-        let user = await this.login({
+      this.resetErrors();
+      if (!this.filledForm.username && !this.filledForm.password) {
+        this.showErrors("Please fill in your username and password.");
+      } else {
+        let response = await this.login({
           email: this.filledForm.username,
           password: this.filledForm.password
         });
-        this.$router.push({
-          name: "Account"
-        });
-      } else {
-        this.hasErrors = true;
-        // console.log("Login: form not ok:", this.filledForm);
-        //TODO: fill form
+        console.log("USER:", response);
+        if (response.error) {
+          this.showErrors(response.error);
+        } else if (response.username) {
+          this.$router.push({
+            name: "Account"
+          });
+        } else {
+          this.showErrors("Wrong password or username.");
+        }
       }
     },
     goToRegister() {
       this.$router.push({
         name: "Registration"
       });
-    }
+    }, 
+    showErrors(errMsg) {
+      this.hasErrors = true;
+      this.errorMessage = errMsg;
+    },
+    resetErrors() {
+      this.hasErrors = false;
+      this.errorMessage = "";
+    },
   },
   watch: {
     filledForm() {}
@@ -125,27 +133,26 @@ export default Vue.extend({
   padding-top: 30px;
   text-align: center;
 }
+
+.form-container {
+  text-align: center;
+}
+
 .submit-btn {
-  padding-top: 5px;
+  padding-top: 10px;
   text-align: center;
 }
 
 .register-btn {
-  padding-top: 3px;
+  padding-top: 5px;
   text-align: center;
 }
 
 .form {
-  text-align: center;
-  padding-top: 1px;
-  padding-bottom: 3px;
+  padding: 5px 0 10px 0;
 }
 
 .error-mgs {
-  color: red;
-}
-
-.invisible {
-  display: none;
+  color: #FF4C4B;
 }
 </style>

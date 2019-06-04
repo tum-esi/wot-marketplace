@@ -22,7 +22,7 @@
         <span
           :class="{ 'invisible' : !hasErrors }"
           class="error-mgs"
-        >Please fill out all required fields in this form.</span>
+        >{errorMessage}</span>
         <aButton
           :btnValue="filledForm"
           :btnLabel="'Create Project'"
@@ -49,6 +49,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      errorMessage: "",
       hasErrors: false,
       filledForm: {
         name:  undefined,
@@ -89,7 +90,6 @@ export default Vue.extend({
     
     ...mapActions("project", ["addNewProject", "loadProject"]),
     async submitForm() {
-      // eslint-disable-next-line
       if (
         this.filledForm.name &&
         this.filledForm.shortDescription &&
@@ -98,30 +98,38 @@ export default Vue.extend({
         this.filledForm.implementationType &&
         this.filledForm.platform
       ) {
-        // console.log("filledForm", this.filledForm);
-        // Api needs td as object not as string from textarea
         try {
           this.filledForm.td = JSON.parse(this.filledForm.td);
         } catch(error) {
-          // this.hasErrors = true;
-          // console.log('json errr', error);
+          this.showErrors("Please provide your Thing Description in valid JSON format.")
           return;
         }
-        await this.addNewProject({
+        let response = await this.addNewProject({
           newProject: this.filledForm
         });
-        let newProject = await this.loadProject({
-          projectId: this.filledForm.name
-        });
-        if (newProject) {
-          this.$router.push({
-            name: "Project",
-            params: { id: newProject.name }
+        if (response['error']) {
+          this.showErrors(response.error); 
+        } else {
+          let newProject = await this.loadProject({
+            projectId: this.filledForm.name
           });
+          if (newProject) {
+            this.$router.push({
+              name: "Project",
+              params: { id: newProject.name }
+            });
+          } else {
+            this.showErrors(newProject.error);
+          }
         }
       } else {
-        this.hasErrors = true;
+        this.showErrors();
       }
+    }, 
+    showErrors(errorMsg) {
+      let standardErrorMssg = "Please fill out all required fields in this form."
+      this.hasErrors = true;
+      this.errorMessage = errorMsg ? errorMsg : standardErrorMssg;
     }
   },
   watch: {

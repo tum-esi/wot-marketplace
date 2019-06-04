@@ -97,19 +97,24 @@ export default {
   methods: {
     ...mapActions("project", ["loadProject"]),
     async getProject() {
-      let project = await this.loadProject({
+      let response = await this.loadProject({
         projectId: this.$route.params.id
       });
-      this.name = project.name;
-      this.description = project.shortDescription;
-      this.markdown = project.longDescription;
-      this.thingDescription = project.td;
-      this.info[0].content = project.implementationType;
-      this.info[1].content = project.platform;
-      this.info[2].content = project.complexity;
-      this.info[3].content = project.topic;
-      this.info[4].content.link = project.github;
-      this.keywords[0].content = project.tags;
+      if (typeof response === String) {
+        console.log("API ERROR: ", response);
+      } else {
+        let project = response;
+        this.name = project.name;
+        this.description = project.shortDescription;
+        this.markdown = project.longDescription;
+        this.thingDescription = project.td;
+        this.info[0].content = project.implementationType;
+        this.info[1].content = project.platform;
+        this.info[2].content = project.complexity;
+        this.info[3].content = project.topic;
+        this.info[4].content.link = project.github;
+        this.keywords[0].content = project.tags;
+      }
     }
   }
 };
