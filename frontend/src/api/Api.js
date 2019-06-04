@@ -96,7 +96,7 @@ export async function getUser(userName) {
         let response = await axios.get(`${baseUrl}${registerUrl}/${userName}`);
 
         // eslint-disable-next-line
-        // console.log('api getUser:', response);
+        console.log('api getUser:', response);
         return response.data;
     } catch (error) {
         return getErrorMessage(error.response.status);

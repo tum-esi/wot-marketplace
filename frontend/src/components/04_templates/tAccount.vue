@@ -5,7 +5,7 @@
         <h2>Projects</h2>
         <div
           v-if="implementations.length === 0"
-        >You haven't contributed any implementations to WoTify yet</div>
+        class="no-projects">You haven't contributed any implementations to WoTify yet</div>
         <div id="search-results">
           <mProjectItem
             v-for="(implementation, index) in implementations"
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div class="user-infos">
       <div class="project-content-right">
         <mInfoBox :title="'User Information'" :content="userInfo"/>
       </div>
@@ -100,7 +100,7 @@ export default Vue.extend({
     },
     async getUserData() {
       let currentUser = await this.getCurrenUser.username;
-      currentUser = await this.getUser({ username: currentUser});
+      currentUser = await this.getUser({ username: currentUser });
       // console.log("currentUser", currentUser);
       if (currentUser) {
         if (currentUser.implementations)
@@ -133,14 +133,14 @@ export default Vue.extend({
   float: left;
   padding-top: 10px;
   position: relative;
-  margin-bottom: 10px;
+    margin-bottom: 50px;
 }
 .project-content-left h2 {
   padding-left: 20px;
 }
 
 .project-content-right {
-  width: 25%;
+  width: 100%;
   float: right;
   padding-right: 15px;
   padding-top: 46px;
@@ -151,5 +151,15 @@ export default Vue.extend({
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
+}
+
+.user-infos {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.no-projects {
+  padding-left: 20px;
 }
 </style>

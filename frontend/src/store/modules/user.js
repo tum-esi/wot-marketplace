@@ -11,11 +11,11 @@ export default {
         async getUser({ commit }, payload) {
             // console.log("user: payload.username:", payload.username);
             let user = await Api.getUser(payload.username);
-            if (user) {
+            if (!user.error && user) {
                 commit('setCurrentUser', user);
                 return user;
             } else {
-                return "error";
+                return user.error || "error";
             }
         },
         async register({ commit }, payload) {
