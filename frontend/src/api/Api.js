@@ -80,6 +80,8 @@ export async function addNewProject(newProject) {
     if (!newProject) return getErrorMessage('newProject');
     try {
         let response = await axios.post(`${baseUrl}${projectUrl}`, newProject);
+        console.log('API: ', response);
+        console.log('API.data: ', response.data);
         return response.data;
     } catch (error) {
         return getErrorMessage(error.response.status);
@@ -167,6 +169,9 @@ function getErrorMessage(error) {
         case ERROR_MSGS.notFound:
         case ERROR_MSGS.notFoundStatus:
             errorMsg = "This service is currently not available. Please try again later.";
+            break;
+        case ERROR_MSGS.unauthorizedStatus:
+            errorMsg = "You are not logged in. Please log in.";
             break;
         default:
             errorMsg = "There is an unknown problem. Please try again later.";

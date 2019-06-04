@@ -70,7 +70,7 @@ export default {
     async searchBtnClicked(searchTerm) {
       this.projects = [];
       this.resetErrors();
-      this.showError("Loading");
+      this.showError("Loading...");
       let response = await this.loadProjectItems({
         searchTerm,
         searchOptions: this.searchOptions

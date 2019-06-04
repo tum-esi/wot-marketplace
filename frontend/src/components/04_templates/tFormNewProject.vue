@@ -16,13 +16,10 @@
         :inputFormValues="formElement.inputFormValues"
         :formInputStyle="formElement.formInputStyle"
         :formOnClick="formElement.formOnClick"
-        v-on:on-required-input-clicked="hasErrors = false"
+        v-on:input-clicked="resetErrors"
       />
       <div class="submit-btn-container">
-        <span
-          :class="{ 'invisible' : !hasErrors }"
-          class="error-mgs"
-        >{errorMessage}</span>
+        <span :class="{ 'invisible' : !hasErrors }" class="error-mgs">{{errorMessage}}</span>
         <aButton
           :btnValue="filledForm"
           :btnLabel="'Create Project'"
@@ -52,15 +49,15 @@ export default Vue.extend({
       errorMessage: "",
       hasErrors: false,
       filledForm: {
-        name:  undefined,
-        shortDescription:  undefined,
-        longDescription:  undefined,
-        github:  undefined,
-        td:  undefined,
-        topic:  undefined,
+        name: undefined,
+        shortDescription: undefined,
+        longDescription: undefined,
+        github: undefined,
+        td: undefined,
+        topic: undefined,
         implementationType: "code",
         platform: "other",
-        tags:  undefined,
+        tags: undefined,
         complexity: undefined
       }
     };
@@ -82,38 +79,53 @@ export default Vue.extend({
     }
   },
   methods: {
-    // Possible errors on form validation: 
+    // Possible errors on form validation:
     // - missing required field
     // - td has the wrong format
     // - user is not logged in --> disable button maybe
-    // - title not long enough, etc. 
-    
+    // - title not long enough, etc.
+
     ...mapActions("project", ["addNewProject", "loadProject"]),
     async submitForm() {
-      if (
+      if (this.filledForm.name && this.filledForm.name.split("").length < 5) {
+        this.showErrors("The project's name should be at least 5 characters.");
+      } else if (
+        this.filledForm.shortDescription &&
+        this.filledForm.shortDescription.split("").length < 5
+      ) {
+        this.showErrors(
+          "The project's description should be at least 5 characters."
+        );
+      } else if (
         this.filledForm.name &&
         this.filledForm.shortDescription &&
         this.filledForm.longDescription &&
-        this.filledForm.td && 
+        this.filledForm.td &&
         this.filledForm.implementationType &&
         this.filledForm.platform
       ) {
         try {
           this.filledForm.td = JSON.parse(this.filledForm.td);
-        } catch(error) {
-          this.showErrors("Please provide your Thing Description in valid JSON format.")
+        } catch (error) {
+          this.showErrors(
+            "Please provide your Thing Description in valid JSON format."
+          );
           return;
         }
         let response = await this.addNewProject({
           newProject: this.filledForm
         });
-        if (response['error']) {
-          this.showErrors(response.error); 
+        console.log('project new', response);
+        if (!response) {
+          this.showErrors("This service is currently not available. Try again later");          
+        } else if (response.error) {
+          this.showErrors(response.error);
         } else {
           let newProject = await this.loadProject({
             projectId: this.filledForm.name
           });
-          if (newProject) {
+          console.log('newProject', newProject);
+          if (!newProject.error && newProject) {
             this.$router.push({
               name: "Project",
               params: { id: newProject.name }
@@ -123,13 +135,16 @@ export default Vue.extend({
           }
         }
       } else {
-        this.showErrors();
+        this.showErrors("Please fill out all required fields in this form.");
       }
-    }, 
-    showErrors(errorMsg) {
-      let standardErrorMssg = "Please fill out all required fields in this form."
+    },
+    showErrors(errMsg) {
       this.hasErrors = true;
-      this.errorMessage = errorMsg ? errorMsg : standardErrorMssg;
+      this.errorMessage = errMsg;
+    },
+    resetErrors() {
+      this.hasErrors = false;
+      this.errorMessage = "";
     }
   },
   watch: {
