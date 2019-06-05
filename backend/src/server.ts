@@ -17,6 +17,7 @@ import PassportLocal from "passport-local";
 import Helmet from "helmet";
 import ExpressWinston from "express-winston";
 import HttpError from "http-errors";
+import Compression from "compression";
 
 
 function setupPassport(userModel) {
@@ -64,7 +65,8 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         frameguard: {action: "deny"},
         dnsPrefetchControl: false
     }));
-    app.use(Favicon(Path.join(__dirname, '../public/favicon.ico')))
+    app.use(Compression());
+    app.use(Favicon(Path.join(__dirname, '../public/favicon.ico')));
     app.use("/public", Express.static(Path.join(__dirname, "../public")));
     app.use("/js", Express.static(Path.join(__dirname, "../public/js")));
     app.use("/css", Express.static(Path.join(__dirname, "../public/css")));
