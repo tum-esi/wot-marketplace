@@ -1,28 +1,41 @@
 <template>
   <div class="markdown-container">
-  <div>
-    <markdown-it-vue class="md-body" :content="markDown"/>
+  <div id="editor">
+    <div v-html="compiledMarkdown"></div>
   </div>
   </div>
 </template>
 
 <script lang="ts">
-import MarkdownItVue from 'markdown-it-vue'
-import 'markdown-it-vue/dist/markdown-it-vue.css'
 import Vue from "vue";
+import Marked from "marked";
+import Lodash from "lodash";
 
 export default Vue.extend({
-  name: "aMarkDownBox",
-  components: {
-    MarkdownItVue
-  },
+  el: "#editor",
   props: {
-    markDown: {
-      required: false,
-      default: ""
+    input: {
+      default: undefined,
+      required: false
+    }
+  },
+  computed: {
+    compiledMarkdown: function () {
+      let input = this.input || " ";
+      return Marked(input, { 
+        sanitize: true,
+        breaks: true
+      })
+    }
+  },
+  watch: {
+    input: function() {
+      Lodash.debounce(function (e) {
+        this.input = e.target.value
+      }, 300)
     }
   }
-});
+})
 </script>
 
 <style scoped>
