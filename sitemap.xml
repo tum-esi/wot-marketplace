@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                           http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+	<url>
+		<loc>https://wotify.org/#/</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1.00</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/#/new-project</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/#/login</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/#/project/DotStar%20Python</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+		<url>
+		<loc>https://wotify.org/#/project/HUE%20Bridge%20Simple</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+		<url>
+		<loc>https://wotify.org/#/project/HUE%20Daylight%20Sensor</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+		<url>
+		<loc>https://wotify.org/#/project/HUE%20Dimmer%20Switch</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+		<url>
+		<loc>https://wotify.org/#/project/HUE%20White%20Light</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+		
+		<url>
+		<loc>https://wotify.org/#/project/ESP%20Light%20Sensor</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+
+	<url>
+		<loc>https://wotify.org/#/project/MeArm%20Pi%20node-wot</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+
+	<url>
+		<loc>https://wotify.org/#/project/piCamera%20flask</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+
+	<url>
+		<loc>https://wotify.org/#/project/SenseHAT_node-wot</loc>
+		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	
+</urlset>
