@@ -7,7 +7,7 @@ export default {
             {
                 formKey: "name",
                 formTitle: "Title *",
-                formDescription: "Give your project a short and descriptive title.",
+                formDescription: "Give your project a short and descriptive title (min. 5 characters).",
                 formInputType: "text",
                 formInputError: "Please enter a title for your project.",
                 formInputStyle: "big-form-input",
@@ -16,7 +16,7 @@ export default {
             {
                 formKey: "shortDescription",
                 formTitle: "Short Description *",
-                formDescription: "Describe this project in one sentence (max. 180 characters).",
+                formDescription: "Describe this project in one sentence (min. 5, max. 180 characters).",
                 formInputType: "text",
                 formInputError: "Please enter a short description for your project.",
                 formInputStyle: "big-form-input",
@@ -25,7 +25,7 @@ export default {
             {
                 formKey: "longDescription",
                 formTitle: "Description / README  *",
-                formDescription: "If you have a README for your project provide here. Just copy it from your repository. If not, describe this project in more detail. How can it be used? Use markdown syntax.",
+                formDescription: "If you have a README for your project provide here. Just copy it from your repository. If not, describe this project in more detail. How can it be used? Use markdown syntax. (Min. 5 characters)",
                 formInputType: "textarea",
                 formInputError: "Please enter a avlid Url.",
                 formInputStyle: "big-form-input textarea-medium",
@@ -34,7 +34,7 @@ export default {
             {
                 formKey: "td",
                 formTitle: "Thing Description *",
-                formDescription: "Paste the Thing Description of your project.",
+                formDescription: "Paste the Thing Description of your project in a JSON format.",
                 formInputType: "textarea",
                 formInputStyle: "big-form-input textarea-medium"
             },
@@ -44,45 +44,45 @@ export default {
                 formDescription: "Add the URL of the repository, where your WoT project is hosted. Make sure it is publiclly available.",
                 formInputType: "text",
                 formInputStyle: "big-form-input"
-            },
-            {
-                formKey: "topic",
-                formTitle: "Topic",
-                formDescription: "Please select at least one topic.",
-                formInputType: "radio",
-                inputFormValues: ['Sensor', 'Robotics', 'Actuator', 'Other'],
-                formInputError: "Please select at least one option."
-            },
-            {
-                formKey: "platform",
-                formTitle: "Platform",
-                formDescription: "Please choose the according platform.",
-                formInputType: "radio",
-                inputFormValues: ['Raspberry', 'Arduino', 'ESP', 'Other'],
-                formInputError: "Please select one option."
-            },
-            {
-                formKey: "implementationType",
-                formTitle: "Implementation type",
-                formDescription: "Is this thing a Thing Description template or source code?",
-                formInputType: "radio",
-                inputFormValues: ['Template', 'Code'],
-                formInputError: "Please select one option."
-            },
-            {
-                formKey: "complexity",
-                formTitle: "Project Complexity",
-                formDescription: "Is this a beginner, an advanced or an expert project? Please select an appropriate complexity.",
-                formInputType: "radio",
-                inputFormValues: ['Beginner', 'Medium', 'Expert'],
-                formInputError: "Please select one option."
-            },
-            {
-                formKey: "tags",
-                formTitle: "Tags",
-                formDescription: "Add some tags that will help others find your project. Comma or space separate the tags.",
-                formInputType: "tag"
             }
+            // {
+            //     formKey: "topic",
+            //     formTitle: "Topic",
+            //     formDescription: "Please select at least one topic.",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Sensor', 'Robotics', 'Actuator', 'Other'],
+            //     formInputError: "Please select at least one option."
+            // },
+            // {
+            //     formKey: "platform",
+            //     formTitle: "Platform",
+            //     formDescription: "Please choose the according platform.",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Raspberry', 'Arduino', 'ESP', 'Other'],
+            //     formInputError: "Please select one option."
+            // },
+            // {
+            //     formKey: "implementationType",
+            //     formTitle: "Implementation type",
+            //     formDescription: "Is this thing a Thing Description template or source code?",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Template', 'Code'],
+            //     formInputError: "Please select one option."
+            // },
+            // {
+            //     formKey: "complexity",
+            //     formTitle: "Project Complexity",
+            //     formDescription: "Is this a beginner, an advanced or an expert project? Please select an appropriate complexity.",
+            //     formInputType: "radio",
+            //     inputFormValues: ['Beginner', 'Medium', 'Expert'],
+            //     formInputError: "Please select one option."
+            // },
+            // {
+            //     formKey: "tags",
+            //     formTitle: "Tags",
+            //     formDescription: "Add some tags that will help others find your project. Comma or space separate the tags.",
+            //     formInputType: "tag"
+            // }
         ]
     },
     actions: {

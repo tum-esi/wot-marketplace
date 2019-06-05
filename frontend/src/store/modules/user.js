@@ -8,16 +8,16 @@ export default {
         isUserLoggedIn: false
     },
     actions: {
-        async getUser({ commit }, payload ) {
-            console.log("user: payload.username:", payload.username);
+        async getUser({ commit }, payload) {
+            // console.log("user: payload.username:", payload.username);
             let user = await Api.getUser(payload.username);
-            if (user)   {
+            if (!user.error && user) {
                 commit('setCurrentUser', user);
                 return user;
             } else {
-                return "error";
-            }              
-        }, 
+                return user.error || "error";
+            }
+        },
         async register({ commit }, payload) {
             if (payload.newUser) {
                 commit('setNewUser', payload.newUser);
@@ -25,26 +25,24 @@ export default {
                 return;
             }
             let newUser = await Api.register(payload.newUser);
-            // eslint-disable-next-line
-            console.log('users: newUser: ', newUser);
-            if (newUser) {
+            if (!newUser.error && newUser) {
                 commit('setCurrentUser', newUser);
                 commit('setUserLoggedIn', true);
                 return newUser;
             } else {
-                return "error";
+                return newUser.error || "error";
             }
         },
         async login({ commit }, payload) {
             let user = await Api.login({ email: payload.email, password: payload.password });
-            if (user) {
+            if (!user.error && user) {
                 // eslint-disable-next-line
-                console.log('users: loggedin: ', user);
+                // console.log('users: loggedin: ', user);
                 commit('setCurrentUser', user);
                 commit('setUserLoggedIn', true);
                 return user;
             } else {
-                return "error";
+                return user.error || "error";
             }
         },
         async logout({ commit, state }) {

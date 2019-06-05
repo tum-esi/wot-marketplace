@@ -2,7 +2,7 @@
   <div class="registration-container">
     <h2>Register to WoTify</h2>
     <p>Fields marked with * are mandatory</p>
-    <div>
+    <div class="form-container">
       <form @submit="submitForm" class="form">
         <mFormElement
           v-for="(formElement, index) in formElements"
@@ -17,8 +17,10 @@
           :formValue="formElement.formValue"
           :inputFormValues="formElement.inputFormValues"
           :formInputStyle="formElement.formInputStyle"
+          v-on:input-clicked="resetErrors"
         />
       </form>
+      <span :class="{ 'invisible' : !hasErrors }" class="error-mgs">{{ errorMessage }}</span>
     </div>
     <div class="submit-btn">
       <aButton
@@ -45,6 +47,8 @@ export default Vue.extend({
   },
   data() {
     return {
+      hasErrors: false,
+      errorMessage: "",
       elementInputValue: "",
       formStyle: {
         title: "login-form-title"
@@ -53,35 +57,35 @@ export default Vue.extend({
         {
           formTitle: "Username*",
           formInputType: "text",
-          formInputPlaceholder: "Choose a new username",
+          formInputPlaceholder: "Username needs to be min. 5 characters.",
           formKey: "registrationUsername",
           formInputStyle: "login-input"
         },
         {
           formTitle: "Password*",
           formInputType: "password",
-          formInputPlaceholder: "Choose a password of minimum 6 characters",
+          formInputPlaceholder: "Password needs to be min. 6 characters.",
           formKey: "registrationPassword",
           formInputStyle: "login-input"
         },
         {
           formTitle: "Email*",
           formInputType: "text",
-          formInputPlaceholder: "Provide your email",
+          formInputPlaceholder: "Enter email address.",
           formKey: "registrationEmail",
           formInputStyle: "login-input"
         },
         {
           formTitle: "First Name",
           formInputType: "text",
-          formInputPlaceholder: "Not visible to others",
+          formInputPlaceholder: "Add your first name.",
           formKey: "registrationFirstName",
           formInputStyle: "login-input"
         },
         {
           formTitle: "Last Name",
           formInputType: "text",
-          formInputPlaceholder: "Not visible to others",
+          formInputPlaceholder: "Add your last name.",
           formKey: "registrationLastName",
           formInputStyle: "login-input"
         }
@@ -92,31 +96,59 @@ export default Vue.extend({
   methods: {
     ...mapActions("user", ["register"]),
     async submitForm() {
+      this.resetErrors();
       if (
+        !this.filledForm.registrationUsername ||
+        !this.filledForm.registrationPassword ||
+        !this.filledForm.registrationEmail
+      ) {
+        this.showErrors("Please fill in all required fields.");
+      } else if (
         this.filledForm.registrationUsername &&
         this.filledForm.registrationPassword &&
         this.filledForm.registrationEmail
       ) {
-        console.log("Registration: form is ok:", this.filledForm);
-        let registeredUser = await this.register({
-          newUser: {
-            password: this.filledForm.registrationPassword,
-            username: this.filledForm.registrationUsername,
-            email: this.filledForm.registrationEmail,
-            firstname: this.filledForm.registrationFirstName,
-            lastname: this.filledForm.registrationLastName
-          }
-        });
-        console.log("Registration: user was registered?:", registeredUser);
-        if (registeredUser) {
-          console.log("Registration: successfull!:", registeredUser);
-          this.$router.push({
-            name: "Account"
+        if (this.filledForm.registrationUsername.split('').length < 5) {
+          console.log(this.filledForm.registrationUsername);
+          this.showErrors("Username needs to be at least 5 characters.");
+        } else if (this.filledForm.registrationEmail.split('').indexOf('@') === -1) {
+          this.showErrors("Please check your email adress.");
+        } else {
+          let registeredUser = await this.register({
+            newUser: {
+              password: this.filledForm.registrationPassword,
+              username: this.filledForm.registrationUsername,
+              email: this.filledForm.registrationEmail,
+              firstname: this.filledForm.registrationFirstName,
+              lastname: this.filledForm.registrationLastName
+            }
           });
+          if (registeredUser.error) {
+            this.showErrors(registeredUser.error);
+          } else if (registeredUser.username) {
+            console.log("REGISTER:", registeredUser);
+            this.$router.push({
+              name: "Account"
+            });
+          } else {
+            this.showErrors(
+              "Registration currently not possible. Please try again later."
+            );
+          }
         }
       } else {
-        console.log("Registration: please fill form");
+        this.showErrors(
+          "Registration currently not possible. Please try again later."
+        );
       }
+    },
+    showErrors(errMsg) {
+      this.hasErrors = true;
+      this.errorMessage = errMsg;
+    },
+    resetErrors() {
+      this.hasErrors = false;
+      this.errorMessage = "";
     }
   },
   watch: {
@@ -132,7 +164,9 @@ export default Vue.extend({
 .registration-container {
   padding: 10px;
 }
-
+.form-container {
+  text-align: center;
+}
 .registration-container h2 {
   padding-bottom: 10px;
   padding-top: 10px;
@@ -143,6 +177,7 @@ export default Vue.extend({
   text-align: center;
 }
 .submit-btn {
+  padding-top: 10px;
   text-align: center;
 }
 .submit-text {
@@ -156,7 +191,10 @@ export default Vue.extend({
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-  padding-top: 1px;
-  padding-bottom: 3px;
+  padding: 5px 0 10px 0;
+}
+
+.error-mgs {
+  color: #ff4c4b;
 }
 </style>

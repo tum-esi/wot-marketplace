@@ -1,15 +1,20 @@
 <template>
   <div>
+    <p class="search-info">Browse the wotify collection to find WoT-enabled Things, WoT-implementations and Thing Descriptions.</p>
     <!-- Search bar & new project button -->
     <div class="search-header">
-      <mSearchbar class="search-header-left" v-on:search-btn-clicked="searchBtnClicked"/>
+      <mSearchbar
+        class="search-header-left"
+        v-on:search-btn-clicked="searchBtnClicked"
+        v-on:searchbar-clicked="resetErrors"
+      />
       <div class="search-header-right">
-        <aButton
+        <!-- <aButton
           :btnLabel="'New Project'"
           :btnOnClick="'add-project-btn-clicked'"
           :btnClass="'search-btn btn-right'"
           v-on:add-project-btn-clicked="projectBtnClicked"
-        />
+        /> -->
       </div>
     </div>
     <!-- Search status container -->
@@ -18,10 +23,7 @@
       v-bind:status="status"
       v-bind:propSearchTerm="searchTerm"
     />-->
-    <!-- <div
-      class="status-container"
-      v-bind:class="{invisible: status != 'noResult'}"
-    >There are no projects for "{{ searchTerm }}"</div>-->
+    <div class="status-container" :class="{'invisible': !hasErrors}">{{ errorMessage }}</div>
     <!-- Search results -->
     <div id="search-results">
       <mProjectItem
@@ -51,23 +53,45 @@ export default {
   components: {
     aButton,
     mProjectItem,
-    mSearchbar,
+    mSearchbar
     // mStatus
   },
   data() {
     return {
       searchOptions: { count: 10, skip: 0 },
       projects: [],
+      hasErrors: false,
+      errorMessage: "",
       err: undefined
     };
   },
   methods: {
     ...mapActions("project", ["loadProjectItems"]),
     async searchBtnClicked(searchTerm) {
-      this.projects = await this.loadProjectItems({
+      this.projects = [];
+      this.resetErrors();
+      this.showError("Loading...");
+      let response = await this.loadProjectItems({
         searchTerm,
         searchOptions: this.searchOptions
       });
+      console.log("SEARCH: ", response);
+      if (response.error) {
+        this.showError(response.error);
+      } else if (!response.length) {
+        this.showError(`There are no results for the search "${searchTerm}".`);
+      } else {
+        this.resetErrors();
+        this.projects = response;
+      }
+    },
+    showError(errMsg) {
+      this.hasErrors = true;
+      this.errorMessage = errMsg;
+    },
+    resetErrors() {
+      this.hasErrors = false;
+      this.errorMessage = "";
     },
     projectBtnClicked() {
       this.$router.push({
@@ -85,9 +109,15 @@ export default {
 </script>
 
 <style scoped>
+.search-info {
+  color: #1c1c1c;
+  padding: 7px 20px 0 22px;
+  font-size: 16px;
+}
+
 .search-header {
   width: 100%;
-  padding: 20px 20px 10px 20px;
+  padding: 7px 20px 10px 20px;
   box-sizing: border-box;
   display: inline-flex;
 }
@@ -101,8 +131,10 @@ export default {
 }
 
 .status-container {
-  padding: 10px;
+  padding: 20px 10px 10px 10px;
   text-align: center;
+  color: #1c1c1c;
+  font-size: 16px;
 }
 
 #search-results {
