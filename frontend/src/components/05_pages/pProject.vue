@@ -21,7 +21,7 @@
           >Thing Description</a>
         </div>
         <div class="project-content-left-container">
-          <aMarkDownBox :class="{invisible:buttons.btnG != selected}" :markDown="markdown"/>
+          <aMarkDownBox :class="{invisible:buttons.btnG != selected}" :input="markdown"/>
           <aCodeBox :class="{invisible:buttons.btnT != selected}" :code="thingDescription"/>
         </div>
       </div>
