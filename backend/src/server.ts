@@ -90,6 +90,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         secret: Config.session.secret, 
         resave: false,
         saveUninitialized: false,
+        proxy: true,
         store: new MongoStore({ mongooseConnection: Mongoose.connection }),
         cookie: {
             httpOnly: true,
