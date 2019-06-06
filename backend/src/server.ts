@@ -64,10 +64,19 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         frameguard: {action: "deny"},
         dnsPrefetchControl: false
     }));
-    app.use(Favicon(Path.join(__dirname, '../public/favicon.ico')))
-    app.use("/public", Express.static(Path.join(__dirname, "../public")));
-    app.use("/js", Express.static(Path.join(__dirname, "../public/js")));
-    app.use("/css", Express.static(Path.join(__dirname, "../public/css")));
+    app.use(Favicon(Path.join(__dirname, '../public/favicon.ico')));
+    app.use("/public", Express.static(
+        Path.join(__dirname, "../public"),
+        {maxAge: 1000 * 60 * 60 * 12}  // 12 Hours
+    ));
+    app.use("/js", Express.static(
+        Path.join(__dirname, "../public/js"), 
+        {cacheControl: false}
+    ));
+    app.use("/css", Express.static(
+        Path.join(__dirname, "../public/css"),
+        {cacheControl: false}
+    ));
     app.use(Slashes());
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
@@ -84,7 +93,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         store: new MongoStore({ mongooseConnection: Mongoose.connection }),
         cookie: {
             httpOnly: true,
-            secure: false, //FIXME: change to true after switching to https
+            secure: true,
             maxAge: 1000 * 60 * 60 * 24 * 60, // 60days
             sameSite: "lax"
         }
@@ -273,7 +282,6 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         models.ImplementationModel.find(
             {name: req.params.projectName},
             (err, result) => {
-                Logger.info("DB ERR:" + err)
                 if (err) { res.sendStatus(404); return; }
                 res.json(result)
             }

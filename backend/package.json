@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "~3.0.6",
     "body-parser": "~1.19.0",
+    "compression": "~1.7.4",
     "connect-mongo": "~2.0.3",
     "connect-slashes": "~1.4.0",
     "express": "~4.17.1",
@@ -38,7 +39,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "develop": "tsnd --respawn src/server.ts",
-    "build-frontend": "npm install --prefix ../frontend && npm run build --prefix ../frontend && cp -R ../frontend/dist/ ./public/",
-    "serve": "npm run build-frontend && npm install && npm run build && npm start"
+    "get-frontend": "rm -rf public && npm install --prefix ../frontend && npm run build --prefix ../frontend && cp -R ../frontend/dist/ ./public/",
+    "serve": "npm run get-frontend && npm install && npm run build && npm start"
   }
 }
