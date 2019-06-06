@@ -273,7 +273,6 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         models.ImplementationModel.find(
             {name: req.params.projectName},
             (err, result) => {
-                Logger.info("DB ERR:" + err)
                 if (err) { res.sendStatus(404); return; }
                 res.json(result)
             }
