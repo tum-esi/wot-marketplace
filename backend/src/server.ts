@@ -77,7 +77,7 @@ function setupExpress(models) {  // : {ImplementationModel: Mongoose.Model<Mongo
         Path.join(__dirname, "../public/css"),
         {cacheControl: false}
     ));
-    app.use(Slashes());
+    app.use(Slashes(false));
     app.use(BodyParser.urlencoded({ extended: false }));
     app.use(BodyParser.json());
     app.use(ExpressWinston.logger({
