@@ -65,6 +65,7 @@ export default {
       err: undefined
     };
   },
+  created () { this.searchBtnClicked("") },
   methods: {
     ...mapActions("project", ["loadProjectItems"]),
     async searchBtnClicked(searchTerm) {
