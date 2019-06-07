@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="search-info">Browse the wotify collection to find WoT-enabled Things, WoT-implementations and Thing Descriptions.</p>
+    <p class="search-info">Browse the wotify collection to find W3C Web of Things compliant implementations and Thing Descriptions for your devices and experience the future of IoT.</p>
     <!-- Search bar & new project button -->
     <div class="search-header">
       <mSearchbar
