@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const initializeDatabase = () => {
-    mongoose.connect('mongodb://localhost/test', {
+    mongoose.connect('mongodb://localhost:27017/wotify_development', {
         useNewUrlParser: true,
         useCreateIndex: true
     });

@@ -1,13 +1,12 @@
 import express from 'express';
+import passport from 'passport';
 
 import * as usersController from '../controllers/usersController';
 
 const router = express.Router();
 
-router.post('/', usersController.users_post);
+router.get('/:username', passport.authenticate('jwt', { session: false }), usersController.users_username_get);
 
-router.get('/:username', usersController.users_username_get);
-
-router.put('/:username', usersController.users_username_put);
+router.put('/:username', passport.authenticate('jwt', { session: false }),usersController.users_username_put);
 
 export default router;

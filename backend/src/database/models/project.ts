@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface ProjectType extends Document{
     name: string;
-    //owner: string;
+    owner: string;
     /*updated: Date;
     shortDescription: string;
     longDescription: string;
@@ -25,8 +25,8 @@ const ProjectSchema = new Schema({
         required: true,
         trim: true
     }/*,
-    owner: {
-        type: String,
+    authorId: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     updated: {
