@@ -1,9 +1,11 @@
 import * as WoT from 'wot-typescript-definitions';
 import mongoose, { Schema, Document } from "mongoose";
 
+import { UserType } from "./user";
+
 export interface ProjectType extends Document{
     name: string;
-    owner: string;
+    author: UserType;
     /*updated: Date;
     shortDescription: string;
     longDescription: string;
@@ -24,11 +26,12 @@ const ProjectSchema = new Schema({
         unique: true,
         required: true,
         trim: true
-    }/*,
-    authorId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }/*,
     updated: {
         type: Date, 
         default: Date.now 

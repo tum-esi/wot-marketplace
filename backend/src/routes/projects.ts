@@ -9,6 +9,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), projectsContr
 
 router.get('/:name', projectsController.projects_name_get);
 
-//router.put('/:username', passport.authenticate('jwt', { session: false }), projectsController.);
+router.put('/:name', passport.authenticate('jwt', { session: false }), projectsController.projects_name_put);
 
 export default router;

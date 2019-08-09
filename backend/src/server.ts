@@ -24,5 +24,5 @@ app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 
 app.listen(3000, () => {
-    console.log('server started');
+    console.log('Server listening on port 3000.');
 });

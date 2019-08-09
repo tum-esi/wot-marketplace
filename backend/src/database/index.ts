@@ -11,11 +11,11 @@ export const initializeDatabase = () => {
     });
 
     mongoose.connection.on('connected', () => {
-        console.log('connected');
+        console.log('Succesfully connected to database wotify_development');
     });
 
     mongoose.connection.on('disconnected', () => {
-        console.log('disconnected');
+        console.log('Succesfully disconnected');
     });
 }
 
