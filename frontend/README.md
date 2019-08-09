@@ -1,10 +1,4 @@
-# Frontend
-
-Run this to test application: 
-```
-npm run serve
-```
-
+# frontend
 
 ## Project setup
 ```

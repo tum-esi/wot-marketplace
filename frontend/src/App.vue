@@ -1,82 +1,31 @@
 <template>
   <div id="app">
-    <mHeader/>
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
     <router-view/>
-    <mFooter/>
   </div>
 </template>
 
-<script>
-import mFooter from "./components/02_molecules/mFooter.vue";
-import mHeader from "./components/02_molecules/mHeader.vue";
-
-export default {
-  name: "app",
-  components: {
-    mFooter,
-    mHeader
-  }
-};
-</script>
-
 <style>
-/* General styling for the whole application, can be used in any component  */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.6em;
-  background: #eee;
-  min-height: 100%;
-  margin: 0 0 50px 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-.bg {
-  background: rgb(238, 238, 238);
-}
-
-.btn {
-  color: #ffffff;
-  background: #1c1c1c;
-  display: inline-block;
-  border-color: #000;
-  cursor: pointer;
-  border-radius: 3px;
-  font-size: 20px;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  text-decoration: none;
-  text-shadow: none;
-  outline: none;
-  border: none;
+  color: #2c3e50;
+}
+#nav {
+  padding: 30px;
 }
 
-.btn:hover {
-  background: rgb(100, 93, 93);
-  border-color: rgb(100, 93, 93);
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
 }
 
-.btn:active {
-  background: #30b8a3;
-  border-color: #30b8a3;
-  border-radius: 3px;
-  border: none;
-}
-
-.invisible {
-  display: none;
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
