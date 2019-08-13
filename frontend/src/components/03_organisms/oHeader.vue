@@ -1,16 +1,20 @@
 <template>
   <div class="header-container">
-    <aNavLink :to="{ name: 'Library' }" :addClass="'header-logo'">
+    <aNavLink :to="{ name: 'Library' }" class="header-logo">
       <img class="header-logo-image" src="../../assets/wot-mini.png" />
     </aNavLink>
-    <mDropDown v-if="isConnected" class="header-element">
+    <mDropDown v-if="isConnected" :addClass="'default header-element'">
       <template #dropDownLabel>{{ getUsername }}</template>
       <template #dropDownOptions>
-        <aButton btnEvent="btn-logout" @btn-logout="requestLogout">LOGOUT</aButton>
         <aNavLink
+          :addClass="'dropDown-element'"
           :to="{ name: 'Profile', params: { id: getUsername }}"
-          :class="'header-element'"
-        >PROFILE</aNavLink>
+        >Profile</aNavLink>
+        <aButton
+          :addClass="'dropDown-element'"
+          btnEvent="btn-logout"
+          @btn-logout="requestLogout"
+        >Logout</aButton>
       </template>
     </mDropDown>
     <aNavLink
@@ -98,11 +102,9 @@ export default class oHeader extends Vue {
 <style scoped>
 .header-container {
   background: #1c1c1c;
-  color: #000;
   padding: 10px;
   overflow: hidden;
   width: 100%;
-  font-size: 20px;
   border-bottom: 5px solid #30b8a3;
   margin: 0;
 }
@@ -122,23 +124,7 @@ export default class oHeader extends Vue {
 }
 
 .header-element {
-  vertical-align: top;
-  text-decoration: none;
-  text-align: center;
-  outline: none;
-  width: 150px;
-  height: 50px;
-  padding: 10px;
-  background: #1c1c1c;
-  color: #fff;
-  border: none;
-  font-size: 20px;
-  border-radius: 3px;
   float: right;
-}
-
-.header-element:hover {
-  background: #333;
 }
 
 .active {

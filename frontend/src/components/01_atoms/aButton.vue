@@ -41,4 +41,23 @@ export default class aButton extends Vue {
 .login-btn:hover {
   background: #333;
 }
+
+.dropDown-element{
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropDown-element:hover {
+  background: #30b8a3;
+  color: #fff;
+}
 </style>
