@@ -33,7 +33,7 @@ export const auth_login_post = async (req: express.Request, res: express.Respons
             req.login(user, (err) => {
                 if(err) return next(createError(500, err));
                 const token = jwt.sign({ id: user.id, username: user.username }, 'pokemonichooseyou'); // TODO: to config as well
-                return res.json({
+                return res.status(200).json({
                     username: user.username,
                     token
                 });

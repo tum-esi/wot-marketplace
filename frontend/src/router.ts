@@ -1,25 +1,48 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+import pAbout from "@/components/04_pages/pAbout.vue";
+import pContribute from "@/components/04_pages/pContribute.vue";
+import pLibrary from "@/components/04_pages/pLibrary.vue";
+import pLogin from "@/components/04_pages/pLogin.vue";
+import pRegister from "@/components/04_pages/pRegister.vue";
+import pProfile from "@/components/04_pages/pProfile.vue";
+
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: Home
+      path: "/",
+      name: "Library",
+      component: pLibrary
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: "/about",
+      name: "About",
+      component: pAbout
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: pLogin
+    },
+    {
+      path: "/register",
+      name: "Register",
+      component: pRegister
+    },
+    {
+      path: "/contribute",
+      name: "Contribute",
+      component: pContribute
+    },
+    {
+      path: "/users/:id",
+      name: "Profile",
+      component: pProfile
     }
   ]
-})
+});

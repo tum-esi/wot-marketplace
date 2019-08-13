@@ -1,31 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <oHeader />
+    <router-view />
+    <oFooter />
   </div>
 </template>
 
+<script lang="ts">
+import Vue from "vue";
+import oHeader from "@/components/03_organisms/oHeader.vue";
+import oFooter from "@/components/03_organisms/oFooter.vue";
+
+export default Vue.extend({
+  name: "app",
+  components: {
+    oHeader,
+    oFooter
+  }
+});
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
+* {
+  box-sizing: border-box;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6em;
+  background: #eee;
+  min-height: 100%;
+  margin: 0 0 50px 0;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

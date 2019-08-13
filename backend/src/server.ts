@@ -1,6 +1,7 @@
 import express from 'express';
 
 import bodyParser from 'body-parser';
+import { join } from 'path';
 
 import { initializeDatabase } from './database';
 import { initializeMiddlewares } from './middlewares';
@@ -18,6 +19,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+    res.sendFile(join(__dirname, "..", "..", "frontend", "dist", "index.html"));
+})
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
