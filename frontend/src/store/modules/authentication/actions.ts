@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
 
 import { AuthState } from './types';
-import { register, login } from '@/api';
+import { login } from '@/api';
 
 export const actions: ActionTree<AuthState, {}> = {
   login({ commit }, payload) {
@@ -27,7 +27,7 @@ export const actions: ActionTree<AuthState, {}> = {
           message: response.error
         });
       }
-    });    
+    });
   },
   logout({ commit }) {
     return new Promise((resolve, reject) => {
@@ -37,8 +37,5 @@ export const actions: ActionTree<AuthState, {}> = {
       localStorage.removeItem("user-name");
       resolve();
     });
-  },
-  async register({ commit }, payload) {
-    
   }
 }

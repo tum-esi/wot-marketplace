@@ -1,24 +1,75 @@
 <template>
-  <div class="login-form-container">
-    <oLoginForm />
+  <div class="login-content">
+    <h1 class="login-header">Login to WoTify</h1>
+    <hr />
+    <oForm
+      :formFields="loginFormFields"
+      buttonLabel="Login"
+      :submitFunction="attemptLogin"
+      addClass="login-form"
+    />
+    <aNavLink :to="{ name: 'Register' }" :addClass="'default'">Don't have an account? Sign-up here.</aNavLink>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 
-import oLoginForm from "@/components/03_organisms/oLoginForm.vue";
+import aNavLink from "@/components/01_atoms/aNavLink.vue";
+import oForm from "@/components/03_organisms/oForm.vue";
+
+const authModule = namespace("authentication");
 
 @Component({
   components: {
-    oLoginForm
+    oForm,
+    aNavLink
   }
 })
-export default class pLogin extends Vue {}
+export default class pLogin extends Vue {
+  @authModule.Action("login") login!: (
+    userCredentials: Object
+  ) => { success: boolean; message: string };
+
+  private loginFormFields = [
+    {
+      type: "text",
+      label: "Username",
+      placeholder: "Enter your username here",
+      variable: "username"
+    },
+    {
+      type: "password",
+      label: "Password",
+      placeholder: "Enter your password here",
+      variable: "password"
+    }
+  ];
+
+  async attemptLogin(loginFormData: Object) {
+    let authenticated = await this.login(loginFormData);
+    if (authenticated.success) {
+      this.$router.push({
+        name: "Library"
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>
-.login-form-container {
-  padding: 10%;
+hr {
+  width: 350px;
+}
+
+.login-header {
+  font-weight: 200;
+}
+
+.login-content {
+  display: grid;
+  justify-items: center;
+  padding: 12%;
 }
 </style>

@@ -27,4 +27,15 @@ export default class aInput extends Vue {
   padding: 10px 15px;
   font-size: 0.8em;
 }
+
+.login-form {
+  padding: 10px 15px;
+  font-size: 1em;
+}
+
+.register-form {
+  padding: 10px 15px;
+  font-size: 1em;
+  width: 100%;
+}
 </style>

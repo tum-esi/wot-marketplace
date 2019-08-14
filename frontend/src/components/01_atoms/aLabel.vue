@@ -14,3 +14,13 @@ export default class aButton extends Vue {
   @Prop() addClass?: string;
 }
 </script>
+
+<style scoped>
+.login-form{
+  font-size: 1.3em;
+}
+
+.register-form{
+  font-size: 1.3em;
+}
+</style>

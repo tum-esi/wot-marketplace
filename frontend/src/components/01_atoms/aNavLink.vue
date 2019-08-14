@@ -18,6 +18,7 @@ export default class aNavLink extends Vue {
 
 <style scoped>
 .default:link {
+  text-align: center;
   color: #30b8a3;
   opacity: 0.8;
   margin: 5px;

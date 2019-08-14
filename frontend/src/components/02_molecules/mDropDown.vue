@@ -3,7 +3,7 @@
     <div :class="addClass" class="drop-down-label">
       <slot name="dropDownLabel"></slot>
     </div>
-    <div class="options" :class="addClass" v-show="showDropDown" @click="showDropDown=false" >
+    <div class="options" :class="addClass" v-show="showDropDown" @click="showDropDown=false">
       <slot name="dropDownOptions"></slot>
     </div>
   </div>
@@ -49,6 +49,11 @@ export default class mDropDown extends Vue {
   color: #fff;
   border: none;
   font-size: 20px;
+  border-radius: 3px;
+}
+
+.default.drop-down-label:hover {
+  background: #333;
 }
 
 .default.options {

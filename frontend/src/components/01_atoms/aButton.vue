@@ -23,7 +23,7 @@ export default class aButton extends Vue {
 </script>
 
 <style scoped>
-.login-btn {
+.login-form {
   text-align: center;
   outline: none;
   width: 150px;
@@ -38,11 +38,30 @@ export default class aButton extends Vue {
   cursor: pointer;
 }
 
-.login-btn:hover {
+.login-form:hover {
   background: #333;
 }
 
-.dropDown-element{
+.register-form {
+  text-align: center;
+  outline: none;
+  width: 200px;
+  height: 40px;
+  padding: 5px;
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.register-form:hover {
+  background: #333;
+}
+
+.dropDown-element {
   float: none;
   color: black;
   padding: 12px 16px;

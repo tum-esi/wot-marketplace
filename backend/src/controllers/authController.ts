@@ -10,7 +10,8 @@ export const auth_register_post = async (req: express.Request, res: express.Resp
         User.register(new User({
             username: req.body.username,
             firstName: req.body.firstName,
-            lastName: req.body.lastName
+            lastName: req.body.lastName,
+            email: req.body.email
         }), req.body.password, (err, createdUser: UserType) => {
             if (err) {
                 return next(createError(500, 'An error occured: ' + err));
