@@ -6,17 +6,16 @@ import { UserType } from "./user";
 export interface ProjectType extends Document{
     title: string;
     author: UserType;
-    /*updated: Date;
-    shortDescription: string;
-    longDescription: string;
-    github: string;
-    projectType: string;
+    updated: Date;
+    summary: string;
+    repoUrl: string;
+    description: string;
+    thingDesc: WoT.ThingDescription;
     topic: string[];
     platform: string[];
-    tags: string[];
+    projectType: string;
     complexity: string;
-    td: WoT.ThingDescription;
-    */
+    tags: string[];
 }
 
 const ProjectSchema = new Schema({
@@ -31,52 +30,49 @@ const ProjectSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }/*,
+    },
     updated: {
         type: Date, 
         default: Date.now 
     },
-    shortDescription: {
+    summary: {
         type: String,
         minlength: 5,
         maxlength: 180,
         required: true
     },
-    longDescription: {
+    repoUrl: {
+        type: String
+    },
+    description: {
         type: String,
         minlength: 5,
         maxlength: 500,
         required: true
     },
-    github: String,
-    ProjectType: {
-        type: String,
-        enum: ["template", "code"],
+    thingDesc: {
+        type: Object,
         required: true
     },
     topic: [{
         type: String, 
-        enum: ["sensor", "actuator", "robotics", "lighting", "other"]
+        enum: ["Sensor", "Robotics", "Actuators", "Others"]
     }],
     platform: {
         type: String,
-        enum: ["raspberry", "arduino", "ESP", "other"],
+        enum: ["Raspberry Pi", "Arduino", "ESP", "Others"],
         required: true
     },
-    tags: [String],
+    projectType: {
+        type: String,
+        enum: ["TD", "Code"],
+        required: true
+    },
     complexity: {
         type: String,
-        enum: ["simple", "medium", "expert"]
+        enum: ["Beginner", "Medium", "Expert"]
     },
-    version: {
-        type: new Schema({
-            instance: String
-        })
-    },
-    td: {
-        type: Object,
-        required: true
-    }*/
+    tags: [String]
 });
 /*
 ProjectSchema.index(

@@ -17,12 +17,18 @@ import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 
 import oForm from "@/components/03_organisms/oForm.vue";
 
+import { createProject } from "@/api";
+
+const authModule = namespace("authentication");
+
 @Component({
   components: {
     oForm
   }
 })
 export default class pContribute extends Vue {
+  @authModule.Getter("getToken") authToken!: string;
+  
   private projectFormFields = [
     {
       type: "text",
@@ -70,16 +76,16 @@ export default class pContribute extends Vue {
     },
     {
       type: "radio",
-      label: "Implementation Type *",
+      label: "Project Type *",
       desc: "Select the type of content ( Thing Description or Source Code )",
-      variable: "implementationType",
+      variable: "projectType",
       radioOptions: ["TD", "Code"]
     },
     {
       type: "radio",
       label: "Complexity",
       desc: "Select the complexity of this project",
-      variable: "topic",
+      variable: "complexity",
       radioOptions: ["Beginner", "Medium", "Expert"]
     },
     {
@@ -91,7 +97,8 @@ export default class pContribute extends Vue {
   ];
 
   async attemptCreateProject(contributeForm: Object){
-    console.log(contributeForm);
+    let response = await createProject(contributeForm, this.authToken);
+    console.log(response);
   }
 }
 </script>

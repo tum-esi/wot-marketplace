@@ -62,6 +62,10 @@ export default class pRegister extends Vue {
   async attemptRegister(formInputData: Object) {
     let response = await register(formInputData);
     console.log(response);
+    if (response.success) {
+      this.$router.push({
+      });
+    }
   }
 }
 </script>

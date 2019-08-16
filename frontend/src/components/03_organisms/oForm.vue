@@ -32,7 +32,7 @@ import aButton from "@/components/01_atoms/aButton.vue";
     aButton
   }
 })
-export default class oRegisterForm extends Vue {
+export default class oForm extends Vue {
   @Prop() private formFields!: [{ [key: string]: any}];
   @Prop() private buttonLabel!: string;
   @Prop() private submitFunction!: Function;

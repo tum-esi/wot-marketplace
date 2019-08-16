@@ -25,3 +25,16 @@ export const login = async (userCredentials: Object) => {
   }
 }
 
+export const createProject = async (newProject: Object, userToken: string) => {
+  try{
+    let axiosConfig = {
+      headers: {
+        "Authorization": `Bearer ${userToken}` 
+      }
+    };
+    let response = await axios.post('/api/projects', newProject, axiosConfig);
+    return response.data;
+  }catch(error){
+    return error.response;
+  }
+}
