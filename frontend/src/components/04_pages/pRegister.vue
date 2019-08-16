@@ -73,6 +73,7 @@ export default class pRegister extends Vue {
 <style scoped>
 hr {
   width: 500px;
+  height: 1px;
 }
 
 .register-header {

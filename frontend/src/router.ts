@@ -7,6 +7,7 @@ import pLibrary from "@/components/04_pages/pLibrary.vue";
 import pLogin from "@/components/04_pages/pLogin.vue";
 import pRegister from "@/components/04_pages/pRegister.vue";
 import pProfile from "@/components/04_pages/pProfile.vue";
+import pProject from "@/components/04_pages/pProject.vue";
 
 Vue.use(Router);
 
@@ -43,6 +44,11 @@ export default new Router({
       path: "/users/:id",
       name: "Profile",
       component: pProfile
+    },
+    {
+      path: "/projects/:name",
+      name: "Project",
+      component: pProject
     }
   ]
 });

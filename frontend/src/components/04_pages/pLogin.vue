@@ -62,6 +62,7 @@ export default class pLogin extends Vue {
 <style scoped>
 hr {
   width: 350px;
+  height: 1px;
 }
 
 .login-header {
