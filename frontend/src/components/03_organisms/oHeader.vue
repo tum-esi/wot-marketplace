@@ -105,6 +105,7 @@ export default class oHeader extends Vue {
   padding: 10px;
   overflow: hidden;
   width: 100%;
+  height: 75px;
   border-bottom: 5px solid #30b8a3;
   margin: 0;
 }

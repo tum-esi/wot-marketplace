@@ -4,7 +4,7 @@ import mongoose, { Schema, Document } from "mongoose";
 import { UserType } from "./user";
 
 export interface ProjectType extends Document{
-    name: string;
+    title: string;
     author: UserType;
     /*updated: Date;
     shortDescription: string;
@@ -20,7 +20,7 @@ export interface ProjectType extends Document{
 }
 
 const ProjectSchema = new Schema({
-    name: {
+    title: {
         type: String,
         minlength: 5,
         unique: true,

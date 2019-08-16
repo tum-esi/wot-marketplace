@@ -1,15 +1,13 @@
 <template>
   <div class="form-el-container" :class="addClass">
-    <div class="form-el-left" :class="addClass">
-      <aLabel :addClass="addClass">{{ labelContent }}</aLabel>
-      <p v-if="labelDescription" :class="addClass">{{ labelDescription }}</p>
-    </div>
+    <aLabel class="form-el-left" :addClass="addClass" :addDesc="labelDescription">{{ labelContent }}</aLabel>
     <div class="form-el-right" :class="addClass">
       <aInput
         v-model="elemValue"
         :addClass="addClass"
         :inputType="inputType"
         :placeholder="inputPlaceholder"
+        :radioOptions="radioOptions"
       />
     </div>
   </div>
@@ -32,6 +30,7 @@ export default class mFormElement extends Vue {
   @Prop() private labelDescription?: string;
   @Prop() private inputType!: string;
   @Prop() private inputPlaceholder!: string;
+  @Prop() private radioOptions?: string[];
   @Prop() private addClass?: string;
   @Prop() private value!: string;
 
@@ -48,14 +47,9 @@ export default class mFormElement extends Vue {
 <style scoped>
 .login-form.form-el-container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
   text-align: center;
+  grid-template-columns: 0.8fr 2fr;
   margin: 10px;
-}
-
-.login-form.form-el-left {
-  text-align: right;
-  margin: auto 10px;
 }
 
 .login-form.form-el-right {
@@ -64,23 +58,22 @@ export default class mFormElement extends Vue {
 
 .register-form.form-el-container {
   display: grid;
-  grid-template-columns: 140px 400px;
+  grid-template-columns: 135px 300px;
   text-align: center;
   margin: 10px;
 }
 
-.register-form.form-el-left {
-  text-align: right;
+.register-element.form-el-right {
   margin: auto 10px;
 }
 
-.register-form.form-el-left p {
-  font-size: 12px;
-  margin: 0;
-  line-height: 1.1em;
+.contribute-form.form-el-container {
+  display: grid;
+  grid-template-columns: 400px 600px;
+  margin: 10px;
 }
 
-.register-element.form-el-right {
+.contribute-element.form-el-right {
   margin: auto 10px;
 }
 </style>

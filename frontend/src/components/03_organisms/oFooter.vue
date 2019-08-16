@@ -13,16 +13,14 @@ export default class oFooter extends Vue{ }
 
 <style scoped>
 .footer-container {
+  clear: both;
   background: #1c1c1c;
   padding: 10px;
   overflow: hidden;
   width: 100%;
+  height: 50px;
   border-top: 3px solid #30b8a3;
   text-align: center;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 50px;
 }
 
 .footer-el {

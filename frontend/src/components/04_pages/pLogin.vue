@@ -5,6 +5,7 @@
     <oForm
       :formFields="loginFormFields"
       buttonLabel="Login"
+      :enterToSubmit="true"
       :submitFunction="attemptLogin"
       addClass="login-form"
     />
@@ -68,8 +69,7 @@ hr {
 }
 
 .login-content {
-  display: grid;
-  justify-items: center;
+  text-align: center;
   padding: 12%;
 }
 </style>

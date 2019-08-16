@@ -14,20 +14,17 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 
-import aNavLink from "@/components/01_atoms/aNavLink.vue";
 import oForm from "@/components/03_organisms/oForm.vue";
 
 import { register } from "@/api";
 
 @Component({
   components: {
-    oForm,
-    aNavLink
+    oForm
   }
 })
-export default class pLogin extends Vue {
+export default class pRegister extends Vue {
   private registerFormFields = [
     {
       type: "text",

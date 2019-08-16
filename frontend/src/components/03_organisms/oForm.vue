@@ -8,12 +8,14 @@
       :labelDescription="element.desc"
       :inputType="element.type"
       :inputPlaceholder="element.placeholder"
+      :radioOptions="element.radioOptions"
       :addClass="addClass"
+      @keyup.native.stop.enter="e => enterToSubmit && submitFunction(formInputData)"
     />
     <aButton
       :addClass="addClass"
-      :btnEvent="'form-btn-clicked'"
-      @form-btn-clicked="submitFunction(formInputData)"
+      :btnEvent="'form-btn-triggered'"
+      @form-btn-triggered="submitFunction(formInputData)"
     >{{ buttonLabel }}</aButton>
   </div>
 </template>
@@ -34,6 +36,7 @@ export default class oRegisterForm extends Vue {
   @Prop() private formFields!: [{ [key: string]: any}];
   @Prop() private buttonLabel!: string;
   @Prop() private submitFunction!: Function;
+  @Prop() private enterToSubmit?: boolean;
   @Prop() private addClass?: string;
 
   private formInputData = {}

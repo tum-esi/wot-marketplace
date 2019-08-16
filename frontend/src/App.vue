@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <oHeader />
-    <router-view />
+    <router-view style="min-height: calc(100vh - 125px); overflow: auto"/>
     <oFooter />
   </div>
 </template>
@@ -25,12 +25,16 @@ export default Vue.extend({
   box-sizing: border-box;
 }
 
+html, body, #app {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6em;
   background: #eee;
-  min-height: 100%;
-  margin: 0 0 50px 0;
 }
 
 </style>

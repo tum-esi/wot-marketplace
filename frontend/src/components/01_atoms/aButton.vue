@@ -61,6 +61,25 @@ export default class aButton extends Vue {
   background: #333;
 }
 
+.contribute-form {
+  text-align: center;
+  outline: none;
+  width: 300px;
+  height: 50px;
+  padding: 5px;
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.contribute-form:hover {
+  background: #333;
+}
+
 .dropDown-element {
   float: none;
   color: black;
