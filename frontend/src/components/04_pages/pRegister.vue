@@ -64,6 +64,7 @@ export default class pRegister extends Vue {
     console.log(response);
     if (response.success) {
       this.$router.push({
+        name: "Library"
       });
     }
   }
