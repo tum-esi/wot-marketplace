@@ -27,6 +27,7 @@ export default class oProjectTagContainer extends Vue{
   padding: 10px 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   grid-gap: 15px;
 }
 </style>
