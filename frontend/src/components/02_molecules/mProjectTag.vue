@@ -1,16 +1,20 @@
 <template>
-  <aNavLink>
-    <aLabel :addDesc="project.summary">{{ project.title }}</aLabel>
+  <aNavLink
+    :to="{ name: 'Project', params: { name: project.title }}"
+    addClass="project-tag"
+    :class="project.projectType.toLowerCase()"
+  >
+    <aLabel :addDesc="project.summary" addClass="project-tag-top">{{ project.title }}</aLabel>
+    <div class="project-tag-bottom" :class="project.projectType.toLowerCase()">
+      <p class="project-tag">{{ project.projectType }}</p>
+    </div>
   </aNavLink>
-  <div>
-    <p>{{ project.platform }}</p>
-  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import aNavLink from "@/components/02_molecules/mProjectItem.vue";
+import aNavLink from "@/components/01_atoms/aNavLink.vue";
 import aLabel from "@/components/01_atoms/aLabel.vue";
 
 @Component({
@@ -26,5 +30,21 @@ export default class aProjectItem extends Vue {
 </script>
 
 <style scoped>
+.project-tag-bottom {
+  height: 40px;
+}
 
+.project-tag p {
+  margin: 0;
+  padding: 8px 20px;
+  color: white;
+}
+
+div.project-tag-bottom.td {
+  background-color: #116b5e;
+}
+
+div.project-tag-bottom.code {
+  background-color: #b85730;
+}
 </style>

@@ -9,6 +9,7 @@ import { initializeMiddlewares } from './middlewares';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/users';
 import projectRoutes from './routes/projects';
+import searchRoutes from './routes/search';
 
 let app = express();
 initializeDatabase();
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/search', searchRoutes);
 
 app.listen(3000, () => {
     console.log('Server listening on port 3000.');

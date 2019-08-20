@@ -98,4 +98,22 @@ export default class aButton extends Vue {
   background: #30b8a3;
   color: #fff;
 }
+
+.search-btn {
+  text-align: center;
+  outline: none;
+  width: 8vw;
+  padding: 0.6vw;
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  font-size: 1vw;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  opacity: 0.8;
+}
 </style>

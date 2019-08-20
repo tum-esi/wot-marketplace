@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="to" :tag="tag" :activeClass="activeClass" :class="addClass" exact>
+  <router-link :to="to" :tag="tag" :active-class="activeClass" :class="addClass" exact>
     <slot></slot>
   </router-link>
 </template>
@@ -11,8 +11,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class aNavLink extends Vue {
   @Prop() private to!: object;
   @Prop() private tag?: string;
-  @Prop({ default: "" }) private activeClass!: string;
-  @Prop({ default: "" }) private addClass!: string;
+  @Prop() private activeClass?: string;
+  @Prop() private addClass?: string;
 }
 </script>
 
@@ -64,5 +64,25 @@ export default class aNavLink extends Vue {
 .dropDown-element:hover {
   background: #30b8a3;
   color: #fff;
+}
+
+.project-tag {
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  background: white;
+  height: 100%;
+}
+
+.project-tag:hover {
+  opacity: 0.8;
+}
+
+.project-tag.td {
+  border: 3px solid #116b5e;
+}
+
+.project-tag.code {
+  border: 3px solid #b85730;
 }
 </style>

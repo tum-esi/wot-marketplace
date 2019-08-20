@@ -8,6 +8,7 @@
         :inputType="inputType"
         :placeholder="inputPlaceholder"
         :radioOptions="radioOptions"
+        :checkboxOptions="checkboxOptions"
       />
     </div>
   </div>
@@ -29,8 +30,9 @@ export default class mFormElement extends Vue {
   @Prop() private labelContent!: string;
   @Prop() private labelDescription?: string;
   @Prop() private inputType!: string;
-  @Prop() private inputPlaceholder!: string;
+  @Prop() private inputPlaceholder?: string;
   @Prop() private radioOptions?: string[];
+  @Prop() private checkboxOptions?: string[];
   @Prop() private addClass?: string;
   @Prop() private value!: string;
 
@@ -63,7 +65,7 @@ export default class mFormElement extends Vue {
   margin: 10px;
 }
 
-.register-element.form-el-right {
+.register-form.form-el-right {
   margin: auto 10px;
 }
 
@@ -73,7 +75,17 @@ export default class mFormElement extends Vue {
   margin: 10px;
 }
 
-.contribute-element.form-el-right {
+.contribute-form.form-el-right {
   margin: auto 10px;
+}
+
+.search-filter.form-el-left {
+  text-align: center;
+  margin: 0.5vw;
+}
+
+.search-sort {
+  display: grid;
+  grid-template-columns: 65px 180px;
 }
 </style>

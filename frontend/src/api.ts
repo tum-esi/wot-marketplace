@@ -38,3 +38,17 @@ export const createProject = async (newProject: Object, userToken: string) => {
     return error.response;
   }
 }
+
+export const searchProjects = async (searchOptions: Object) => {
+  try{
+    let response = await axios.get('/api/search', 
+    { 
+      params: {
+        ...searchOptions
+      } 
+    });
+    return response.data;
+  }catch(error){
+    return error.response;
+  }
+}

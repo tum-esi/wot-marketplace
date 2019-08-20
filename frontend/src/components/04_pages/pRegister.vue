@@ -61,8 +61,7 @@ export default class pRegister extends Vue {
 
   async attemptRegister(formInputData: Object) {
     let response = await register(formInputData);
-    console.log(response);
-    if (response.success) {
+    if (response.status === 200) {
       this.$router.push({
         name: "Library"
       });

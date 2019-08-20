@@ -32,9 +32,26 @@
       v-for="element in radioOptions"
       :key="element.id"
       :class="addClass"
-      class="option-container"
+      class="radio-option-container"
     >
       <input type="radio" :class="addClass" class="radio" :value="element" v-model="inputValue" />
+      {{ element }}
+    </label>
+  </div>
+
+  <div v-else-if="inputType === 'checkbox'" :class="addClass" class="checkbox-container">
+    <label
+      v-for="element in checkboxOptions"
+      :key="element.id"
+      :class="addClass"
+      class="checkbox-option-container"
+    >
+      <input
+        type="checkbox"
+        :class="addClass"
+        class="checkbox"
+        @change="e => onCheckboxChange(e.target.checked, element)"
+      />
       {{ element }}
     </label>
   </div>
@@ -51,8 +68,10 @@ export default class aInput extends Vue {
   @Prop() placeholder?: string;
   @Prop() addClass?: string;
   @Prop() radioOptions?: string[];
+  @Prop() checkboxOptions?: string[];
   @Prop() value!: any;
 
+  private topics!: string[];
   private tags!: string[];
 
   get inputValue() {
@@ -63,8 +82,13 @@ export default class aInput extends Vue {
     this.$emit("input", inputValue);
   }
 
+  @Watch("topics", { deep: true })
+  onTopicsChanged(val: string[]) {
+    this.$emit("input", val);
+  }
+
   @Watch("tags", { deep: true })
-  onTagsChanged(val: Object, oldVal: Object) {
+  onTagsChanged(val: string[]) {
     this.$emit("input", val);
   }
 
@@ -77,8 +101,17 @@ export default class aInput extends Vue {
     this.tags.splice(index, 1);
   }
 
+  onCheckboxChange(checked: boolean, topic: string) {
+    if(checked){
+      this.topics.push(topic);
+    }else{
+      this.topics.splice(this.topics.indexOf(topic), 1);
+    }
+  }
+
   constructor() {
     super();
+    this.topics = [];
     this.tags = [];
   }
 }
@@ -152,17 +185,16 @@ export default class aInput extends Vue {
 .contribute-form.radio-container {
   display: grid;
   grid-auto-flow: column;
-  cursor: pointer;
 }
 
-.contribute-form.option-container {
+.contribute-form.radio-option-container {
   display: grid;
   grid-template-columns: 50px 100px;
   text-align: center;
   font-size: 15px;
 }
 
-.contribute-form label input {
+.contribute-form.radio-container input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -176,13 +208,85 @@ export default class aInput extends Vue {
   outline: none;
 }
 
-.contribute-form label input:checked::before {
+.contribute-form.radio-container * {
+  cursor: pointer;
+}
+
+.contribute-form.radio-container *:hover {
+  opacity: 0.8;
+}
+
+.contribute-form.radio-container input:checked::before {
   content: "\2714";
-  padding: 5px;
+  padding: 3.5px;
   color: white;
 }
 
-.contribute-form label input:checked {
+.contribute-form.radio-container input:checked {
   background: #30b8a3;
+}
+
+.contribute-form.checkbox-container {
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.contribute-form.checkbox-option-container {
+  display: grid;
+  grid-template-columns: 50px 100px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.contribute-form.checkbox-container input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 30px;
+  width: 30px;
+  background: white;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 0;
+  margin: auto;
+  outline: none;
+}
+
+.contribute-form.checkbox-container * {
+  cursor: pointer;
+}
+
+.contribute-form.checkbox-container *:hover {
+  opacity: 0.8;
+}
+
+.contribute-form.checkbox-container input:checked::before {
+  content: "\2714";
+  padding: 3.5px;
+  color: white;
+}
+
+.contribute-form.checkbox-container input:checked {
+  background: #30b8a3;
+}
+
+.search-input {
+  width: 40vw;
+  font-size: 1vw;
+  padding: 0.5vw;
+  margin: 0.2vw 1vw;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.search-filter.checkbox-container {
+  display: grid;
+  grid-auto-flow: row;
+  margin: 0 1vw;
+}
+
+.search-filter.checkbox-option-container {
+  font-size: 0.8vw;
+  margin: auto 0;
 }
 </style>

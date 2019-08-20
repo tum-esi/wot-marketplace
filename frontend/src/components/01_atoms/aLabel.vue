@@ -58,4 +58,18 @@ export default class aLabel extends Vue {
   margin: 0;
   line-height: 1.1em;
 }
+
+div.project-tag-top {
+  height: 100px;
+  padding: 10px;
+}
+
+.project-tag-top label {
+  font-weight: 700;
+}
+
+.project-tag-top p {
+  color: gray;
+  margin: 5px 0;
+}
 </style>

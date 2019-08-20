@@ -57,15 +57,15 @@ export default class pContribute extends Vue {
     {
       type: "textarea",
       label: "Thing Description *",
-      desc: "Paste the Thing Description of your project in JSON format",
+      desc: "Paste the Thing Description of your Thing in JSON format",
       variable: "thingDesc"
     },
     {
-      type: "radio",
+      type: "checkbox",
       label: "Topic",
       desc: "Please select one topic",
       variable: "topic",
-      radioOptions: ["Sensor", "Robotics", "Actuators", "Others"]
+      checkboxOptions: ["Sensors", "Robotics", "Actuators", "Others"]
     },
     {
       type: "radio",
@@ -97,6 +97,7 @@ export default class pContribute extends Vue {
   ];
 
   async attemptCreateProject(contributeForm: Object){
+    console.log(contributeForm);
     let response = await createProject(contributeForm, this.authToken);
     console.log(response);
   }

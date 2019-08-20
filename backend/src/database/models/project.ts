@@ -56,7 +56,7 @@ const ProjectSchema = new Schema({
     },
     topic: [{
         type: String, 
-        enum: ["Sensor", "Robotics", "Actuators", "Others"]
+        enum: ["Sensors", "Robotics", "Actuators", "Others"]
     }],
     platform: {
         type: String,
@@ -74,23 +74,21 @@ const ProjectSchema = new Schema({
     },
     tags: [String]
 });
-/*
+
 ProjectSchema.index(
     {
-        name: "text",
-        shortDescription: "text",
+        title: "text",
         tags: "text",
-        topic: "text"
+        summary: "text"
     },
     {
         weights: {
             name: 4,
-            shortDescription: 1,
             tags: 3,
-            topic: 1
+            summary: 1
         },
-        name: "TextIndex"
+        name: "text_index"
     }
 );
-*/
+
 export const Project = mongoose.model<ProjectType>("Project", ProjectSchema, "projects");

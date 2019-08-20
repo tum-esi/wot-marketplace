@@ -3,7 +3,7 @@
     <aNavLink :to="{ name: 'Library' }" class="header-logo">
       <img class="header-logo-image" src="../../assets/wot-mini.png" />
     </aNavLink>
-    <mDropDown v-if="isConnected" :addClass="'default header-element'">
+    <mDropDown v-if="isConnected" addClass="default header-element" :closeOnClick="true">
       <template #dropDownLabel>{{ getUsername }}</template>
       <template #dropDownOptions>
         <aNavLink

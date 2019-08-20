@@ -9,6 +9,7 @@
       :inputType="element.type"
       :inputPlaceholder="element.placeholder"
       :radioOptions="element.radioOptions"
+      :checkboxOptions="element.checkboxOptions"
       :addClass="addClass"
       @keyup.native.stop.enter="e => enterToSubmit && submitFunction(formInputData)"
     />
