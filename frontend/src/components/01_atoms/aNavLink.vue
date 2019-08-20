@@ -78,11 +78,11 @@ export default class aNavLink extends Vue {
   opacity: 0.8;
 }
 
-.project-tag.td {
+.project-tag.code {
   border: 3px solid #116b5e;
 }
 
-.project-tag.code {
+.project-tag.td {
   border: 3px solid #b85730;
 }
 </style>

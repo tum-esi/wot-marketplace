@@ -31,7 +31,7 @@ export default class aProjectItem extends Vue {
 
 <style scoped>
 .project-tag-bottom {
-  height: 40px;
+  height: 30%;
 }
 
 .project-tag p {
@@ -40,11 +40,11 @@ export default class aProjectItem extends Vue {
   color: white;
 }
 
-div.project-tag-bottom.td {
+div.project-tag-bottom.code {
   background-color: #116b5e;
 }
 
-div.project-tag-bottom.code {
+div.project-tag-bottom.td {
   background-color: #b85730;
 }
 </style>

@@ -60,7 +60,7 @@ export default class aLabel extends Vue {
 }
 
 div.project-tag-top {
-  height: 100px;
+  height: 70%;
   padding: 10px;
 }
 

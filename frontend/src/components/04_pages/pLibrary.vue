@@ -1,10 +1,12 @@
 <template>
   <div class="library-content">
-    <p
-      class="library-desc"
-    >Browse the wotify collection to find W3C Web of Things compliant implementations and Thing Descriptions for your devices and experience the future of IoT.</p>
-    <mSearchBar />
-    <oProjectTagContainer :projects="loadedProjects"/>
+    <div class="library-content-top">
+      <p
+        class="library-desc"
+      >Browse the wotify collection to find W3C Web of Things compliant implementations and Thing Descriptions for your devices and experience the future of IoT.</p>
+      <mSearchBar />
+    </div> 
+    <oProjectTagContainer :projects="loadedProjects" class="library-content-btm"/>
   </div>
 </template>
 
@@ -46,5 +48,10 @@ export default class pLibrary extends Vue {
 .library-desc {
   font-size: 1em;
   margin: 0.5vw 1vw;
+}
+
+.library-content {
+  display: grid;
+  grid-template-rows: 1fr 4fr;
 }
 </style>

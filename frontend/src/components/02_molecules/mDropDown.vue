@@ -85,14 +85,17 @@ export default class mDropDown extends Vue {
   color: #1c1c1c;
   border: none;
   font-size: 0.9em;
+  font-weight: bold;
   margin: 0 1vw;
   padding: 0 1vw;
   border-radius: 1vw;
+  border: 1px solid black;
 }
 
 .search-filter.drop-down-label:hover {
   background: #30b8a3;
-  color: #fff;  
+  color: #fff;
+  border: 1px solid white;
 }
 
 .search-filter.options {

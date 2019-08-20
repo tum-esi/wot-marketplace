@@ -15,7 +15,7 @@
     </div>
     <div class="search-bar-btm">
       <mDropDown addClass="search-filter">
-        <template #dropDownLabel>&#11167; Filters &#11167;</template>
+        <template #dropDownLabel><< Filters >></template>
         <template #dropDownOptions>
           <div class="filter-options">
             <mFormElement
@@ -111,12 +111,12 @@ export default class mSearchBar extends Vue {
 .search-bar-btm {
   width: 50vw;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .filter-options {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   padding: 0.2vw;
   margin: 0 1vw;
 }
