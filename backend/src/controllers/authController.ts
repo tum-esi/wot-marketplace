@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
@@ -14,25 +13,33 @@ export const auth_register_post = async (req: express.Request, res: express.Resp
             email: req.body.email
         }), req.body.password, (err, createdUser: UserType) => {
             if (err) {
-                return next(createError(500, 'An error occured: ' + err));
+                return next(err);
             }
-            return res.status(200).send('Successfully created new account');
-        })
-    } catch (err) {
-        return next(createError(500, 'An error occured: ' + err));
+            return res.sendStatus(201);
+        });
+    } catch (error) {
+        return next(error);
     }
 }
 
 export const auth_login_post = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         if(!req.body.username || !req.body.password) {
-            return next(createError(400, 'Missing fields.'));
+            let error = new Error();
+            error.name = 'MissingFieldsError';
+            return next(error);
         }
-        passport.authenticate('local', { session: false }, (err, user) => {
-            if(err) return next(createError(400, 'Something went wrong.'));
-            if(!user) return next(createError(401, 'Invalid credentials.'));
+        passport.authenticate('local', { session: false }, (error, user) => {
+            if(error) {
+                return next(error);
+            }
+            if(!user) {
+                let error = new Error();
+                error.name = 'UnauthorizedError';
+                return next(error);
+            }
             req.login(user, (err) => {
-                if(err) return next(createError(500, err));
+                if(err) return next(err);
                 const token = jwt.sign({ id: user.id, username: user.username }, 'pokemonichooseyou'); // TODO: to config as well
                 return res.status(200).json({
                     username: user.username,
@@ -40,7 +47,7 @@ export const auth_login_post = async (req: express.Request, res: express.Respons
                 });
             });
         })(req, res, next);
-    } catch (err) {
-        return next(createError(500, 'An error occured: ' + err));
+    } catch (error) {
+        return next(error);
     }
 }

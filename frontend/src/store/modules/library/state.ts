@@ -2,6 +2,8 @@ import { LibraryState } from './types';
 
 export const state: LibraryState = {
   page: 1,
-  loadedProjects: [],
-  totalProjects: 0
+  totalPages: 1,
+  totalResults: 0,
+  totalDocs: 0,
+  loadedProjects: []
 }

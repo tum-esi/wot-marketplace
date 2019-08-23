@@ -72,4 +72,13 @@ div.project-tag-top {
   color: gray;
   margin: 5px 0;
 }
+
+.password-change-form.form-el-left {
+  text-align: right;
+  margin: auto 10px;
+}
+
+.password-change-form label {
+  font-size: 1em;
+}
 </style>

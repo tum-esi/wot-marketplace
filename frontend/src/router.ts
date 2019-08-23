@@ -8,6 +8,10 @@ import pLogin from "@/components/04_pages/pLogin.vue";
 import pRegister from "@/components/04_pages/pRegister.vue";
 import pProfile from "@/components/04_pages/pProfile.vue";
 import pProject from "@/components/04_pages/pProject.vue";
+import pUser from "@/components/04_pages/pUser.vue";
+import p404 from "@/components/04_pages/p404.vue";
+import aJsonBox from "@/components/01_atoms/aJsonBox.vue";
+import aMarkdownBox from "@/components/01_atoms/aMarkdownBox.vue";
 
 Vue.use(Router);
 
@@ -17,6 +21,12 @@ export default new Router({
   routes: [
     {
       path: "/",
+      redirect: {
+        name: "Library"
+      }
+    },
+    {
+      path: "/library",
       name: "Library",
       component: pLibrary
     },
@@ -41,14 +51,36 @@ export default new Router({
       component: pContribute
     },
     {
-      path: "/users/:id",
+      path: "/profile",
       name: "Profile",
       component: pProfile
     },
     {
-      path: "/projects/:name",
+      path: "/users/:id",
+      name: "Users",
+      component: pUser
+    },
+    {
+      path: "/library/:name",
       name: "Project",
-      component: pProject
+      component: pProject,
+      children: [
+        {
+          path: '',
+          name: "Project General",
+          component: aMarkdownBox
+        },
+        {
+          path: "thingdesc",
+          name: "Project ThingDesc",
+          component: aJsonBox
+        }
+      ]
+    },
+    {
+      path: "*",
+      name: "404",
+      component: p404
     }
   ]
 });

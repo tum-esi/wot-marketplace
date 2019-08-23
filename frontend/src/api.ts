@@ -12,16 +12,9 @@ export const register = async (newUser: Object) => {
 export const login = async (userCredentials: Object) => {
   try {
     let response = await axios.post('/api/auth/login', userCredentials);
-    return response.data;
-  } catch (err) {
-    if(err.response.status === 401){
-      return {
-        error: "Wrong username or password."
-      }
-    }
-    return {
-      error: "Something went wrong."
-    };
+    return response;
+  } catch (error) {
+    return error.response;
   }
 }
 
@@ -33,7 +26,7 @@ export const createProject = async (newProject: Object, userToken: string) => {
       }
     };
     let response = await axios.post('/api/projects', newProject, axiosConfig);
-    return response.data;
+    return response;
   }catch(error){
     return error.response;
   }
@@ -41,13 +34,41 @@ export const createProject = async (newProject: Object, userToken: string) => {
 
 export const searchProjects = async (searchOptions: Object) => {
   try{
-    let response = await axios.get('/api/search', 
+    let response = await axios.get('/api/search',
     { 
       params: {
         ...searchOptions
       } 
     });
     return response.data;
+  }catch(error){
+    return error.response;
+  }
+}
+
+export const getUser = async (username: string, userToken: string)  => {
+  try{
+    let axiosConfig = {
+      headers: {
+        "Authorization": `Bearer ${userToken}` 
+      }
+    };
+    let response = await axios.get(`/api/users/${username}`, axiosConfig);
+    return response.data;
+  }catch(error){
+    return error.response;
+  }
+}
+
+export const editUser = async (username: string, profileChanges: object, userToken: string) => {
+  try{
+    let axiosConfig = {
+      headers: {
+        "Authorization": `Bearer ${userToken}` 
+      }
+    };
+    let response = await axios.put(`/api/users/${username}`, profileChanges, axiosConfig);
+    return response;
   }catch(error){
     return error.response;
   }

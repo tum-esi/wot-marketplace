@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <oHeader />
-    <router-view style="min-height: calc(100vh - 125px); overflow: auto"/>
+    <router-view style="min-height: calc(100vh - 125px); overflow: auto; position: relative;" />
     <oFooter />
   </div>
 </template>
@@ -25,7 +25,9 @@ export default Vue.extend({
   box-sizing: border-box;
 }
 
-html, body, #app {
+html,
+body,
+#app {
   min-height: 100vh;
   width: 100%;
   margin: 0;
@@ -37,4 +39,17 @@ body {
   background: #eee;
 }
 
+.error-message {
+  text-align: center;
+  margin: 0;
+  font-size: 0.8em;
+  color: red;
+}
+
+.validation-message {
+  text-align: center;
+  margin: 0;
+  font-size: 0.8em;
+  color: green;
+}
 </style>

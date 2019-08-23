@@ -3,6 +3,7 @@
     <h1 class="register-header">Create your WoTify account</h1>
     <hr />
     <p class="register-info">Fields marked with * are mandatory</p>
+    <p v-show="errorMessage !== ''" class="error-message">{{ errorMessage }}</p>
     <oForm
       :formFields="registerFormFields"
       buttonLabel="Register"
@@ -25,6 +26,8 @@ import { register } from "@/api";
   }
 })
 export default class pRegister extends Vue {
+  private errorMessage: string = "";
+  
   private registerFormFields = [
     {
       type: "text",
@@ -42,6 +45,7 @@ export default class pRegister extends Vue {
     {
       type: "text",
       label: "Email *",
+      desc: "Please provide a valid email.",
       placeholder: "Enter your e-mail address",
       variable: "email"
     },
@@ -61,11 +65,15 @@ export default class pRegister extends Vue {
 
   async attemptRegister(formInputData: Object) {
     let response = await register(formInputData);
-    if (response.status === 200) {
-      this.$router.push({
-        name: "Library"
+    if (response.status === 201) {
+      return this.$router.push({
+        name: "Login",
+        query: {
+          registered: "true"
+        }
       });
     }
+    this.errorMessage = response.data.message;
   }
 }
 </script>

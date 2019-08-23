@@ -5,7 +5,8 @@
         class="library-desc"
       >Browse the wotify collection to find W3C Web of Things compliant implementations and Thing Descriptions for your devices and experience the future of IoT.</p>
       <mSearchBar />
-    </div> 
+      <mPageNavigator :currentPage="page" :totalPages="totalPages" :getPage="getPage"/>
+    </div>
     <oProjectTagContainer :projects="loadedProjects" class="library-content-btm"/>
   </div>
 </template>
@@ -16,6 +17,7 @@ import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 import { Route } from "vue-router";
 
 import mSearchBar from "@/components/02_molecules/mSearchBar.vue";
+import mPageNavigator from "@/components/02_molecules/mPageNavigator.vue";
 import oProjectTagContainer from "@/components/03_organisms/oProjectTagContainer.vue";
 
 const PAGE_SIZE = 12;
@@ -24,22 +26,37 @@ const libModule = namespace("library");
 @Component({
   components: {
     mSearchBar,
+    mPageNavigator,
     oProjectTagContainer
   }
 })
 export default class pLibrary extends Vue {
-  @libModule.Getter("getCurrentPage") pageNum!: number;
+  @libModule.Getter("getPage") page!: number;
+  @libModule.Getter("getTotalPages") totalPages!: number;
+  @libModule.Getter("getTotalResults") totalResults!: number;
+  @libModule.Getter("getTotalDocs") totalDocs!: number;
   @libModule.Getter("getLoadedProjects") loadedProjects!: object[];
 
-  @libModule.Action("searchProjects") searchProjects!: (filters: Object) => void;
-  
-  async created() {
-    await this.searchProjects({ page: 1, pageSize: PAGE_SIZE });
+  @libModule.Action("searchProjects") searchProjects!: (
+    filters: Object
+  ) => void;
+
+  @Watch("$route")
+  async onRouteChanged(to: Route) {
+    await this.searchProjects({
+      ...this.$route.query,
+      pageSize: PAGE_SIZE
+    });
   }
 
-  @Watch('$route')
-  async onRouteChanged(to: Route){
-    await this.searchProjects(to.query);
+  async getPage(page: number) {
+    this.$router.push({
+      name: "Library",
+      query: {
+        ...this.$route.query,
+        page: page.toString()
+      }
+    });
   }
 }
 </script>
@@ -53,5 +70,9 @@ export default class pLibrary extends Vue {
 .library-content {
   display: grid;
   grid-template-rows: 1fr 4fr;
+}
+
+div.library-content-top {
+  position: relative;
 }
 </style>

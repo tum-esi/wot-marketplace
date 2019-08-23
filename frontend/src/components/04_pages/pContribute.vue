@@ -1,12 +1,14 @@
 <template>
   <div class="contribute-content">
     <h1 class="contribute-header">Add a new WoT project</h1>
+    <p v-show="errorMessage !== ''" class="error-message">{{ errorMessage }}</p>
     <hr />
     <oForm
       :formFields="projectFormFields"
       buttonLabel="Create Project"
       :submitFunction="attemptCreateProject"
       addClass="contribute-form"
+      @keyup.native="resetMessage"
     />
   </div>
 </template>
@@ -28,6 +30,8 @@ const authModule = namespace("authentication");
 })
 export default class pContribute extends Vue {
   @authModule.Getter("getToken") authToken!: string;
+
+  private errorMessage: string = "";
   
   private projectFormFields = [
     {
@@ -96,10 +100,23 @@ export default class pContribute extends Vue {
     }
   ];
 
-  async attemptCreateProject(contributeForm: Object){
-    console.log(contributeForm);
+  resetMessage(){
+    this.errorMessage = "";
+  }
+
+  async attemptCreateProject(contributeForm: {[key: string]: string}){
     let response = await createProject(contributeForm, this.authToken);
-    console.log(response);
+    if(response.status === 201){
+      this.$router.push({
+        name: 'Project',
+        params: {
+          name: contributeForm.title
+        }
+      });
+    } else {
+      this.errorMessage = response.data.message;
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>

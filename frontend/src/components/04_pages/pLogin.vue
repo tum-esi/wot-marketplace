@@ -2,12 +2,15 @@
   <div class="login-content">
     <h1 class="login-header">Login to WoTify</h1>
     <hr />
+    <p v-show="errorMessage !== ''" class="error-message">{{ errorMessage }}</p>
+    <p v-show="validationMessage" class="validation-message">User was succesfully registered.</p>
     <oForm
       :formFields="loginFormFields"
       buttonLabel="Login"
       :enterToSubmit="true"
       :submitFunction="attemptLogin"
       addClass="login-form"
+      @keyup.native="resetMessage"
     />
     <aNavLink :to="{ name: 'Register' }" :addClass="'default'">Don't have an account? Sign-up here.</aNavLink>
   </div>
@@ -31,7 +34,10 @@ const authModule = namespace("authentication");
 export default class pLogin extends Vue {
   @authModule.Action("login") login!: (
     userCredentials: Object
-  ) => { success: boolean; message: string };
+  ) => Promise<object>;
+
+  private errorMessage: string = "";
+  private validationMessage: boolean = false;
 
   private loginFormFields = [
     {
@@ -49,12 +55,22 @@ export default class pLogin extends Vue {
   ];
 
   async attemptLogin(loginFormData: Object) {
-    let authenticated = await this.login(loginFormData);
-    if (authenticated.success) {
+    this.login(loginFormData).then((response) => {
       this.$router.push({
         name: "Library"
       });
-    }
+    }).catch((error) => {
+      this.errorMessage = error.data.message;
+    });
+  }
+
+  resetMessage(){
+    this.errorMessage = "";
+    this.validationMessage = false;
+  }
+
+  created(){
+    this.validationMessage = this.$route.query.registered === "true";
   }
 }
 </script>

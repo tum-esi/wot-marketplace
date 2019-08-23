@@ -1,16 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 
-import { ProjectType } from "./project";
-
-const SALT_WORK_FACTOR = 10;
-
 export interface UserType extends Document {
     username: string;
     firstName: string;
     lastName: string;
     email: string;
-    //projects?: ProjectType[];
 }
 
 const UserSchema: Schema = new Schema({
@@ -43,11 +38,7 @@ const UserSchema: Schema = new Schema({
         lowercase: true,
         trim: true,
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    }/*,
-    projects: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project'
-    }]*/
+    }
 });
 
 UserSchema.plugin(passportLocalMongoose);

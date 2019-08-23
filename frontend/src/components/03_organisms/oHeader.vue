@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <aNavLink :to="{ name: 'Library' }" class="header-logo">
+    <aNavLink :to="elements.library.route" class="header-logo">
       <img class="header-logo-image" src="../../assets/wot-mini.png" />
     </aNavLink>
     <mDropDown v-if="isConnected" addClass="default header-element" :closeOnClick="true">
@@ -76,7 +76,12 @@ export default class oHeader extends Vue {
       class: "header-element",
       label: "LIBRARY",
       route: {
-        name: "Library"
+        name: "Library",
+        query: {
+          term: "",
+          sort: "Date",
+          page: "1"
+        }
       }
     }
   };
@@ -94,7 +99,14 @@ export default class oHeader extends Vue {
 
   async requestLogout() {
     await this.logout();
-    this.$router.push({ name: "Library" });
+    this.$router.push({
+      name: "Library",
+      query: {
+        term: "",
+        sort: "Date",
+        page: "1"
+      }
+    });
   }
 }
 </script>

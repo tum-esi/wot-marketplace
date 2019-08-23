@@ -51,12 +51,20 @@
         :class="addClass"
         class="checkbox"
         @change="e => onCheckboxChange(e.target.checked, element)"
+        :checked="value ? value.includes(element) : false"
       />
       {{ element }}
     </label>
   </div>
 
-  <input v-else v-model="inputValue" :class="addClass" :type="inputType" :placeholder="placeholder" />
+  <input
+    v-else
+    v-model="inputValue"
+    :class="addClass"
+    :type="inputType"
+    :placeholder="placeholder"
+    :disabled="isDisabled"
+  />
 </template>
 
 <script lang="ts">
@@ -69,6 +77,8 @@ export default class aInput extends Vue {
   @Prop() addClass?: string;
   @Prop() radioOptions?: string[];
   @Prop() checkboxOptions?: string[];
+  @Prop() checkboxInitialChecked?: boolean[];
+  @Prop() isDisabled?: boolean;
   @Prop() value!: any;
 
   private topics!: string[];
@@ -102,16 +112,19 @@ export default class aInput extends Vue {
   }
 
   onCheckboxChange(checked: boolean, topic: string) {
-    if(checked){
+    if (checked) {
       this.topics.push(topic);
-    }else{
+    } else {
       this.topics.splice(this.topics.indexOf(topic), 1);
     }
   }
 
   constructor() {
     super();
-    this.topics = [];
+    this.topics =
+      this.value && Array.isArray(this.value) && this.inputType === "checkbox"
+        ? [...this.value]
+        : [];
     this.tags = [];
   }
 }
@@ -271,7 +284,7 @@ export default class aInput extends Vue {
 }
 
 .search-input {
-  width: 40vw;
+  width: 54vw;
   font-size: 1vw;
   padding: 0.5vw;
   margin: 0.2vw 1vw;
@@ -289,4 +302,25 @@ export default class aInput extends Vue {
   font-size: 0.8vw;
   margin: auto 0;
 }
+
+.password-change-form input {
+  padding: 10px 15px;
+  font-size: 1em;
+  width: 100%;
+}
+
+.user-profile-input {
+  width: 100%;
+  font-size: 1em;
+  padding: 0.2vw;
+  text-align: left;
+}
+
+.user-profile-input:disabled{
+  text-align: center;
+  background: none;
+  border: none;
+  color: black;
+}
+
 </style>

@@ -8,3 +8,5 @@ export const initializeMiddlewares = (app: Application) => {
     initOther(app);
     initPassport(app);
 }
+
+export { initializeErrorHandler } from './errorHandler'; 

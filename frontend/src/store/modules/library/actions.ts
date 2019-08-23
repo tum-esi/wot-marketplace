@@ -8,10 +8,12 @@ export const actions: ActionTree<LibraryState, {}> = {
     return new Promise(async (resolve) => {
       let response = await searchProjects(payload);
       
-      commit('setCurrentPage', response.page);
+      commit('setPage', response.page);
+      commit('setTotalPages', Math.ceil(response.totalResults/payload.pageSize));
+      commit('setTotalResults', response.totalResults);
       commit('setLoadedProjects', response.results);
-      commit('setTotalProjects', response.totalDocs);
-
+      commit('setTotalDocs', response.totalDocs);
+      
       resolve();
     });
   }

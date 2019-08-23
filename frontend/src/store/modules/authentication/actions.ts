@@ -7,25 +7,19 @@ export const actions: ActionTree<AuthState, {}> = {
   login({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       let response = await login(payload);
-      if(!response.error){
-        localStorage.setItem('user-token', response.token);
-        localStorage.setItem('user-name', response.username);
+      if(response.status === 200){
+        localStorage.setItem('user-token', response.data.token);
+        localStorage.setItem('user-name', response.data.username);
   
-        commit('setCurrentUser', response.username);
-        commit('setToken', response.token);
-  
-        resolve({
-          success: true,
-          message: `${response.username} logged in.`
-        });
+        commit('setCurrentUser', response.data.username);
+        commit('setToken', response.data.token);
+        
+        resolve(response);
       } else {
         localStorage.removeItem('user-token');
         localStorage.removeItem('user-name');
       
-        reject({
-          success: false,
-          message: response.error
-        });
+        reject(response);
       }
     });
   },

@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="to" :tag="tag" :active-class="activeClass" :class="addClass" exact>
+  <router-link :to="to" :tag="tag" :active-class="activeClass" :class="addClass">
     <slot></slot>
   </router-link>
 </template>

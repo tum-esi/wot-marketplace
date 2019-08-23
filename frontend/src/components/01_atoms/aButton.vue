@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" :class="addClass" @click="onClick">
+  <button class="btn" :class="addClass" @click="onClick" :disabled="isDisabled">
     <slot></slot>
   </button>
 </template>
@@ -15,7 +15,6 @@ export default class aButton extends Vue {
   @Prop() addClass?: string;
 
   onClick() {
-    if (this.isDisabled) return;
     if (this.btnValue) return this.$emit(this.btnEvent, this.btnValue);
     this.$emit(this.btnEvent);
   }
@@ -99,21 +98,29 @@ export default class aButton extends Vue {
   color: #fff;
 }
 
-.search-btn {
+.search-btn:hover {
+  opacity: 0.8;
+}
+
+.password-change-form {
   text-align: center;
   outline: none;
-  width: 8vw;
+  width: 10vw;
   padding: 0.6vw;
   background: #1c1c1c;
   color: #fff;
   border: none;
-  font-size: 1vw;
+  font-size: 0.8vw;
   border-radius: 5px;
-  margin: 10px;
+  margin: auto;
   cursor: pointer;
 }
 
-.search-btn:hover {
+.password-change:hover {
   opacity: 0.8;
+}
+
+.page-navigator {
+
 }
 </style>

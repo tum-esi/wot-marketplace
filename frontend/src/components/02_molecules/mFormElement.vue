@@ -9,6 +9,7 @@
         :placeholder="inputPlaceholder"
         :radioOptions="radioOptions"
         :checkboxOptions="checkboxOptions"
+        :checkboxInitialChecked="checkboxInitialChecked"
       />
     </div>
   </div>
@@ -33,6 +34,7 @@ export default class mFormElement extends Vue {
   @Prop() private inputPlaceholder?: string;
   @Prop() private radioOptions?: string[];
   @Prop() private checkboxOptions?: string[];
+  @Prop() private checkboxInitialChecked?: boolean[];
   @Prop() private addClass?: string;
   @Prop() private value!: string;
 
@@ -87,5 +89,16 @@ export default class mFormElement extends Vue {
 .search-sort {
   display: grid;
   grid-template-columns: 65px 180px;
+}
+
+.password-change-form.form-el-container {
+  display: grid;
+  text-align: center;
+  grid-template-columns: 1.2fr 2fr;
+  margin: 10px;
+}
+
+.password-change-form.form-el-right {
+  margin: auto 10px;
 }
 </style>
