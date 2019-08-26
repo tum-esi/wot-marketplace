@@ -1,12 +1,12 @@
 <template>
   <aNavLink
-    :to="{ name: 'Project', params: { name: project.title }}"
+    :to="{ path: `/library/${project.title}/general` }"
     addClass="project-tag"
-    :class="project.projectType.toLowerCase()"
+    :class="project.type.toLowerCase()"
   >
     <aLabel :addDesc="project.summary" addClass="project-tag-top">{{ project.title }}</aLabel>
-    <div class="project-tag-bottom" :class="project.projectType.toLowerCase()">
-      <p class="project-tag">{{ project.projectType }}</p>
+    <div class="project-tag-bottom" :class="project.type.toLowerCase()">
+      <p class="project-tag">{{ project.type }}</p>
     </div>
   </aNavLink>
 </template>

@@ -178,7 +178,7 @@ export default class pProfile extends Vue {
   }
 
   async confirmPasswordChange(formData: { [key: string]: string }) {
-    if(!formData.new && !formData.old && !formData.confirm){
+    if (!formData.new && !formData.old && !formData.confirm) {
       this.passwordChange = false;
       return;
     }
@@ -193,12 +193,12 @@ export default class pProfile extends Vue {
         },
         this.userToken
       );
-      if(response.status === 200) {
+      if (response.status === 200) {
         this.validationMessage = "Password is succesfully changed.";
         this.passwordChange = false;
       } else {
         this.errorMessage = "Old password is incorrect.";
-      }    
+      }
     } else {
       this.errorMessage = "Passwords do not match.";
     }
@@ -219,12 +219,15 @@ export default class pProfile extends Vue {
   }
 
   async created() {
-    let profile = await getUser(this.username, this.userToken);
-    this.userId = profile._id;
-    for (var elem in this.profileFields) {
-      this.profileFields[elem] = profile[elem];
-    }
-    this.getPage(1);
+    let response = await getUser(this.username, this.userToken);
+    if (response.status === 200) {
+      let profile: {[key: string]: string} = response.data;
+      this.userId = profile._id;
+      for (var elem in this.profileFields) {
+        this.profileFields[elem] = profile[elem];
+      }
+      this.getPage(1);
+    } // TODO: error handling
   }
 }
 </script>

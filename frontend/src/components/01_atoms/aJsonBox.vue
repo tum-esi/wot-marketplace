@@ -1,7 +1,7 @@
 <template>
   <div class="json-container">
     <VueJsonPretty
-      :data="jsonContent"
+      :data="content"
       :showDoubleQuotes="true"
       :showLine="true"
       :showLength="true"
@@ -20,15 +20,18 @@ import VueJsonPretty from "vue-json-pretty";
   }
 })
 export default class aJsonBox extends Vue {
-  @Prop() private jsonContent!: Object;
+  @Prop() private content!: Object;
 }
 </script>
 
 <style scoped>
-.code-container {
+.json-container {
   word-wrap: normal;
   padding: 5px 10px;
   color: #222;
   background: #fff;
+  border: none;
+  border: 2px solid black;
+  border-top: none;
 }
 </style>

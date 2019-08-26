@@ -20,6 +20,10 @@ export const initializeErrorHandler = (app: express.Application) => {
             stat = 400;
             response.message = "The required fields are not filled properly.";
             break;
+        case "InvalidTDError":
+            stat = 400;
+            response.message = "The Thing description is invalid.";
+            break;
         case "IncorrectPasswordError":
             stat = 401;
             response.message = "Password is incorrect.";

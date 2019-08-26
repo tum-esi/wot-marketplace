@@ -82,7 +82,7 @@ export default class pContribute extends Vue {
       type: "radio",
       label: "Project Type *",
       desc: "Select the type of content ( Thing Description or Source Code )",
-      variable: "projectType",
+      variable: "type",
       radioOptions: ["TD", "Code"]
     },
     {
@@ -105,10 +105,17 @@ export default class pContribute extends Vue {
   }
 
   async attemptCreateProject(contributeForm: {[key: string]: string}){
+    try {
+      contributeForm.thingDesc = JSON.parse(contributeForm.thingDesc);
+    } catch (error) {
+      this.errorMessage = "Invalid JSON object in Thing Description field.";
+      return;
+    }
+
     let response = await createProject(contributeForm, this.authToken);
     if(response.status === 201){
       this.$router.push({
-        name: 'Project',
+        name: 'Project General',
         params: {
           name: contributeForm.title
         }

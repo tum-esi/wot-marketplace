@@ -85,4 +85,19 @@ export default class aNavLink extends Vue {
 .project-tag.td {
   border: 3px solid #b85730;
 }
+
+.project-page {
+  display: inline-block;
+  color: #fff;
+  background: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  outline: none;
+}
+
+.project-page:hover {
+  background: #30b8a3;
+  border-radius: 10px 10px 0 0;
+}
 </style>

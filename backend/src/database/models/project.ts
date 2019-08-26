@@ -13,7 +13,7 @@ export interface ProjectType extends Document{
     thingDesc: WoT.ThingDescription;
     topic: string[];
     platform: string[];
-    projectType: string;
+    type: string;
     complexity: string;
     tags: string[];
 }
@@ -47,7 +47,7 @@ const ProjectSchema = new Schema({
     description: {
         type: String,
         minlength: 5,
-        maxlength: 500,
+        maxlength: 10000,
         required: true
     },
     thingDesc: {
@@ -63,7 +63,7 @@ const ProjectSchema = new Schema({
         enum: ["Raspberry Pi", "Arduino", "ESP", "Others"],
         required: true
     },
-    projectType: {
+    type: {
         type: String,
         enum: ["TD", "Code"],
         required: true

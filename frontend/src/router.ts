@@ -62,17 +62,16 @@ export default new Router({
     },
     {
       path: "/library/:name",
-      name: "Project",
       component: pProject,
       children: [
         {
-          path: '',
-          name: "Project General",
+          path: 'general',
+          name: 'Project General',
           component: aMarkdownBox
         },
         {
-          path: "thingdesc",
-          name: "Project ThingDesc",
+          path: 'thingdesc',
+          name: 'Project ThingDesc',
           component: aJsonBox
         }
       ]

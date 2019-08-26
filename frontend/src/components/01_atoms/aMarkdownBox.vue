@@ -15,6 +15,26 @@ let md = new showdown.Converter({
 
 @Component
 export default class aMarkdownBox extends Vue {
-  @Prop() private content!: Object;
+  @Prop() private content!: string;
+
+  get compiledMarkdown() {
+    return md.makeHtml(this.content);
+  }
 }
 </script>
+
+<style scoped>
+.markdown-container {
+  padding: 5px 10px;
+  background: #fff;
+  border: 2px solid black;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 15px;
+}
+</style>

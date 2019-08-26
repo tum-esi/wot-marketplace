@@ -32,10 +32,19 @@ export const createProject = async (newProject: Object, userToken: string) => {
   }
 }
 
+export const getProject = async (projectName: string) => {
+  try{
+    let response = await axios.get(`/api/projects/${projectName}`);
+    return response;
+  }catch(error){
+    return error.response;
+  }
+}
+
 export const searchProjects = async (searchOptions: Object) => {
   try{
     let response = await axios.get('/api/search',
-    { 
+    {
       params: {
         ...searchOptions
       } 
@@ -54,7 +63,7 @@ export const getUser = async (username: string, userToken: string)  => {
       }
     };
     let response = await axios.get(`/api/users/${username}`, axiosConfig);
-    return response.data;
+    return response;
   }catch(error){
     return error.response;
   }

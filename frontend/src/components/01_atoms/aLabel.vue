@@ -71,6 +71,7 @@ div.project-tag-top {
 .project-tag-top p {
   color: gray;
   margin: 5px 0;
+  line-height: 1.2em;
 }
 
 .password-change-form.form-el-left {

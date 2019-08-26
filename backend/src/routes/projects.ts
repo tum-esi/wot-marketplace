@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.post('/', passport.authenticate('jwt', { session: false }), projectsController.projects_post);
 
-router.get('/:name', projectsController.projects_name_get);
+router.get('/:title', projectsController.projects_title_get);
 
-router.put('/:name', passport.authenticate('jwt', { session: false }), projectsController.projects_name_put);
+router.put('/:title', passport.authenticate('jwt', { session: false }), projectsController.projects_title_put);
 
 export default router;
