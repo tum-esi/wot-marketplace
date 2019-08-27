@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 
 export interface UserType extends Document {
+    [x: string]: any;
     username: string;
     firstName: string;
     lastName: string;

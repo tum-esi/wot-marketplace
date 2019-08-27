@@ -5,6 +5,7 @@ import * as tdValidationSchema from '../assets/tdJsonSchema.json';
 const ajv = new Ajv();
 
 import { ProjectType, Project } from '../database';
+import { UserType } from '../database';
 
 export const projects_post = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
@@ -29,7 +30,7 @@ export const projects_post = async (req: express.Request, res: express.Response,
 
         var newProject: ProjectType = new Project({
             ...req.body,
-            author: req.user._id
+            author: (req.user as UserType)._id
         });
         var createdProject: ProjectType = await newProject.save({ validateBeforeSave: true });
         res.sendStatus(201);
@@ -63,7 +64,7 @@ export const projects_title_put = async (req: express.Request, res: express.Resp
             error.name = "NotFoundError";
             next(error);
             return;
-        }else if(projectToEdit.author.username !== req.user.username){
+        }else if(projectToEdit.author.username !== (req.user as UserType).username){
             let error = new Error();
             error.name = "UnauthorizedError";
             next(error);
@@ -107,7 +108,7 @@ export const projects_title_delete = async (req: express.Request, res: express.R
             error.name = "NotFoundError";
             next(error);
             return;    
-        }else if(projectToDelete.author.username !== req.user.username){
+        }else if(projectToDelete.author.username !== (req.user as UserType).username){
             let error = new Error();
             error.name = "UnauthorizedError";
             next(error);
