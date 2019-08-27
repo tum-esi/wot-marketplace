@@ -24,6 +24,10 @@ export const initializeErrorHandler = (app: express.Application) => {
             stat = 400;
             response.message = "The Thing description is invalid.";
             break;
+        case "InvalidUrlError":
+            stat = 400;
+            response.message = "Please format the URL specified correctly.";
+            break;
         case "IncorrectPasswordError":
             stat = 401;
             response.message = "Password is incorrect.";

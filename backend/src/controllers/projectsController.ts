@@ -28,6 +28,13 @@ export const projects_post = async (req: express.Request, res: express.Response,
             return;
         }
 
+        if(req.body.repoUrl && !req.body.repoUrl.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm)){
+            let error = new Error();
+            error.name = "InvalidUrlError";
+            next(error);
+            return;
+        }
+
         var newProject: ProjectType = new Project({
             ...req.body,
             author: (req.user as UserType)._id
