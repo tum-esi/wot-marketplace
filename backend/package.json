@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc-watch --onSuccess \"node ./dist/server.js\"",
+    "dev": "tsc-watch --onSuccess \"node -r dotenv/config ./dist/server.js\"",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "serve": "node dist/server.js",
+    "serve": "node -r dotenv/config dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -48,6 +48,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "connect-mongo": "^3.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "express-winston": "^3.2.1",

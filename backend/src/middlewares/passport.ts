@@ -4,7 +4,7 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
 
-import { User, UserType } from '../database';
+import { User } from '../database';
 
 export const initPassport = (app: Application) => {
     passport.use(new passportLocal.Strategy({
@@ -17,7 +17,7 @@ export const initPassport = (app: Application) => {
 
     passport.use(new passportJWT.Strategy({
         jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'pokemonichooseyou' //Should be in a env variable
+        secretOrKey: process.env.SECRET_CODE
     }, async (jwtPayload, done) => {
         return User.findById(jwtPayload.id).then((user) => {
             return done(null, user);
