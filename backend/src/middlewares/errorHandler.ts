@@ -44,6 +44,10 @@ export const initializeErrorHandler = (app: express.Application) => {
             stat = 404;
             response.message = "Resource not found."
             break;
+        case "SyntaxError":
+            stat = 400;
+            response.message = "Invalid JSON object on Thing Description field.";
+            break;
         default:
             response.message = "Something went wrong.";
             break;

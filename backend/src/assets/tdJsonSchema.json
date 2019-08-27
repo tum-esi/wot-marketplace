@@ -1046,7 +1046,7 @@
       },
       "anyUri": {
           "type": "string",
-          "format": "iri-reference"
+          "format": "uri-reference"
       }
   },
   "type": "object",

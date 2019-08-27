@@ -21,12 +21,6 @@
               :inputType="element.type"
               :labelContent="element.label"
               :checkboxOptions="element.options"
-              :checkboxInitialChecked="element.options.map(arg => {
-                if(searchFilters[element.label.toLowerCase()]){
-                  return searchFilters[element.label.toLowerCase()].includes(arg);
-                }
-                return false;
-              })"
               addClass="search-filter"
             />
           </div>

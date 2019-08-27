@@ -6,26 +6,13 @@
     :placeholder="placeholder"
   />
 
-  <div
-    v-else-if="inputType === 'tag'"
-    :class="addClass"
-    class="tag-container"
-    @click="$refs.tagInput.focus()"
-  >
-    <span
-      v-for="(element, index) in tags"
-      :key="element.id"
-      @click="removeTag(index)"
-      :class="addClass"
-    >{{ element }}</span>
-    <input
-      type="text"
-      @keyup.space="e => addTag(e.target)"
-      :class="addClass"
-      class="tag-input"
-      ref="tagInput"
-    />
-  </div>
+  <VueInputTag 
+    v-else-if="inputType === 'tag'" 
+    v-model="inputValue"
+    :add-tag-on-blur="true"
+    :limit="10"
+    :add-tag-on-keys="[13, 188, 9, 32]" 
+  />
 
   <div v-else-if="inputType === 'radio'" :class="addClass" class="radio-container">
     <label
@@ -50,8 +37,8 @@
         type="checkbox"
         :class="addClass"
         class="checkbox"
-        @change="e => onCheckboxChange(e.target.checked, element)"
-        :checked="value ? value.includes(element) : false"
+        :value="element"
+        v-model="inputValue"
       />
       {{ element }}
     </label>
@@ -70,19 +57,21 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 
-@Component
+import VueInputTag from "vue-input-tag";
+
+@Component({
+  components: {
+    VueInputTag
+  }
+})
 export default class aInput extends Vue {
   @Prop() inputType!: string;
   @Prop() placeholder?: string;
   @Prop() addClass?: string;
   @Prop() radioOptions?: string[];
   @Prop() checkboxOptions?: string[];
-  @Prop() checkboxInitialChecked?: boolean[];
   @Prop() isDisabled?: boolean;
-  @Prop() value!: any;
-
-  private topics!: string[];
-  private tags!: string[];
+  @Prop({ default: [] }) value!: any;
 
   get inputValue() {
     return this.value;
@@ -90,42 +79,6 @@ export default class aInput extends Vue {
 
   set inputValue(inputValue) {
     this.$emit("input", inputValue);
-  }
-
-  @Watch("topics", { deep: true })
-  onTopicsChanged(val: string[]) {
-    this.$emit("input", val);
-  }
-
-  @Watch("tags", { deep: true })
-  onTagsChanged(val: string[]) {
-    this.$emit("input", val);
-  }
-
-  addTag(e: HTMLInputElement) {
-    this.tags.push(e.value.replace(/[^0-9a-z$]/gi, ""));
-    e.value = "";
-  }
-
-  removeTag(index: number) {
-    this.tags.splice(index, 1);
-  }
-
-  onCheckboxChange(checked: boolean, topic: string) {
-    if (checked) {
-      this.topics.push(topic);
-    } else {
-      this.topics.splice(this.topics.indexOf(topic), 1);
-    }
-  }
-
-  constructor() {
-    super();
-    this.topics =
-      this.value && Array.isArray(this.value) && this.inputType === "checkbox"
-        ? [...this.value]
-        : [];
-    this.tags = [];
   }
 }
 </script>
@@ -159,40 +112,6 @@ export default class aInput extends Vue {
   font-size: 15px;
   resize: none;
   padding: 5px;
-}
-
-.contribute-form.tag-container {
-  width: 100%;
-  min-height: 52px;
-  background: white;
-  display: inline-block;
-  border: 1px solid lightgray;
-  border-radius: 4px;
-  cursor: text;
-}
-
-.contribute-form span {
-  font-size: 90%;
-  display: inline-block;
-  background: #30b8a3;
-  color: white;
-  cursor: pointer;
-  padding: 0.4em 0.75em;
-  margin: 5px;
-  border-radius: 4px;
-}
-
-.contribute-form span:hover {
-  opacity: 0.8;
-}
-
-.contribute-form.tag-input {
-  border: 0;
-  outline: 0;
-  padding: 10px;
-  font-size: 18px;
-  background: none;
-  width: auto;
 }
 
 .contribute-form.radio-container {
@@ -316,11 +235,10 @@ export default class aInput extends Vue {
   text-align: left;
 }
 
-.user-profile-input:disabled{
+.user-profile-input:disabled {
   text-align: center;
   background: none;
   border: none;
   color: black;
 }
-
 </style>

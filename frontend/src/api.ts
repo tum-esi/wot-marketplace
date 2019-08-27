@@ -41,6 +41,34 @@ export const getProject = async (projectName: string) => {
   }
 }
 
+export const deleteProject = async (projectName: string, userToken: string) => {
+  try{
+    let axiosConfig = {
+      headers: {
+        "Authorization": `Bearer ${userToken}` 
+      }
+    };
+    let response = await axios.delete(`/api/projects/${projectName}`, axiosConfig);
+    return response;
+  }catch(error){
+    return error.response;
+  }
+}
+
+export const editProject = async (projectName: string, projectChanges: object, userToken: string) => {
+  try{
+    let axiosConfig = {
+      headers: {
+        "Authorization": `Bearer ${userToken}` 
+      }
+    };
+    let response = await axios.put(`/api/projects/${projectName}`, projectChanges, axiosConfig);
+    return response;
+  }catch(error){
+    return error.response;
+  }
+}
+
 export const searchProjects = async (searchOptions: Object) => {
   try{
     let response = await axios.get('/api/search',

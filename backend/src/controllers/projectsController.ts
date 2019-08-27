@@ -1,26 +1,32 @@
 import express from 'express';
-//import Ajv from 'ajv';
-//import * as tdValidationSchema from '../assets/tdJsonSchema.json';
+import Ajv from 'ajv';
+import * as tdValidationSchema from '../assets/tdJsonSchema.json';
 
-//const ajv = new Ajv();
+const ajv = new Ajv();
 
 import { ProjectType, Project } from '../database';
 
 export const projects_post = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-        /*try{
-            console.log("validating td");
-            if(!ajv.validate(tdValidationSchema, JSON.parse(req.body.thingDesc))){
+        try{
+            req.body.thingDesc = JSON.parse(req.body.thingDesc);
+        }catch(error){
+            next(error);
+            return;
+        }
+
+        try{
+            if(!ajv.validate(tdValidationSchema, req.body.thingDesc)){
                 let error = new Error();
                 error.name = "InvalidTDError";
                 next(error);
                 return;
             }
         }catch(error){
-            console.log(error);
             next(error);
             return;
-        }*/
+        }
+
         var newProject: ProjectType = new Project({
             ...req.body,
             author: req.user._id
@@ -39,7 +45,8 @@ export const projects_title_get = async (req: express.Request, res: express.Resp
         if (!foundProject) {
             let error = new Error();
             error.name = "NotFoundError";
-            return next(error);
+            next(error);
+            return;
         }
         res.status(200).json(foundProject);
     } catch (error) {
@@ -49,8 +56,67 @@ export const projects_title_get = async (req: express.Request, res: express.Resp
 
 export const projects_title_put = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-        
-    } catch (err) {
-        
+        var projectToEdit = await Project.findById(req.body._id).populate("author").exec();
+        delete req.body._id;
+        if (!projectToEdit) {
+            let error = new Error();
+            error.name = "NotFoundError";
+            next(error);
+            return;
+        }else if(projectToEdit.author.username !== req.user.username){
+            let error = new Error();
+            error.name = "UnauthorizedError";
+            next(error);
+            return;
+        }
+
+        try{
+            req.body.thingDesc = JSON.parse(req.body.thingDesc);
+        }catch(error){
+            next(error);
+            return;
+        }
+
+        try{
+            if(!ajv.validate(tdValidationSchema, req.body.thingDesc)){
+                let error = new Error();
+                error.name = "InvalidTDError";
+                next(error);
+                return;
+            }
+        }catch(error){
+            next(error);
+            return;
+        }
+
+        projectToEdit.set({
+            ...req.body
+        });
+        await projectToEdit.save({ validateBeforeSave: true });
+        res.sendStatus(200);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const projects_title_delete = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+        var projectToDelete = await Project.findOne({ title: req.params.title }).populate("author").exec();
+        if(!projectToDelete){
+            let error = new Error();
+            error.name = "NotFoundError";
+            next(error);
+            return;    
+        }else if(projectToDelete.author.username !== req.user.username){
+            let error = new Error();
+            error.name = "UnauthorizedError";
+            next(error);
+            return;
+        }else{
+            await Project.deleteOne({ title: req.params.title }).exec();
+            res.sendStatus(204);            
+        }
+    } catch (error) {
+        next(error);
     }
 }

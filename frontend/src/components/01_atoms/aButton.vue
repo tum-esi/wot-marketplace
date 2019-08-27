@@ -123,4 +123,20 @@ export default class aButton extends Vue {
 .page-navigator {
 
 }
+
+.project-button {
+  text-decoration: none;
+  font-size: 18px;
+  background: maroon;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.project-button:hover {
+  opacity: 0.8;
+}
 </style>

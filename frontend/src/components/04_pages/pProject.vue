@@ -30,26 +30,45 @@
         />
       </div>
     </div>
+    <div v-if="username === project.author.username" class="project-buttons">
+      <aNavLink
+        :to="{ name: 'Project Edit', params: { name: project.title } }"
+        addClass="project-button"
+      >EDIT</aNavLink>
+      <aButton
+        btnEvent="delete-btn-clicked"
+        @delete-btn-clicked="removeProject"
+        addClass="project-button"
+      >DELETE</aButton>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 
+import aButton from "@/components/01_atoms/aButton.vue";
 import aNavLink from "@/components/01_atoms/aNavLink.vue";
 import aInfoBox from "@/components/01_atoms/aInfoBox.vue";
 
-import { getProject } from "@/api";
+import { getProject, deleteProject } from "@/api";
+
+const authModule = namespace("authentication");
 
 @Component({
   components: {
     aNavLink,
-    aInfoBox
+    aInfoBox,
+    aButton
   }
 })
 export default class pProject extends Vue {
+  @authModule.Getter("getToken") authToken!: string;
+  @authModule.Getter("getUsername") username!: string;
+
   private project: {
-    [key: string]: string | string[] | object | Date | null;
+    [key: string]: any;
   } = {
     title: "",
     author: {},
@@ -100,17 +119,26 @@ export default class pProject extends Vue {
             content: this.project.tags
           }
         ]
+      },
+      {
+        title: "Author",
+        categories: [
+          {
+            type: "text",
+            content: this.project.author.username
+          }
+        ]
       }
     ];
 
-    if(this.project.url) {
+    if (this.project.repoUrl) {
       sidebar.push({
         title: "Repository",
         categories: [
           {
             type: "link",
             content: {
-              label: "View repository",
+              label: "View on repository",
               url: this.project.repoUrl
             }
           }
@@ -128,12 +156,20 @@ export default class pProject extends Vue {
     return this.project.thingDesc;
   }
 
+  async removeProject() {
+    let response = await deleteProject(this.project.title, this.authToken);
+    if(response.status === 204){
+      this.$router.push({ name: 'Profile' });
+    } else {
+
+    }
+  }
+
   async created() {
     let response = await getProject(this.$route.params.name);
     if (response.status === 200) {
       this.project = response.data;
     } else if (response.status === 404) {
-      console.log(response);
       this.$router.push({ name: "404" });
       //TODO: error handling
     }
@@ -178,5 +214,12 @@ div.project-content-right {
   border: none;
   border-bottom: none;
   border-radius: 10px 10px 0 0;
+}
+
+div.project-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1vw;
 }
 </style>

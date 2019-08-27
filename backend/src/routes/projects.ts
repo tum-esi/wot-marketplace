@@ -11,4 +11,6 @@ router.get('/:title', projectsController.projects_title_get);
 
 router.put('/:title', passport.authenticate('jwt', { session: false }), projectsController.projects_title_put);
 
+router.delete('/:title', passport.authenticate('jwt', { session: false }), projectsController.projects_title_delete);
+
 export default router;

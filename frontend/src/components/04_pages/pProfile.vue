@@ -127,7 +127,7 @@ export default class pProfile extends Vue {
     filters: Object
   ) => void;
 
-  @authModule.Getter("getToken") userToken!: string;
+  @authModule.Getter("getToken") authToken!: string;
   @authModule.Getter("getUsername") username!: string;
 
   private editMode: boolean = false;
@@ -167,7 +167,7 @@ export default class pProfile extends Vue {
     let response = await editUser(
       this.username,
       this.profileFields,
-      this.userToken
+      this.authToken
     );
     if (response.status === 200) {
       this.validationMessage = "Changes are saved.";
@@ -191,7 +191,7 @@ export default class pProfile extends Vue {
             new: formData.new
           }
         },
-        this.userToken
+        this.authToken
       );
       if (response.status === 200) {
         this.validationMessage = "Password is succesfully changed.";
@@ -219,7 +219,7 @@ export default class pProfile extends Vue {
   }
 
   async created() {
-    let response = await getUser(this.username, this.userToken);
+    let response = await getUser(this.username, this.authToken);
     if (response.status === 200) {
       let profile: {[key: string]: string} = response.data;
       this.userId = profile._id;

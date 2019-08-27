@@ -5,9 +5,14 @@
         class="library-desc"
       >Browse the wotify collection to find W3C Web of Things compliant implementations and Thing Descriptions for your devices and experience the future of IoT.</p>
       <mSearchBar />
-      <mPageNavigator :currentPage="page" :totalPages="totalPages" :getPage="getPage"/>
+      <mPageNavigator
+        v-if="loadedProjects.length"
+        :currentPage="page"
+        :totalPages="totalPages"
+        :getPage="getPage"
+      />
     </div>
-    <oProjectTagContainer :projects="loadedProjects" class="library-content-btm"/>
+    <oProjectTagContainer :projects="loadedProjects" class="library-content-btm" />
   </div>
 </template>
 

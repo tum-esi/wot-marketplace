@@ -4,7 +4,11 @@
     <div v-for="element in content" :key="element.id" class="infobox-element">
       <label v-if="element.label" class="infobox-element-label">{{ element.label }}</label>
       <p v-if="element.type === 'text'" class="infobox-element-text">{{ element.content }}</p>
-      <a v-else-if="element.type === 'link'" :href="element.content.url">{{ element.content.label }}</a>
+      <a
+        v-else-if="element.type === 'link'"
+        :href="`//${element.content.url}`"
+        target="_blank"
+      >{{ element.content.label }}</a>
       <ul v-else-if="element.type === 'list'" class="infobox-element-list">
         <li
           v-for="tagElem in element.content"
@@ -46,13 +50,11 @@ export default class aInfoBox extends Vue {
 .infobox-element-label {
   display: inline-block;
   margin: 0 10px;
-  width: 30%;
 }
 
 .infobox-element-text {
   display: inline-block;
   margin: 0 10px;
-  width: 55%;
 }
 
 .infobox-element-list {

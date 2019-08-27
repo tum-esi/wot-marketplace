@@ -5,14 +5,14 @@
       @previous-page="getPage(currentPage-1)"
       :isDisabled="currentPage === 1"
       addClass="page-navigator"
-    ><<</aButton>
+    >&lt;&lt;</aButton>
     <p class="page-navigator">{{ currentPage }} of {{ totalPages }} pages</p>
     <aButton
       btnEvent="next-page"
       @next-page="getPage(currentPage+1)"
       :isDisabled="currentPage === totalPages"
       addClass="page-navigator"
-    >>></aButton>
+    >&gt;&gt;</aButton>
   </div>
 </template>
 

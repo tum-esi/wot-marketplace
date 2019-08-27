@@ -100,4 +100,18 @@ export default class aNavLink extends Vue {
   background: #30b8a3;
   border-radius: 10px 10px 0 0;
 }
+
+.project-button {
+  text-decoration: none;
+  font-size: 18px;
+  background: rgb(77, 129, 77);
+  color: white;
+  border-radius: 5px;
+  padding: 8px 25.5px;
+  margin: 0 5px;
+}
+
+.project-button:hover {
+  opacity: 0.8;
+}
 </style>

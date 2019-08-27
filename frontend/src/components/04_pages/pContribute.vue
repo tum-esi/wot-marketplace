@@ -105,21 +105,9 @@ export default class pContribute extends Vue {
   }
 
   async attemptCreateProject(contributeForm: {[key: string]: string}){
-    try {
-      contributeForm.thingDesc = JSON.parse(contributeForm.thingDesc);
-    } catch (error) {
-      this.errorMessage = "Invalid JSON object in Thing Description field.";
-      return;
-    }
-
     let response = await createProject(contributeForm, this.authToken);
     if(response.status === 201){
-      this.$router.push({
-        name: 'Project General',
-        params: {
-          name: contributeForm.title
-        }
-      });
+      this.$router.push({ path: `/library/${contributeForm.title}/general` });
     } else {
       this.errorMessage = response.data.message;
       window.scrollTo(0,0);
