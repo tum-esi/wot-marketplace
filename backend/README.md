@@ -25,6 +25,7 @@ The empty fields are to be filled with the corresponding values.
 
 With a `.env` file, to start the server for development with HMR, run the following command:
 ```
+npm i
 npm run dev
 ```
 
