@@ -6,12 +6,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
+/**
+ * A basic button component
+ */
 @Component
 export default class aButton extends Vue {
+  // Value emitted on-click
   @Prop({ default: null }) btnValue?: any;
+  // To allow disabling of button
   @Prop({ default: false }) isDisabled?: boolean;
+  // Event emitted on-click
   @Prop() btnEvent!: string;
+  // Additional css classes for component
   @Prop() addClass?: string;
 
   onClick() {

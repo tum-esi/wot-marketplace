@@ -1,18 +1,23 @@
-# wot-marketplace
+# WoTify
 
-Repository of Devices that can be WoT Enabled
+Repository of Devices that can be WoT Enabled.
 
-## How to run
-This project requires the installation of Node.js and NPM to work.
+Please read both the READMEs for the frontend and backend before running the application.
 
-After installing Node.js and NPM, you can install all the other needed dependencies, build the backend and frontend, and run the server using a single command:
-```bash
-cd backend && npm run serve
+## Quick start
+
+This project requires the installation of NodeJS and npm to work.
+
+After installing NodeJS and npm, run :
+```
+npm i --prefix ./frontend && npm i --prefix ./backend
+```
+from the root directory of the project to install all the needed dependencies needed by both the front and back end.
+
+To run the application, run :
+```
+npm run build --prefix ./frontend && npm run dev --prefix ./backend
 ```
 
-It should be noted that a configuration file is also needed.
 
 
-## Info
-
-You can use a string escaper to turn multiline READMEs to strings so that they are a JSON string

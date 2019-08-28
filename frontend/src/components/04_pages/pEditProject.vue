@@ -67,26 +67,25 @@ export default class pEditProject extends Vue {
     {
       type: "text",
       label: "Title *",
-      desc:
-        "Give your project a short and descriptive title of at least 5 characters.",
+      desc: "Give your project a short and descriptive title of at least 5 characters.",
       variable: "title"
     },
     {
       type: "text",
       label: "Summary *",
-      desc: "Briefly describe this project",
+      desc: "Briefly describe this project ( max 180 characters )",
       variable: "summary"
     },
     {
       type: "text",
       label: "Repository URL",
-      desc: "Add the URL of your publicly accessible WoT project repository.",
+      desc: "Add the URL of your publicly accessible WoT project repository. The URL must contain the corresponding protocol.",
       variable: "repoUrl"
     },
     {
       type: "textarea",
       label: "Description / README *",
-      desc: "",
+      desc: "Describe more thoroughly your project. Use MarkDown syntax.",
       variable: "description"
     },
     {
@@ -104,7 +103,7 @@ export default class pEditProject extends Vue {
     },
     {
       type: "radio",
-      label: "Platform",
+      label: "Platform *",
       desc: "Please choose the corresponding platform",
       variable: "platform",
       radioOptions: ["Raspberry Pi", "Arduino", "ESP", "Others"]
@@ -127,7 +126,7 @@ export default class pEditProject extends Vue {
       type: "tag",
       label: "Tags",
       desc: "Add some tags to help that will help others to find your project.",
-      variable: "tags"
+      variable: "tags"  
     }
   ];
 

@@ -22,11 +22,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
+/**
+ * An info box to indicate basic information 
+ */
 @Component
 export default class aInfoBox extends Vue {
+  // Header for the infobox
   @Prop() title!: string;
+  /**
+   * 
+   */
   @Prop() content!: any;
+  // Additional css classes for component
   @Prop() addClass?: string;
 }
 </script>
