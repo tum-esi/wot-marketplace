@@ -6,6 +6,11 @@ import passportJWT from 'passport-jwt';
 
 import { User } from '../database';
 
+/**
+ * Authentication middleware
+ * 
+ * @param app 
+ */
 export const initPassport = (app: Application) => {
     passport.use(new passportLocal.Strategy({
         usernameField: 'username',
@@ -18,7 +23,7 @@ export const initPassport = (app: Application) => {
     passport.use(new passportJWT.Strategy({
         jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.SECRET_CODE
-    }, async (jwtPayload, done) => {
+    }, async (jwtPayload, done) => { // deserialization strategy from JWT
         return User.findById(jwtPayload.id).then((user) => {
             return done(null, user);
         }).catch((err) => {

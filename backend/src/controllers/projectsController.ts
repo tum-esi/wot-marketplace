@@ -7,28 +7,36 @@ const ajv = new Ajv();
 import { ProjectType, Project } from '../database';
 import { UserType } from '../database';
 
+/**
+ * Route handler for POST request to /api/projects
+ * Handles validation and then creation of a project
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const projects_post = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-        try{
-            req.body.thingDesc = JSON.parse(req.body.thingDesc);
-        }catch(error){
+        try {
+            req.body.thingDesc = JSON.parse(req.body.thingDesc); // Valid JSON object check
+        } catch (error) {
             next(error);
             return;
         }
 
-        try{
-            if(!ajv.validate(tdValidationSchema, req.body.thingDesc)){
+        try {
+            if (!ajv.validate(tdValidationSchema, req.body.thingDesc)) { // Valid TD object check
                 let error = new Error();
                 error.name = "InvalidTDError";
                 next(error);
                 return;
             }
-        }catch(error){
+        } catch (error) {
             next(error);
             return;
         }
 
-        if(req.body.repoUrl && !req.body.repoUrl.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm)){
+        if (req.body.repoUrl && !req.body.repoUrl.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/igm)) { // URLs must be formatted to include protocol
             let error = new Error();
             error.name = "InvalidUrlError";
             next(error);
@@ -42,11 +50,18 @@ export const projects_post = async (req: express.Request, res: express.Response,
         var createdProject: ProjectType = await newProject.save({ validateBeforeSave: true });
         res.sendStatus(201);
     } catch (error) {
-        console.log(error);
         next(error);
     }
 }
 
+/**
+ * Route handler for GET request to /api/projects/:title
+ * Handles queries for a single project object
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const projects_title_get = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         var foundProject = await Project.findOne(req.params).populate('author').exec();
@@ -62,6 +77,14 @@ export const projects_title_get = async (req: express.Request, res: express.Resp
     }
 }
 
+/**
+ * Route handler for PUT request to /api/projects/:title
+ * Handles edits to a single project document
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const projects_title_put = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         var projectToEdit = await Project.findById(req.body._id).populate("author").exec();
@@ -71,28 +94,28 @@ export const projects_title_put = async (req: express.Request, res: express.Resp
             error.name = "NotFoundError";
             next(error);
             return;
-        }else if(projectToEdit.author.username !== (req.user as UserType).username){
+        } else if (projectToEdit.author.username !== (req.user as UserType).username) {
             let error = new Error();
             error.name = "UnauthorizedError";
             next(error);
             return;
         }
 
-        try{
+        try {
             req.body.thingDesc = JSON.parse(req.body.thingDesc);
-        }catch(error){
+        } catch (error) {
             next(error);
             return;
         }
 
-        try{
-            if(!ajv.validate(tdValidationSchema, req.body.thingDesc)){
+        try {
+            if (!ajv.validate(tdValidationSchema, req.body.thingDesc)) {
                 let error = new Error();
                 error.name = "InvalidTDError";
                 next(error);
                 return;
             }
-        }catch(error){
+        } catch (error) {
             next(error);
             return;
         }
@@ -107,22 +130,31 @@ export const projects_title_put = async (req: express.Request, res: express.Resp
     }
 }
 
+/**
+ * Route handler for DELETE request to /api/projects/:title
+ * Handles removal of a single project document
+ * A query is done before the delete for more specific error handling
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const projects_title_delete = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         var projectToDelete = await Project.findOne({ title: req.params.title }).populate("author").exec();
-        if(!projectToDelete){
+        if (!projectToDelete) {
             let error = new Error();
             error.name = "NotFoundError";
             next(error);
-            return;    
-        }else if(projectToDelete.author.username !== (req.user as UserType).username){
+            return;
+        } else if (projectToDelete.author.username !== (req.user as UserType).username) {
             let error = new Error();
             error.name = "UnauthorizedError";
             next(error);
             return;
-        }else{
+        } else {
             await Project.deleteOne({ title: req.params.title }).exec();
-            res.sendStatus(204);            
+            res.sendStatus(204);
         }
     } catch (error) {
         next(error);

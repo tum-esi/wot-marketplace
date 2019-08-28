@@ -71,7 +71,7 @@ export default new Router({
           component: aMarkdownBox
         },
         {
-          path: 'thingdesc',
+          path: 'thingdescription',
           name: 'Project ThingDesc',
           component: aJsonBox
         }

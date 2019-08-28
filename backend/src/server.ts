@@ -9,13 +9,13 @@ let app = express();
 initializeDatabase();
 initializeMiddlewares(app);
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) => { 
     res.sendFile(join(__dirname, "..", "..", "frontend", "dist", "index.html"));
 })
 
 initializeRoutes(app);
-initializeErrorHandler(app);
+initializeErrorHandler(app); // Initialized last to catch all errors.
 
-app.listen(3000, () => {
-    console.log('Server listening on port 3000.');
+app.listen(process.env.SVR_PORT, () => {
+    console.log(`Server listening on port ${process.env.SVR_PORT}.`);
 });

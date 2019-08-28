@@ -3,6 +3,11 @@ import { Application } from 'express';
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
+/**
+ * Logger for express application
+ * 
+ * @param app 
+ */
 export const initLogger = (app: Application) => {
     const options = {
 

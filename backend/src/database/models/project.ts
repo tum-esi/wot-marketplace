@@ -26,7 +26,7 @@ const ProjectSchema = new Schema({
         required: true,
         trim: true
     },
-    author: {
+    author: { // relationship link between documents, alows population of fields
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -38,7 +38,7 @@ const ProjectSchema = new Schema({
     summary: {
         type: String,
         minlength: 5,
-        maxlength: 180,
+        maxlength: 180, // fixed at 180 for appearance purposes in frontend
         required: true
     },
     repoUrl: {
@@ -47,7 +47,7 @@ const ProjectSchema = new Schema({
     description: {
         type: String,
         minlength: 5,
-        maxlength: 10000,
+        maxlength: 10000, // increase if necessary, but do not remove
         required: true
     },
     thingDesc: {
@@ -72,9 +72,12 @@ const ProjectSchema = new Schema({
         type: String,
         enum: ["Beginner", "Medium", "Expert"]
     },
-    tags: [String]
+    tags: [String] // limited at 10 by frontend
 });
 
+/**
+ * Fields indexed for text index search
+ */
 ProjectSchema.index(
     {
         title: "text",
@@ -91,4 +94,4 @@ ProjectSchema.index(
     }
 );
 
-export const Project = mongoose.model<ProjectType>("Project", ProjectSchema, "projects");
+export const Project = mongoose.model<ProjectType>("Project", ProjectSchema, "projects"); //ProjectType is specified so documents generated from this model is typed correctly

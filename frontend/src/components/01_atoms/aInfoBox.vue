@@ -6,7 +6,7 @@
       <p v-if="element.type === 'text'" class="infobox-element-text">{{ element.content }}</p>
       <a
         v-else-if="element.type === 'link'"
-        :href="`//${element.content.url}`"
+        :href="element.content.url"
         target="_blank"
       >{{ element.content.label }}</a>
       <ul v-else-if="element.type === 'list'" class="infobox-element-list">

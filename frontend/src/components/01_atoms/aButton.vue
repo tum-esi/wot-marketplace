@@ -120,10 +120,6 @@ export default class aButton extends Vue {
   opacity: 0.8;
 }
 
-.page-navigator {
-
-}
-
 .project-button {
   text-decoration: none;
   font-size: 18px;

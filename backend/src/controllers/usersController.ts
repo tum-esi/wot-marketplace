@@ -2,6 +2,14 @@ import express from 'express';
 
 import { UserType, User } from '../database';
 
+/**
+ * Route handler for GET request to /api/user/:username
+ * Handles query for a single user object
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const users_username_get = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         if ((req.user as UserType).username === req.params.username) {
@@ -20,6 +28,14 @@ export const users_username_get = async (req: express.Request, res: express.Resp
     }
 }
 
+/**
+ * Route handler for PUT request to /api/users/:username
+ * Handles edits to a single user document
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
 export const users_username_put = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         if (!req.user) {
@@ -29,7 +45,7 @@ export const users_username_put = async (req: express.Request, res: express.Resp
         }
         var userToEdit: UserType = req.user as UserType;
         if (req.body.password){
-            userToEdit.changePassword(req.body.password.old, req.body.password.new).then(() => {
+            userToEdit.changePassword(req.body.password.old, req.body.password.new).then(() => { // changePassword is from passport-local-mongoose
                 res.sendStatus(200);
             }).catch((error: Error) => {
                 next(error);

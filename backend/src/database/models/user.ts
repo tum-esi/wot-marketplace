@@ -42,6 +42,6 @@ const UserSchema: Schema = new Schema({
     }
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose); // plugin for authentication and encryption of password
 
-export const User = mongoose.model<UserType>("User", UserSchema as mongoose.PassportLocalSchema, "users");
+export const User = mongoose.model<UserType>("User", UserSchema as mongoose.PassportLocalSchema, "users"); //UserType is specified so documents generated from this model is typed correctly
