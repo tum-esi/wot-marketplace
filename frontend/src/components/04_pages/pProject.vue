@@ -14,7 +14,7 @@
             activeClass="active"
           >General</aNavLink>
           <aNavLink
-            :to="{ path: `/library/${project.title}/thingdesc`}"
+            :to="{ path: `/library/${project.title}/thingdescription`}"
             addClass="project-page"
             activeClass="active"
           >Thing Description</aNavLink>
