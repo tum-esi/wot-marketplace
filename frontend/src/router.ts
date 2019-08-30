@@ -1,51 +1,91 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import oSearchContainer from './components/03_organisms/oSearchContainer.vue'
-import tFormNewProject from './components/04_templates/tFormNewProject.vue'
-import pProject from './components/05_pages/pProject.vue'
-import tAbout from './components/04_templates/tAbout.vue'
-import tAccount from './components/04_templates/tAccount.vue'
-import tLogin from './components/04_templates/tLogin.vue'
-import tRegistration from './components/04_templates/tRegistration.vue'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+import pAbout from "@/components/04_pages/pAbout.vue";
+import pContribute from "@/components/04_pages/pContribute.vue";
+import pLibrary from "@/components/04_pages/pLibrary.vue";
+import pLogin from "@/components/04_pages/pLogin.vue";
+import pRegister from "@/components/04_pages/pRegister.vue";
+import pProfile from "@/components/04_pages/pProfile.vue";
+import pProject from "@/components/04_pages/pProject.vue";
+import pUser from "@/components/04_pages/pUser.vue";
+import p404 from "@/components/04_pages/p404.vue";
+import pEditProject from "@/components/04_pages/pEditProject.vue";
+import pHomepage from "@/components/04_pages/pHomepage.vue";
+import aJsonBox from "@/components/01_atoms/aJsonBox.vue";
+import aMarkdownBox from "@/components/01_atoms/aMarkdownBox.vue";
+
+Vue.use(Router);
 
 export default new Router({
-    routes: [
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: "/",
+      name: "Homepage",
+      component: pHomepage
+    },
+    {
+      path: "/library",
+      name: "Library",
+      component: pLibrary
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: pAbout
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: pLogin
+    },
+    {
+      path: "/register",
+      name: "Register",
+      component: pRegister
+    },
+    {
+      path: "/contribute",
+      name: "Contribute",
+      component: pContribute
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: pProfile
+    },
+    {
+      path: "/users/:id",
+      name: "Users",
+      component: pUser
+    },
+    {
+      path: "/library/:name",
+      component: pProject,
+      children: [
         {
-            path: '/',
-            name: 'home',
-            component: oSearchContainer
+          path: 'general',
+          name: 'Project General',
+          component: aMarkdownBox
         },
         {
-            path: '/new-project',
-            name: 'AddProject',
-            component: tFormNewProject
-        },
-        {
-            path: '/project/:id',
-            name: 'Project',
-            component: pProject,
-        },
-        {
-            path: '/about',
-            name: 'About',
-            component: tAbout
-        },
-        {
-            path: '/account',
-            name: 'Account',
-            component: tAccount
-        }, 
-        {
-            path: '/login',
-            name: 'Login',
-            component: tLogin
-        }, 
-        {
-            path: '/registration',
-            name: 'Registration',
-            component: tRegistration
+          path: 'thingdescription',
+          name: 'Project ThingDesc',
+          component: aJsonBox
         }
-    ]
-})
+      ]
+    },
+    {
+      path: "/library/:name/edit",
+      name: "Project Edit",
+      component: pEditProject
+    },
+    {
+      path: "*",
+      name: "404",
+      component: p404
+    }
+  ]
+});
