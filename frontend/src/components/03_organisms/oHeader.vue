@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <aNavLink :to="elements.library.route" class="header-logo">
+    <aNavLink :to="{ name: 'Homepage' }" class="header-logo">
       <img class="header-logo-image" src="../../assets/wot-mini.png" />
     </aNavLink>
     <mDropDown v-if="isConnected" addClass="default header-element" :closeOnClick="true">

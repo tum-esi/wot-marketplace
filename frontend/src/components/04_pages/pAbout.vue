@@ -43,6 +43,11 @@
           when receiving a GET request. Then you would write the Thing Description of this
           Thing and contribute to WoTify.
         </p>
+        <p>Use the following paper for referencing WoTify : 
+          <a href="https://github.com/w3c/wot/blob/master/workshop/ws2/Papers/35%20-%20Korkan%20et%20al%2C%20TU%20Munich%20-%20Wotify.pdf">
+            WoTify: A platform to bring Web of Things to your devices
+          </a>
+        </p>
       </div>
       <div>
         <h2>Useful Links</h2>

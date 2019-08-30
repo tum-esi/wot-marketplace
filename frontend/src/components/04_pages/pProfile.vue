@@ -26,7 +26,7 @@
               v-model="profileFields.lastName"
               addClass="user-profile-input"
               :isDisabled="!editMode"
-              @keyup.native="resetMessage"
+              @keyup.native="onKeyPressHandler('profile')"
             />
             <aInput
               inputType="text"
@@ -34,7 +34,7 @@
               v-model="profileFields.firstName"
               addClass="user-profile-input"
               :isDisabled="!editMode"
-              @keyup.native="resetMessage"
+              @keyup.native="onKeyPressHandler('profile')"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@
               v-model="profileFields.email"
               addClass="user-profile-input"
               :isDisabled="!editMode"
-              @keyup.native="resetMessage"
+              @keyup.native="onKeyPressHandler('profile')"
             />
           </div>
         </div>
@@ -62,10 +62,10 @@
         <oForm
           v-else
           :formFields="passwordFormFields"
-          buttonLabel="Confirm"
+          :buttonLabel="changesPassword ? 'Confirm' : 'Close'"
           :submitFunction="confirmPasswordChange"
           addClass="password-change-form"
-          @keyup.native="resetMessage"
+          @keyup.native="onKeyPressHandler('password')"
         />
       </div>
     </div>
@@ -130,8 +130,13 @@ export default class pProfile extends Vue {
   @authModule.Getter("getToken") authToken!: string;
   @authModule.Getter("getUsername") username!: string;
 
+  // Used to change view according to mode.
   private editMode: boolean = false;
   private passwordChange: boolean = false;
+
+  // Detect if changes are made
+  private changesProfile: boolean = false;
+  private changesPassword: boolean = false;
 
   private errorMessage: string = "";
   private validationMessage: string = "";
@@ -164,17 +169,22 @@ export default class pProfile extends Vue {
   ];
 
   async confirmProfileEdit() {
-    let response = await editUser(
-      this.username,
-      this.profileFields,
-      this.authToken
-    );
-    if (response.status === 200) {
-      this.validationMessage = "Changes are saved.";
+    if (this.changesProfile) {
+      let response = await editUser(
+        this.username,
+        this.profileFields,
+        this.authToken
+      );
+      if (response.status === 200) {
+        this.validationMessage = "Changes are saved.";
+        this.editMode = false;
+        return;
+      }
+      this.errorMessage = response.data.message;
+      this.changesProfile = false;
+    } else {
       this.editMode = false;
-      return;
     }
-    this.errorMessage = response.data.message;
   }
 
   async confirmPasswordChange(formData: { [key: string]: string }) {
@@ -209,6 +219,12 @@ export default class pProfile extends Vue {
     this.validationMessage = "";
   }
 
+  onKeyPressHandler(field: string) {
+    this.resetMessage();
+    if (field === "profile") this.changesProfile = true;
+    if (field === "password") this.changesPassword = true;
+  }
+
   async getPage(page: number) {
     this.searchProjects({
       author: this.userId,
@@ -221,7 +237,7 @@ export default class pProfile extends Vue {
   async created() {
     let response = await getUser(this.username, this.authToken);
     if (response.status === 200) {
-      let profile: {[key: string]: string} = response.data;
+      let profile: { [key: string]: string } = response.data;
       this.userId = profile._id;
       for (var elem in this.profileFields) {
         this.profileFields[elem] = profile[elem];

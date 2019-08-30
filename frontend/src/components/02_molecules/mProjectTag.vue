@@ -7,6 +7,12 @@
     <aLabel :addDesc="project.summary" addClass="project-tag-top">{{ project.title }}</aLabel>
     <div class="project-tag-bottom" :class="project.type.toLowerCase()">
       <p class="project-tag">{{ project.type }}</p>
+      <aInput 
+        v-model="project.avg_rating"
+        inputType="rating"
+        :isDisabled="true"
+        addClass="project-rating"
+      />
     </div>
   </aNavLink>
 </template>
@@ -16,11 +22,13 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import aNavLink from "@/components/01_atoms/aNavLink.vue";
 import aLabel from "@/components/01_atoms/aLabel.vue";
+import aInput from "@/components/01_atoms/aInput.vue";
 
 @Component({
   components: {
     aNavLink,
-    aLabel
+    aLabel,
+    aInput
   }
 })
 export default class aProjectItem extends Vue {
@@ -31,6 +39,7 @@ export default class aProjectItem extends Vue {
 
 <style scoped>
 .project-tag-bottom {
+  position: relative;
   height: 30%;
 }
 
@@ -38,6 +47,13 @@ export default class aProjectItem extends Vue {
   margin: 0;
   padding: 8px 20px;
   color: white;
+}
+
+.project-rating {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.2vw 0.5vw;
 }
 
 div.project-tag-bottom.code {

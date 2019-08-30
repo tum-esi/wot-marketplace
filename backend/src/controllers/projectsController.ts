@@ -160,3 +160,36 @@ export const projects_title_delete = async (req: express.Request, res: express.R
         next(error);
     }
 }
+
+/**
+ * Route handler for POST request to /api/projects/:title/rate
+ * Handles rating of a single project document
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ */
+export const projects_title_rate_post = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+        var projectToRate = await Project.findOne({ title: req.params.title }).exec();
+        if (!projectToRate) {
+            let error = new Error();
+            error.name = "NotFoundError";
+            next(error);
+            return;
+        } else if (projectToRate.raters.get((req.user as UserType).username)) {
+            projectToRate.avg_rating += (req.body.rating - (projectToRate.raters.get((req.user as UserType).username) as number)) / projectToRate.raters.size;
+            projectToRate.raters.set((req.user as UserType).username, req.body.rating);
+        } else {
+            projectToRate.raters.set((req.user as UserType).username, req.body.rating);
+            projectToRate.avg_rating += (req.body.rating - projectToRate.avg_rating) / projectToRate.raters.size;
+        }
+        await projectToRate.save({ validateBeforeSave: true });
+        res.status(200).json({
+            rating: projectToRate.avg_rating,
+            raters: projectToRate.raters
+        });
+    } catch (error) {
+        next(error);
+    }
+}

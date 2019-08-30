@@ -4,10 +4,15 @@ import mongoose from 'mongoose';
  * All configuration and database initialization to be done in this function
  */
 export const initializeDatabase = () => {
-    mongoose.connect(`mongodb+srv://${process.env.DB_DEV_USER}:${process.env.DB_DEV_PASS}@${process.env.DB_HOST}/${process.env.DB_DEV_NAME}`, {
-        useNewUrlParser: true,
-        useCreateIndex: true
-    });
+    mongoose.connect(
+        process.env.NODE_ENV === 'production' ? 
+        `mongodb+srv://${process.env.DB_PROD_USER}:${process.env.DB_PROD_PASS}@${process.env.DB_HOST}/${process.env.DB_PROD_NAME}`:
+        `mongodb+srv://${process.env.DB_DEV_USER}:${process.env.DB_DEV_PASS}@${process.env.DB_HOST}/${process.env.DB_DEV_NAME}`, 
+        {
+            useNewUrlParser: true,
+            useCreateIndex: true
+        }
+    );
 
     mongoose.connection.on('error', (err) => {
         console.log(err);

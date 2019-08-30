@@ -114,4 +114,18 @@ export default class aNavLink extends Vue {
 .project-button:hover {
   opacity: 0.8;
 }
+
+.homepage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
 </style>

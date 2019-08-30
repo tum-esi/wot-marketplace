@@ -13,4 +13,6 @@ router.put('/:title', passport.authenticate('jwt', { session: false }), projects
 
 router.delete('/:title', passport.authenticate('jwt', { session: false }), projectsController.projects_title_delete);
 
+router.post('/:title/rate', passport.authenticate('jwt', { session: false }), projectsController.projects_title_rate_post);
+
 export default router;

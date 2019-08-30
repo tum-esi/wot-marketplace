@@ -7,6 +7,7 @@ export interface UserType extends Document {
     firstName: string;
     lastName: string;
     email: string;
+    ratedProjects: {[key: string]: number};
 }
 
 const UserSchema: Schema = new Schema({
@@ -15,7 +16,7 @@ const UserSchema: Schema = new Schema({
         minlength: 5,
         maxlength: 40,
         unique: true,
-        require: true,
+        required: true,
         trim: true
     },
     firstName: {

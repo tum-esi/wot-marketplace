@@ -16,32 +16,55 @@
           class="infobox-element-list-item"
         >{{ tagElem }}</li>
       </ul>
+      <div v-else-if="element.type === 'rating'">
+        <aInput
+          v-model="inputValue"
+          inputType="rating"
+          addClass="infobox-rating"
+          :ratingSelectHandler="ratingHandler"
+        />
+        <p class="infobox-rating">{{ element.content.avg_rating }} by {{ element.content.raters }} user(s).</p>
+        <p v-if="element.content.rating" class="infobox-rating">Rated!</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+
+import aInput from "@/components/01_atoms/aInput.vue";
+
 /**
- * An info box to indicate basic information 
+ * An info box to indicate basic information
  */
-@Component
+@Component({
+  components: {
+    aInput
+  }
+})
 export default class aInfoBox extends Vue {
-  // Header for the infobox
   @Prop() title!: string;
-  /**
-   * 
-   */
   @Prop() content!: any;
-  // Additional css classes for component
+  @Prop() ratingHandler?: Function;
+  @Prop() initialRating?: boolean;
   @Prop() addClass?: string;
+  @Prop() value?: any;
+
+  get inputValue() {
+    return this.value;
+  }
+
+  set inputValue(inputValue) {
+    this.$emit("input", inputValue);
+  }
 }
 </script>
 
 <style scoped>
 .infobox-container {
   width: 100%;
-  padding: 1vw;
+  padding: 0.6vw;
   background: white;
   border: 1px solid lightgray;
 }
@@ -80,5 +103,15 @@ export default class aInfoBox extends Vue {
   margin: 3px 3px 3px 1px;
   cursor: default;
   font-size: 14px;
+}
+
+.infobox-rating {
+  display: inline-block;
+  width: auto;
+}
+
+p.infobox-rating{
+  margin: 0 2vw;
+  padding: 0;
 }
 </style>

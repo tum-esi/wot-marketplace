@@ -69,6 +69,20 @@ export const editProject = async (projectName: string, projectChanges: object, u
   }
 }
 
+export const rateProject = async (projectName: string, rating: number, userToken: string) => {
+  try{
+    let axiosConfig = {
+      headers: {
+        "Authorization": `Bearer ${userToken}` 
+      }
+    };
+    let response = await axios.post(`/api/projects/${projectName}/rate`, { rating }, axiosConfig);
+    return response;
+  }catch(error){
+    return error.response;
+  }
+}
+
 export const searchProjects = async (searchOptions: Object) => {
   try{
     let response = await axios.get('/api/search',

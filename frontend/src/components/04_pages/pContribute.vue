@@ -43,7 +43,7 @@ export default class pContribute extends Vue {
     {
       type: "text",
       label: "Summary *",
-      desc: "Briefly describe this project ( max 180 characters )",
+      desc: "Briefly describe this project ( 5 to max of 180 characters ).",
       variable: "summary"
     },
     {
@@ -61,34 +61,34 @@ export default class pContribute extends Vue {
     {
       type: "textarea",
       label: "Thing Description *",
-      desc: "Paste the Thing Description of your Thing in JSON format",
+      desc: "Paste the Thing Description of your Thing in JSON format.",
       variable: "thingDesc"
     },
     {
       type: "checkbox",
       label: "Topic",
-      desc: "Please select one topic",
+      desc: "Please select one topic.",
       variable: "topic",
       checkboxOptions: ["Sensors", "Robotics", "Actuators", "Others"]
     },
     {
       type: "radio",
       label: "Platform *",
-      desc: "Please choose the corresponding platform",
+      desc: "Please choose the corresponding platform.",
       variable: "platform",
       radioOptions: ["Raspberry Pi", "Arduino", "ESP", "Others"]
     },
     {
       type: "radio",
       label: "Project Type *",
-      desc: "Select the type of content ( Thing Description or Source Code )",
+      desc: "Select the type of content ( Thing Description or Source Code ).",
       variable: "type",
       radioOptions: ["TD", "Code"]
     },
     {
       type: "radio",
       label: "Complexity",
-      desc: "Select the complexity of this project",
+      desc: "Select the complexity of this project.",
       variable: "complexity",
       radioOptions: ["Beginner", "Medium", "Expert"]
     },

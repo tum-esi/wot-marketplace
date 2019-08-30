@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 import { UserType } from "./user";
 
-export interface ProjectType extends Document{
+export interface ProjectType extends Document {
     title: string;
     author: UserType;
     updated: Date;
@@ -15,6 +15,8 @@ export interface ProjectType extends Document{
     platform: string[];
     type: string;
     complexity: string;
+    avg_rating: number;
+    raters: Map<string, number>;
     tags: string[];
 }
 
@@ -32,8 +34,8 @@ const ProjectSchema = new Schema({
         required: true
     },
     updated: {
-        type: Date, 
-        default: Date.now 
+        type: Date,
+        default: Date.now
     },
     summary: {
         type: String,
@@ -55,7 +57,7 @@ const ProjectSchema = new Schema({
         required: true
     },
     topic: [{
-        type: String, 
+        type: String,
         enum: ["Sensors", "Robotics", "Actuators", "Others"]
     }],
     platform: {
@@ -72,8 +74,20 @@ const ProjectSchema = new Schema({
         type: String,
         enum: ["Beginner", "Medium", "Expert"]
     },
+    avg_rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        required: true,
+        default: 0
+    },
+    raters: {
+        type: Map,
+        of: Number,
+        default: {}
+    },
     tags: [String] // limited at 10 by frontend
-});
+}, { minimize: false });
 
 /**
  * Fields indexed for text index search

@@ -27,7 +27,7 @@ export const search_get = async (req: express.Request, res: express.Response, ne
             } else if (element === "term") {
                 req.query.term !== '' ? Object.assign(filter, { $text: { $search: req.query.term } }) : null;
             } else if (element === "sort") {
-                sort = req.query.sort === "Date" ? "updated" : "rating";
+                sort = req.query.sort === "Date" ? "updated" : "avg_rating";
             } else {
                 Object.assign(filter, { [element]: { $in: req.query[element] } });
             }

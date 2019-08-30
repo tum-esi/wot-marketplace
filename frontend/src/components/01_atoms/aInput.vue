@@ -6,12 +6,12 @@
     :placeholder="placeholder"
   />
 
-  <VueInputTag 
-    v-else-if="inputType === 'tag'" 
+  <VueInputTag
+    v-else-if="inputType === 'tag'"
     v-model="inputValue"
     :add-tag-on-blur="true"
     :limit="10"
-    :add-tag-on-keys="[13, 188, 9, 32]" 
+    :add-tag-on-keys="[13, 188, 9, 32]"
   />
 
   <div v-else-if="inputType === 'radio'" :class="addClass" class="radio-container">
@@ -44,6 +44,17 @@
     </label>
   </div>
 
+  <div v-else-if="inputType ==='rating'" :class="addClass">
+    <VueStarRating
+      v-model="inputValue"
+      :read-only="isDisabled"
+      :increment="0.5"
+      :star-size="20"
+      :show-rating="false"
+      @rating-selected="ratingSelectHandler"
+    />
+  </div>
+
   <input
     v-else
     v-model="inputValue"
@@ -58,10 +69,12 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 
 import VueInputTag from "vue-input-tag";
+import VueStarRating from "vue-star-rating";
 
 @Component({
   components: {
-    VueInputTag
+    VueInputTag,
+    VueStarRating
   }
 })
 export default class aInput extends Vue {
@@ -70,6 +83,7 @@ export default class aInput extends Vue {
   @Prop() addClass?: string;
   @Prop() radioOptions?: string[];
   @Prop() checkboxOptions?: string[];
+  @Prop() ratingSelectHandler?: Function;
   @Prop() isDisabled?: boolean;
   @Prop({ default: [] }) value!: any;
 

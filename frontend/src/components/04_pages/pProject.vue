@@ -28,6 +28,19 @@
           :title="element.title"
           :content="element.categories"
         />
+        <aInfoBox
+          v-model="rating"
+          title="Rate this project"
+          :content="[{
+            type: 'rating',
+            content: {
+              raters: Object.keys(project.raters).length,
+              avg_rating: project.avg_rating,
+              rating
+            }
+          }]"
+          :ratingHandler="onRatingChanged"
+        />
       </div>
     </div>
     <div v-if="username === project.author.username" class="project-buttons">
@@ -36,23 +49,30 @@
         addClass="project-button"
       >EDIT</aNavLink>
       <aButton
+        v-if="!deleteClicked"
         btnEvent="delete-btn-clicked"
-        @delete-btn-clicked="removeProject"
+        @delete-btn-clicked="e => deleteClicked = true"
         addClass="project-button"
       >DELETE</aButton>
+      <aButton
+        v-else
+        btnEvent="confirm-delete-btn-clicked"
+        @confirm-delete-btn-clicked="removeProject"
+        addClass="project-button"
+      >CONFIRM</aButton>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 
 import aButton from "@/components/01_atoms/aButton.vue";
 import aNavLink from "@/components/01_atoms/aNavLink.vue";
 import aInfoBox from "@/components/01_atoms/aInfoBox.vue";
 
-import { getProject, deleteProject } from "@/api";
+import { getProject, deleteProject, rateProject } from "@/api";
 
 const authModule = namespace("authentication");
 
@@ -66,6 +86,9 @@ const authModule = namespace("authentication");
 export default class pProject extends Vue {
   @authModule.Getter("getToken") authToken!: string;
   @authModule.Getter("getUsername") username!: string;
+
+  private rating: number = 0;
+  private deleteClicked: boolean = false;
 
   private project: {
     [key: string]: any;
@@ -81,6 +104,8 @@ export default class pProject extends Vue {
     platform: [],
     type: "",
     complexity: "",
+    avg_rating: 0,
+    raters: {},
     tags: []
   };
 
@@ -156,12 +181,26 @@ export default class pProject extends Vue {
     return this.project.thingDesc;
   }
 
+  async onRatingChanged() {
+    let response = await rateProject(
+      this.project.title,
+      this.rating,
+      this.authToken
+    );
+    if (response.status === 200) {
+      this.project.avg_rating = response.data.rating;
+      this.project.raters = response.data.raters
+    } else {
+      //TODO: error handling
+    }
+  }
+
   async removeProject() {
     let response = await deleteProject(this.project.title, this.authToken);
-    if(response.status === 204){
-      this.$router.push({ name: 'Profile' });
+    if (response.status === 204) {
+      this.$router.push({ name: "Profile" });
     } else {
-
+      //TODO: error handling
     }
   }
 
@@ -169,9 +208,9 @@ export default class pProject extends Vue {
     let response = await getProject(this.$route.params.name);
     if (response.status === 200) {
       this.project = response.data;
+      this.rating = response.data.raters[this.username];
     } else if (response.status === 404) {
       this.$router.push({ name: "404" });
-      //TODO: error handling
     }
   }
 }

@@ -58,7 +58,12 @@ export const initializeErrorHandler = (app: express.Application) => {
             stat = 400;
             response.message = "Invalid JSON object on Thing Description field.";
             break;
+        case "NotAllowedError":
+            stat = 400;
+            response.message = "Request is not allowed.";
+            break;
         default: // default error
+            console.log(err);
             response.message = "Something went wrong.";
             break;
     }

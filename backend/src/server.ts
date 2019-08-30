@@ -3,7 +3,7 @@ import { join } from 'path';
 
 import { initializeDatabase } from './database';
 import { initializeMiddlewares, initializeErrorHandler } from './middlewares';
-import { initializeRoutes } from './routes'; 
+import { initializeRoutes } from './routes';
 
 let app = express();
 initializeDatabase();

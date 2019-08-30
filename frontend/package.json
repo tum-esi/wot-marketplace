@@ -17,6 +17,7 @@
     "vue-json-pretty": "^1.6.0",
     "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
+    "vue-star-rating": "^1.6.1",
     "vue-tweet-embed": "^2.3.0",
     "vuex": "^3.0.1",
     "vuex-class": "^0.3.2"
