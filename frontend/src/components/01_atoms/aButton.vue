@@ -1,107 +1,144 @@
 <template>
-  <button class="btn" :class="btnClass" @click="onClick">{{ btnLabel }}</button>
+  <button class="btn" :class="addClass" @click="onClick" :disabled="isDisabled">
+    <slot></slot>
+  </button>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-
+import { Component, Prop, Vue } from "vue-property-decorator";
 /**
- * A basic button, emits a passed event with an optional passed value.
+ * A basic button component
  */
+@Component
+export default class aButton extends Vue {
+  // Value emitted on-click
+  @Prop({ default: null }) btnValue?: any;
+  // To allow disabling of button
+  @Prop({ default: false }) isDisabled?: boolean;
+  // Event emitted on-click
+  @Prop() btnEvent!: string;
+  // Additional css classes for component
+  @Prop() addClass?: string;
 
-export default Vue.extend({
-  name: "aButton",
-  props: {
-    /**
-     * This value will be passed on btn click. Value can be anything.
-     */
-    btnValue: {
-      type: null,
-      default: null,
-      required: false
-    },
-    /**
-     * Disable this button. Button is not clickable.
-     */
-    btnIsDisabled: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-    /**
-     * Button label.
-     */
-    btnLabel: {
-      type: String,
-      required: true
-    },
-    /**
-     * Action for button on click event.
-     */
-    btnOnClick: {
-      type: String,
-      required: true
-    },
-    /**
-     * Extra css classes for the button.
-     */
-    btnClass: {
-      type: String,
-      default: "",
-      required: false
-    }
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    onClick() {
-      if (this.btnIsDisabled) {
-        return;
-      }
-
-      if (this.btnValue) {
-        this.$emit(this.btnOnClick, this.btnValue);
-      } else {
-        this.$emit(this.btnOnClick);
-      }
-    }
+  onClick() {
+    if (this.btnValue) return this.$emit(this.btnEvent, this.btnValue);
+    this.$emit(this.btnEvent);
   }
-});
+}
 </script>
 
 <style scoped>
-.search-btn {
-  vertical-align: top;
+.login-form {
+  text-align: center;
+  outline: none;
   width: 150px;
-  height: 50px;
-  padding: 10px;
+  height: 35px;
+  padding: 5px;
+  background: #1c1c1c;
+  color: #fff;
   border: none;
+  font-size: 15px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
 }
 
-.btn-right {
-  float: right;
+.login-form:hover {
+  background: #333;
 }
 
-.submit-btn {
-  width: 30%;
-  padding: 15px;
-  margin-left: auto;
-}
-
-.logout-btn {
-  vertical-align: top;
-  width: 100%;
-  height: 50px;
-  padding: 10px;
-  border: none;
-}
-
-.login-btn {
-  vertical-align: top;
-  width: 15%;
+.register-form {
+  text-align: center;
+  outline: none;
+  width: 200px;
   height: 40px;
-  padding: 10px;
+  padding: 5px;
+  background: #1c1c1c;
+  color: #fff;
   border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.register-form:hover {
+  background: #333;
+}
+
+.contribute-form {
+  text-align: center;
+  outline: none;
+  width: 300px;
+  height: 50px;
+  padding: 5px;
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.contribute-form:hover {
+  background: #333;
+}
+
+.dropDown-element {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropDown-element:hover {
+  background: #30b8a3;
+  color: #fff;
+}
+
+.search-btn:hover {
+  opacity: 0.8;
+}
+
+.password-change-form {
+  text-align: center;
+  outline: none;
+  width: 10vw;
+  padding: 0.6vw;
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  font-size: 0.8vw;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.password-change:hover {
+  opacity: 0.8;
+}
+
+.project-button {
+  text-decoration: none;
+  font-size: 18px;
+  background: maroon;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.project-button:hover {
+  opacity: 0.8;
 }
 </style>
