@@ -1,6 +1,6 @@
 <template>
   <div class="footer-container">
-    <label class="footer-el">Copyrights © 2019 WoTify. All rights reserved.</label>
+    <label class="footer-el">Copyrights © 2019 WoTify. All rights reserved. <a href="/impressum" target="_blank">Impressum</a> </label>
   </div>
 </template>
 

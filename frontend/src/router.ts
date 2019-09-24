@@ -12,6 +12,7 @@ import pUser from "@/components/04_pages/pUser.vue";
 import p404 from "@/components/04_pages/p404.vue";
 import pEditProject from "@/components/04_pages/pEditProject.vue";
 import pHomepage from "@/components/04_pages/pHomepage.vue";
+import pImpressum from "@/components/04_pages/pImpressum.vue";
 import aJsonBox from "@/components/01_atoms/aJsonBox.vue";
 import aMarkdownBox from "@/components/01_atoms/aMarkdownBox.vue";
 
@@ -35,6 +36,11 @@ export default new Router({
       path: "/about",
       name: "About",
       component: pAbout
+    },
+    {
+      path: "/impressum",
+      name: "Impressum",
+      component: pImpressum
     },
     {
       path: "/login",
