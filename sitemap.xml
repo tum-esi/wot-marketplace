@@ -1,83 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 	<url>
-		<loc>https://wotify.org/#/</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>https://wotify.org/#/new-project</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/library?term=&sort=Date&page=1</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.90</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/login</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.90</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/about</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.90</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/Motor%20Controller%20(Pololu%20TB9051FTG%20Dual)/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.50</priority>
 	</url>
 	<url>
-		<loc>https://wotify.org/#/login</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/library/Motor%20Controller%20(Pololu%20TB9051FTG%20Dual)/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.50</priority>
 	</url>
 	<url>
-		<loc>https://wotify.org/#/project/DotStar%20Python</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/library/HUE%20Daylight%20Sensor/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.50</priority>
 	</url>
-		<url>
-		<loc>https://wotify.org/#/project/HUE%20Bridge%20Simple</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.50</priority>
-	</url>
-		<url>
-		<loc>https://wotify.org/#/project/HUE%20Daylight%20Sensor</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.50</priority>
-	</url>
-		<url>
-		<loc>https://wotify.org/#/project/HUE%20Dimmer%20Switch</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.50</priority>
-	</url>
-		<url>
-		<loc>https://wotify.org/#/project/HUE%20White%20Light</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.50</priority>
-	</url>
-		
-		<url>
-		<loc>https://wotify.org/#/project/ESP%20Light%20Sensor</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.50</priority>
-	</url>
-
 	<url>
-		<loc>https://wotify.org/#/project/MeArm%20Pi%20node-wot</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/library/HUE%20Daylight%20Sensor/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.50</priority>
 	</url>
-
 	<url>
-		<loc>https://wotify.org/#/project/piCamera%20flask</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/library/Philips%20HUE%20Dimmer%20Switch/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.50</priority>
 	</url>
-
 	<url>
-		<loc>https://wotify.org/#/project/SenseHAT_node-wot</loc>
-		<lastmod>2019-06-03T18:21:10+00:00</lastmod>
+		<loc>https://wotify.org/library/Philips%20HUE%20Dimmer%20Switch/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.50</priority>
 	</url>
-	
+	<url>
+		<loc>https://wotify.org/library/Philips%20HUE%20White%20Light/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/Philips%20HUE%20White%20Light/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/Philips%20HUE%20Bridge/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/Philips%20HUE%20Bridge/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/SenseHAT/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/SenseHAT/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/IP%20Camera/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/IP%20Camera/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/MeArm%20Pi%20Robot%20Arm/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/MeArm%20Pi%20Robot%20Arm/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/Dotstar%20LED%20Strip/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/Dotstar%20LED%20Strip/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/ESP%20Switch%20and%20LED/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/ESP%20Switch%20and%20LED/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/ESP%20Light%20Sensor/general</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
+	<url>
+		<loc>https://wotify.org/library/ESP%20Light%20Sensor/thingdescription</loc>
+		<lastmod>2019-09-01T18:21:10+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.50</priority>
+	</url>
 </urlset>
