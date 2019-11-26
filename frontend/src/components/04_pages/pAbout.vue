@@ -7,7 +7,7 @@
         <p>
           WoTify is developed by researchers and students at the
           <a
-            href="https://www.esi.ei.tum.de/en/home"
+            href="https://www.ei.tum.de/en/esi/home"
             target="_blank"
           >Embedded Systems and Internet of Things Research Group of Technical University of Munich</a>
           who also actively contribute to the WoT standardization efforts at the World Wide Web Consortium (W3C).
@@ -16,7 +16,7 @@
         <p>
           We have other open-source projects that you can find on
           <a
-            href="https://github.com/tum-ei-esi/"
+            href="https://github.com/tum-esi/"
             target="_blank"
           >our Github page</a>
           or
