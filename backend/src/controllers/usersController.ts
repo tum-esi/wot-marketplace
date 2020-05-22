@@ -15,7 +15,7 @@ export const users_username_get = async (req: express.Request, res: express.Resp
         if ((req.user as UserType).username === req.params.username) {
             res.status(200).json(req.user);
         } else {
-            var foundUser: UserType = await User.findOne(req.params).lean().exec();
+            var foundUser = await User.findOne(req.params).lean().exec();
             if (!foundUser) {
                 let error = new Error();
                 error.name = "NotFoundError";

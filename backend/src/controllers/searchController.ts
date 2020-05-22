@@ -21,9 +21,9 @@ export const search_get = async (req: express.Request, res: express.Response, ne
 
         for (var element in req.query) {
             if (element === "pageSize") {
-                limit = parseInt(req.query.pageSize, 10);
+                limit = parseInt(req.query.pageSize as string, 10);
             } else if (element === "page") {
-                page = parseInt(req.query.page, 10);
+                page = parseInt(req.query.page as string, 10);
             } else if (element === "term") {
                 req.query.term !== '' ? Object.assign(filter, { $text: { $search: req.query.term } }) : null;
             } else if (element === "sort") {
@@ -33,7 +33,7 @@ export const search_get = async (req: express.Request, res: express.Response, ne
             }
         }
 
-        var results: Promise<ProjectType[]> = await Project.find(
+        var results = await Project.find(
             filter,
             null,
             {
