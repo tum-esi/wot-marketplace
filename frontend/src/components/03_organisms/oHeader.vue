@@ -1,7 +1,7 @@
 <template>
   <div class="header-container">
     <aNavLink :to="{ name: 'Homepage' }" class="header-logo">
-      <img class="header-logo-image" src="../../assets/wot-mini.png" />
+      <img class="header-logo-image" src="../../assets/logo.png" />
     </aNavLink>
     <mDropDown v-if="isConnected" addClass="default header-element" :closeOnClick="true">
       <template #dropDownLabel>{{ getUsername }}</template>

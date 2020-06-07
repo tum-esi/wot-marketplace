@@ -1,15 +1,16 @@
 import express from 'express';
 import { join } from 'path';
-import ServeFavicon from 'serve-favicon';
 
 /**
  * Handles serving of static assets by server
- * 
- * @param app 
+ *
+ * @param app
  */
 export const initStatic = (app: express.Application) => {
-  app.use(ServeFavicon(join(__dirname, "..", "..", "..", "frontend", "dist", "favicon.ico")));
-  
+  app.use("/", express.static(
+      join(__dirname, "..", "..", "..", "frontend", "src", "assets", "icons")
+  ));
+
   app.use("/public", express.static(
     join(__dirname, "..", "..", "..", "frontend", "dist"),
     { maxAge: 1000 * 60 * 60 * 12 }
