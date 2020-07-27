@@ -15,6 +15,7 @@
     "vue-class-component": "7.0.2",
     "vue-input-tag": "2.0.6",
     "vue-json-pretty": "1.6.0",
+    "vue-matomo": "^3.13.5-0",
     "vue-property-decorator": "8.1.0",
     "vue-router": "3.0.3",
     "vue-star-rating": "1.6.1",
